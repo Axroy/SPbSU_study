@@ -1,0 +1,13 @@
+// hello world!
+hello world!
+hello // world!
+
+/*agasghrh
+jldas//agadg*/
+
+"/*agasghrh"
+jldas//agadg*/
+
+"//"
+
+//dsgagd
