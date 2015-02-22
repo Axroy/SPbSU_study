@@ -14,7 +14,7 @@ protected:
     class ListElement
     {
     public:
-        ListElement(int value, ListElement *next);
+        ListElement(int value, ListElement *nextElement);
 
         int data;
         ListElement *next;
