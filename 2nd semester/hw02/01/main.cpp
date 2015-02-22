@@ -14,7 +14,9 @@ int main()
 
     example->print();
 
-    example->remove(5);
+    example->remove(1);
+
+    std::cout << "\n";
     example->print();
 
     return 0;

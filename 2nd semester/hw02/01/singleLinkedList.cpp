@@ -41,11 +41,15 @@ void SingleLinkedList::remove(int value)
 
 void SingleLinkedList::print()
 {
-    ListElement *&current = head->next;
-    while (current != nullptr)
+    if (head->next == nullptr)
+        return;
+
+    ListElement *current = head->next;
+    while (current->next != nullptr)
     {
         std::cout << current->data << " ";
         current = current->next;
     }
+    std::cout << current->data;
 }
 
