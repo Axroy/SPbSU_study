@@ -23,6 +23,7 @@ private:
         ListElement *previous;
     };
     ListElement *head;
+    ListElement *tail;
 };
 
 #endif // DOUBLELINKEDLIST_H

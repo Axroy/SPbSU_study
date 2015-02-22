@@ -1,6 +1,7 @@
 #include <iostream>
 #include "list.h"
 #include "singleLinkedList.h"
+#include "doubleLinkedList.h"
 
 
 int main()
@@ -20,6 +21,11 @@ int main()
     example->print();
 
     delete example;
+
+
+    List *doubleListExample = new DoubleLinkedList;
+    doubleListExample->add(4);
+    doubleListExample->add(5);
 
     return 0;
 }

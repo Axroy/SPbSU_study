@@ -3,6 +3,7 @@
 DoubleLinkedList::DoubleLinkedList()
 {
     head = new ListElement(0, nullptr, nullptr);
+    tail = head;
 }
 
 DoubleLinkedList::~DoubleLinkedList()
@@ -12,7 +13,8 @@ DoubleLinkedList::~DoubleLinkedList()
 
 void DoubleLinkedList::add(int value)
 {
-
+    tail->next = new ListElement(value, nullptr, tail);
+    tail = tail->next;
 }
 
 void DoubleLinkedList::remove(int value)
