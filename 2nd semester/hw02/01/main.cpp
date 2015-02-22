@@ -13,6 +13,7 @@ int main()
     example->add(2);
     example->add(1);
 
+    std::cout << "Single:\n";
     example->print();
 
     example->remove(4);
@@ -24,8 +25,14 @@ int main()
 
 
     List *doubleListExample = new DoubleLinkedList;
+    doubleListExample->add(1);
+    doubleListExample->add(2);
+    doubleListExample->add(3);
     doubleListExample->add(4);
     doubleListExample->add(5);
+
+    std::cout << "\n\nDouble:\n";
+    doubleListExample->print();
 
     return 0;
 }

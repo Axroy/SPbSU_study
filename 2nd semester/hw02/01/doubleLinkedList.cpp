@@ -1,3 +1,4 @@
+#include <iostream>
 #include "doubleLinkedList.h"
 
 DoubleLinkedList::DoubleLinkedList()
@@ -24,7 +25,16 @@ void DoubleLinkedList::remove(int value)
 
 void DoubleLinkedList::print()
 {
+    if (head->next == nullptr)
+        return;
 
+    ListElement *current = head->next;
+    while (current->next != nullptr)
+    {
+        std::cout << current->data << " ";
+        current = current->next;
+    }
+    std::cout << current->data;
 }
 
 
