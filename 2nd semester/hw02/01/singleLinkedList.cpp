@@ -10,17 +10,21 @@ SingleLinkedList::SingleLinkedList()
 void SingleLinkedList::add(int value)
 {
     //std::cout << "worked";
-    ListElement *node = new ListElement(value, nullptr);
+    ListElement *node = new ListElement(value, head->next);
     head->next = node;
 }
 
 void SingleLinkedList::remove(int value)
 {
-
 }
 
 void SingleLinkedList::print()
 {
-
+    ListElement *&current = head->next;
+    while (current != nullptr)
+    {
+        std::cout << current->data << " ";
+        current = current->next;
+    }
 }
 

@@ -11,8 +11,8 @@ List::~List()
 }
 
 
-List::ListElement::ListElement(int value, List::ListElement *next)
+List::ListElement::ListElement(int value, List::ListElement *neext)
 {
     data = value;
-    next = next;
+    next = neext;
 }
