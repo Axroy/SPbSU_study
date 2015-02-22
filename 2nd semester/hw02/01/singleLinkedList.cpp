@@ -16,6 +16,27 @@ void SingleLinkedList::add(int value)
 
 void SingleLinkedList::remove(int value)
 {
+    if (head->next == nullptr)
+        return;
+
+    ListElement *current = head->next;
+
+    if (current->data == value)
+    {
+        head->next = current->next;
+        delete current;
+        return;
+    }
+
+    while (current->next != nullptr && current->next->data != value)
+        current = current->next;
+
+    if (current->next != nullptr)
+    {
+        ListElement *removedElement = current->next;
+        current->next = removedElement->next;
+        delete removedElement;
+    }
 }
 
 void SingleLinkedList::print()
