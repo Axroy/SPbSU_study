@@ -38,6 +38,7 @@ int main()
     std::cout << "\n";
     doubleListExample->print();
 
+    delete doubleListExample;
 
     return 0;
 }
