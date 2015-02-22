@@ -67,3 +67,10 @@ void SingleLinkedList::print()
     std::cout << current->data;
 }
 
+
+
+SingleLinkedList::ListElement::ListElement(int value, SingleLinkedList::ListElement *nextElement)
+{
+    data = value;
+    next = nextElement;
+}

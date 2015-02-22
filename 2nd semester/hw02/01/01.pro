@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     list.cpp \
-    singleLinkedList.cpp
+    singleLinkedList.cpp \
+    doubleLinkedList.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -14,4 +15,5 @@ QMAKE_CXXFLAGS += -std=c++11
 
 HEADERS += \
     list.h \
-    singleLinkedList.h
+    singleLinkedList.h \
+    doubleLinkedList.h
