@@ -1,5 +1,4 @@
-#ifndef SINGLELINKEDLIST_H
-#define SINGLELINKEDLIST_H
+#pragma once
 
 #include "list.h"
 
@@ -25,4 +24,4 @@ private:
     ListElement *head;
 };
 
-#endif // SINGLELINKEDLIST_H
+

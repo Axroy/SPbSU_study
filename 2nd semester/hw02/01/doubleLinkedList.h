@@ -1,5 +1,4 @@
-#ifndef DOUBLELINKEDLIST_H
-#define DOUBLELINKEDLIST_H
+#pragma once
 
 #include "list.h"
 
@@ -26,4 +25,3 @@ private:
     ListElement *tail;
 };
 
-#endif // DOUBLELINKEDLIST_H

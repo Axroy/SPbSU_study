@@ -1,5 +1,4 @@
-#ifndef LIST_H
-#define LIST_H
+#pragma once
 
 class List
 {
@@ -10,4 +9,4 @@ public:
     virtual void print() = 0;
 };
 
-#endif // LIST_H
+
