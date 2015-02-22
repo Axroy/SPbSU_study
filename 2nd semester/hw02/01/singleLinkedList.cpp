@@ -7,6 +7,20 @@ SingleLinkedList::SingleLinkedList()
     head = new ListElement(0, nullptr);
 }
 
+SingleLinkedList::~SingleLinkedList()
+{
+    ListElement *current = head;
+    ListElement *removedElement = head;
+
+    while (current->next != nullptr)
+    {
+        current = current->next;
+        delete removedElement;
+        removedElement = current;
+    }
+    delete current->next;
+}
+
 void SingleLinkedList::add(int value)
 {
     //std::cout << "worked";

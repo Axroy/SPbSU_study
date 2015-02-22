@@ -19,6 +19,8 @@ int main()
     std::cout << "\n";
     example->print();
 
+    delete example;
+
     return 0;
 }
 

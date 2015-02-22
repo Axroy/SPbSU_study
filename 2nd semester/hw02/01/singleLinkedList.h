@@ -7,6 +7,7 @@ class SingleLinkedList : public List
 {
 public:
     SingleLinkedList();
+    ~SingleLinkedList();
     void add(int value);
     void remove(int value);
     void print();
