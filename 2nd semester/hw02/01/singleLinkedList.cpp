@@ -23,7 +23,6 @@ SingleLinkedList::~SingleLinkedList()
 
 void SingleLinkedList::add(int value)
 {
-    //std::cout << "worked";
     ListElement *node = new ListElement(value, head->next);
     head->next = node;
 }
