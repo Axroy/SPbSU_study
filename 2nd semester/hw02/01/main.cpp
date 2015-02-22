@@ -34,6 +34,11 @@ int main()
     std::cout << "\n\nDouble:\n";
     doubleListExample->print();
 
+    doubleListExample->remove(5);
+    std::cout << "\n";
+    doubleListExample->print();
+
+
     return 0;
 }
 

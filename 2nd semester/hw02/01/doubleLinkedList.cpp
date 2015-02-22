@@ -9,7 +9,6 @@ DoubleLinkedList::DoubleLinkedList()
 
 DoubleLinkedList::~DoubleLinkedList()
 {
-
 }
 
 void DoubleLinkedList::add(int value)
@@ -20,7 +19,30 @@ void DoubleLinkedList::add(int value)
 
 void DoubleLinkedList::remove(int value)
 {
+    if (head->next == nullptr)
+        return;
 
+    ListElement *current = head->next;
+
+    if (current->data == value)
+    {
+        head->next = current->next;
+        current->next->previous = head;
+        delete current;
+        return;
+    }
+
+    while (current->next != nullptr && current->next->data != value)
+        current = current->next;
+
+    if (current->next != nullptr)
+    {
+        ListElement *toRemove = current->next;
+        if (toRemove->next != nullptr)
+            toRemove->next->previous = current;
+        current->next = toRemove->next;
+        delete toRemove;
+    }
 }
 
 void DoubleLinkedList::print()
