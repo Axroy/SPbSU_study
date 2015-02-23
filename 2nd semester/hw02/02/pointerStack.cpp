@@ -31,9 +31,13 @@ void PointerStack::push(int value)
     top->next = newElement;
 }
 
-int PointerStack::pop(int value)
+int PointerStack::pop()
 {
-
+    int result = top->next->data;
+    StackElement *toRemove = top->next;
+    top->next = toRemove->next;
+    delete toRemove;
+    return result;
 }
 
 void PointerStack::print()

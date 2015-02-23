@@ -14,6 +14,12 @@ int main()
 
     example->print();
 
+    std::cout << "\n\n" << example->pop();
+    std::cout << " " << example->pop();
+
+    std::cout << "\n\n";
+    example->print();
+
     delete example;
 
     return 0;
