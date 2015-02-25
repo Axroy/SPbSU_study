@@ -23,7 +23,12 @@ void ArrayStack::push(int value)
 
 int ArrayStack::pop()
 {
-
+    if (top == 0)
+        return 0;
+    int result = array[top - 1];
+    top--;
+    array[top] = 0;
+    return result;
 }
 
 void ArrayStack::print()
