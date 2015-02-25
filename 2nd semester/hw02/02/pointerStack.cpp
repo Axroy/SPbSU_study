@@ -31,7 +31,7 @@ void PointerStack::push(int value)
     top->next = newElement;
 }
 
-int PointerStack::pop(int value)
+int PointerStack::pop()
 {
 
 }

@@ -8,7 +8,7 @@ public:
     PointerStack();
     ~PointerStack();
     void push(int value);
-    int pop(int value);
+    int pop();
     void print();
 
 private:
