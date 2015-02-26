@@ -2,6 +2,7 @@
 #include "stack.h"
 #include "pointerStack.h"
 #include "arrayStack.h"
+#include "calculator.h"
 
 
 int main()
@@ -43,6 +44,11 @@ int main()
     arrayExample->print();
 
     delete arrayExample;
+
+
+    Calculator calc;
+    std::cout << "\n\n" << calc.count("2 * 9");
+
 
     return 0;
 }
