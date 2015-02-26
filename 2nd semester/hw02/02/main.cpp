@@ -1,53 +1,19 @@
 #include <iostream>
-#include "stack.h"
-#include "pointerStack.h"
-#include "arrayStack.h"
 #include "calculator.h"
 
 
 int main()
 {
-    Stack *example = new PointerStack;
-    example->push(1);
-    example->push(2);
-    example->push(3);
-    example->push(4);
-    example->push(5);
+    std::cout << "The program calculates mathematical expressions.\n";
+    std::cout << "Only works with single-character numbers.\n";
+    std::cout << "Enter the expression:\n";
 
-    std::cout << "Pointer stack:\n";
-
-    example->print();
-
-    std::cout << "\n\n" << example->pop();
-    std::cout << " " << example->pop();
-
-    std::cout << "\n\n";
-    example->print();
-
-    delete example;
-
-    Stack *arrayExample = new ArrayStack(10);
-    arrayExample->push(1);
-    arrayExample->push(2);
-    arrayExample->push(3);
-    arrayExample->push(4);
-
-    std::cout << "\n\nArray stack:\n";
-
-    arrayExample->print();
-
-    std::cout << "\n\n";
-    std::cout << arrayExample->pop() << " ";
-    std::cout << arrayExample->pop();
-
-    std::cout << "\n\n";
-    arrayExample->print();
-
-    delete arrayExample;
-
+    const int size = 1000;
+    char string[size] = "";
+    fgets(string, size, stdin);
 
     Calculator calc;
-    std::cout << "\n\n" << calc.count("2 * 9");
+    std::cout << "\n\nResult: " << calc.count(string);
 
 
     return 0;

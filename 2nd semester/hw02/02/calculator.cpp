@@ -51,7 +51,7 @@ int Calculator::postfixCount(char *string)
     int numA = 0;
     int numB = 0;
     int i = 0;
-    while (string[i] != '\0')
+    while (string[i] != '\n')
     {
         switch (string[i])
         {
@@ -82,7 +82,7 @@ void Calculator::convertToPostfix(char *string, char *resultingString)
     PostfixConverter *converter = new PostfixConverter;
     int i = 0;
     int resStrPosition = 0;
-    while (string[i] != '\0')
+    while (string[i] != '\n')
     {
         switch (string[i])
         {
@@ -133,6 +133,6 @@ void Calculator::convertToPostfix(char *string, char *resultingString)
 
     }
 
-    resultingString[resStrPosition] = '\0';
+    resultingString[resStrPosition] = '\n';
     delete converter;
 }
