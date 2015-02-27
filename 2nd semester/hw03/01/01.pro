@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     quickSorter.cpp \
-    heapSorter.cpp
+    heapSorter.cpp \
+    insertionSorter.cpp \
+    bubbleSorter.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -13,5 +15,7 @@ qtcAddDeployment()
 HEADERS += \
     sorter.h \
     quickSorter.h \
-    heapSorter.h
+    heapSorter.h \
+    insertionSorter.h \
+    bubbleSorter.h
 
