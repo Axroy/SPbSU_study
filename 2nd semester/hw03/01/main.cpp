@@ -5,6 +5,7 @@
 #include "insertionSorter.h"
 #include "bubbleSorter.h"
 
+///Prints an array with known size
 void print(int *array, int size)
 {
     for (int i = 0; i < size; i++)
