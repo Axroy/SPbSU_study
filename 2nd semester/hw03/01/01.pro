@@ -3,11 +3,13 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    quickSorter.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    sorter.h
+    sorter.h \
+    quickSorter.h
 
