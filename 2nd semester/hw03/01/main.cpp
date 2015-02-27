@@ -26,8 +26,8 @@ int main()
 
     std::cout << "\n\nQuick sort: \n";
 
-    QuickSorter quick;
-    quick.sort(array, size);
+    Sorter *quick = new QuickSorter;
+    quick->sort(array, size);
 
     print(array, size);
 
@@ -36,8 +36,8 @@ int main()
 
     std::cout << "\n\nHeap sort:\n";
 
-    HeapSorter heap;
-    heap.sort(array, size);
+    Sorter *heap = new HeapSorter;
+    heap->sort(array, size);
 
     print(array, size);
 
@@ -46,8 +46,8 @@ int main()
 
     std::cout << "\n\nInsertion sort:\n";
 
-    InsertionSorter insertion;
-    insertion.sort(array, size);
+    Sorter *insertion = new InsertionSorter;
+    insertion->sort(array, size);
 
     print(array, size);
 
@@ -56,8 +56,8 @@ int main()
 
     std::cout << "\n\nBubble sort:\n";
 
-    BubbleSorter bubble;
-    bubble.sort(array, size);
+    Sorter *bubble = new BubbleSorter;
+    bubble->sort(array, size);
 
     print(array, size);
 
