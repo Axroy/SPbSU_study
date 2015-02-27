@@ -13,16 +13,17 @@ void print(int *array, int size)
 
 int main()
 {
+    std::cout << "The program sorts an araay with different sorting algorythms.\n";
     const int size = 10;
     int array[size] = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 
-    std::cout << "Original array: \n\n";
+    std::cout << "Original array: \n";
     print(array, size);
 
 
 
 
-    std::cout << "\n\nQuick sort: \n\n";
+    std::cout << "\n\nQuick sort: \n";
 
     QuickSorter quick;
     quick.sort(array, size);
@@ -32,7 +33,7 @@ int main()
 
 
 
-    std::cout << "\n\nHeap sort:\n\n";
+    std::cout << "\n\nHeap sort:\n";
 
     HeapSorter heap;
     heap.sort(array, size);
@@ -42,7 +43,7 @@ int main()
 
 
 
-    std::cout << "\n\nInsertion sort: \n\n";
+    std::cout << "\n\nInsertion sort:\n";
 
     InsertionSorter insertion;
     insertion.sort(array, size);
@@ -52,7 +53,7 @@ int main()
 
 
 
-    std::cout << "\n\nBubble sort: \n\n";
+    std::cout << "\n\nBubble sort:\n";
 
     BubbleSorter bubble;
     bubble.sort(array, size);
