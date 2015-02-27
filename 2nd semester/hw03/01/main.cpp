@@ -14,7 +14,7 @@ void print(int *array, int size)
 
 int main()
 {
-    std::cout << "The program sorts an araay with different sorting algorythms.\n";
+    std::cout << "The program sorts an array with different sorting algorythms.\n";
     const int size = 10;
     int array[size] = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 
