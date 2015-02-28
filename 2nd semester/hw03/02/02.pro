@@ -10,5 +10,6 @@ include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    squareArray.h
+    squareArray.h \
+    printer.h
 
