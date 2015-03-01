@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     squareArray.cpp \
-    consolePrinter.cpp
+    consolePrinter.cpp \
+    filePrinter.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -13,4 +14,5 @@ qtcAddDeployment()
 HEADERS += \
     squareArray.h \
     printer.h \
-    consolePrinter.h
+    consolePrinter.h \
+    filePrinter.h

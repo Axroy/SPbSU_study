@@ -2,6 +2,7 @@
 #include "squareArray.h"
 //#include "printer.h"
 #include "consolePrinter.h"
+#include "filePrinter.h"
 
 int main()
 {
@@ -31,6 +32,19 @@ int main()
         std::cout << "\n";
         Printer *printer = new ConsolePrinter;
         printer->print(array);
+    }
+    else if (command == 'f')
+    {
+        std::cout << "Enter file name: ";
+        const int maxLength = 100;
+        char fileName[maxLength] = "";
+        std::cin >> fileName;
+        Printer *filePrinter = new FilePrinter(fileName);
+        filePrinter->print(array);
+    }
+    else
+    {
+        std::cout << "Wrong command!";
     }
 
 
