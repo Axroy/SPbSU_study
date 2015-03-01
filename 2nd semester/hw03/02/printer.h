@@ -1,8 +1,10 @@
 #pragma once
 
+#include "squareArray.h"
+
 class Printer
 {
 public:
-    virtual void print() = 0;
+    virtual void print(SquareArray *array) = 0;
 };
 

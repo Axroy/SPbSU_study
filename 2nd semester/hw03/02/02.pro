@@ -4,12 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    squareArray.cpp
+    squareArray.cpp \
+    consolePrinter.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
     squareArray.h \
-    printer.h
-
+    printer.h \
+    consolePrinter.h

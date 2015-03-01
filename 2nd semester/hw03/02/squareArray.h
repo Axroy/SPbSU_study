@@ -8,6 +8,7 @@ public:
     ~SquareArray();
     void print();
     int getSize();
+    int element(int i, int j);
 
 private:
     int size;

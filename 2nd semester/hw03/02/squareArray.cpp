@@ -45,3 +45,8 @@ int SquareArray::getSize()
 {
     return size;
 }
+
+int SquareArray::element(int i, int j)
+{
+    return array[i][j];
+}
