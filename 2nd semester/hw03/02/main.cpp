@@ -1,6 +1,5 @@
 #include <iostream>
 #include "squareArray.h"
-//#include "printer.h"
 #include "consolePrinter.h"
 #include "filePrinter.h"
 
