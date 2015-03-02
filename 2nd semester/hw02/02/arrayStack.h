@@ -11,6 +11,7 @@ public:
     int pop();
     void print();
 
+private:
     int *array;
     int top;
     int size;
