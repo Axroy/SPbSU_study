@@ -13,6 +13,8 @@ public:
     void add(LinkedList *newList);
     ///Removes certain list from the set
     void remove(LinkedList *toRemove);
+    ///Prints sizes of elements in the set
+    void print();
 
 private:
     class SetElement

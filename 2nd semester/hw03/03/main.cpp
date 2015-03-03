@@ -28,7 +28,12 @@ int main()
     set->add(list3);
     set->add(list4);
 
+    set->print();
+
     set->remove(list1);
+
+    std::cout << "\n";
+    set->print();
 
     delete set;
 

@@ -14,3 +14,8 @@ int ListsComparator::compareTo(ListsComparator *list)
         return -1;
     return 0;
 }
+
+int ListsComparator::getSize()
+{
+    return size;
+}

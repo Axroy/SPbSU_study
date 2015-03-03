@@ -1,3 +1,4 @@
+#include <iostream>
 #include "sortedSet.h"
 
 SortedSet::SortedSet()
@@ -60,6 +61,19 @@ void SortedSet::remove(LinkedList *toRemove)
         current->next = removedElement->next;
         delete removedElement;
     }
+}
+
+void SortedSet::print()
+{
+    if (this->isEmpty())
+        return;
+    SetElement *current = head;
+    while (current->next != nullptr)
+    {
+        std::cout << current->list->getSize() << " ";
+        current = current->next;
+    }
+    std::cout << current->list->getSize();
 }
 
 bool SortedSet::isEmpty()
