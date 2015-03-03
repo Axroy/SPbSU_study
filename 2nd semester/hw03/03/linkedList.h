@@ -7,6 +7,9 @@ class LinkedList : public ListsComparator
 public:
     LinkedList();
     ~LinkedList();
+    void add(int value);
+    void remove(int value);
+    void print();
 
 private:
     class ListElement
