@@ -17,7 +17,7 @@ LinkedList::~LinkedList()
         delete removedElement;
         removedElement = current;
     }
-    delete current->next;
+    delete current;
 }
 
 void LinkedList::add(int value)

@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     listsComparator.cpp \
-    linkedList.cpp
+    linkedList.cpp \
+    sortedSet.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -14,4 +15,5 @@ QMAKE_CXXFLAGS += -std=c++11
 
 HEADERS += \
     listsComparator.h \
-    linkedList.h
+    linkedList.h \
+    sortedSet.h
