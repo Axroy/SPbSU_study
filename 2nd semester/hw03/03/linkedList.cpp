@@ -1,10 +1,8 @@
 #include <iostream>
 #include "linkedList.h"
 
-LinkedList::LinkedList()
-{
-    head = new ListElement(0, nullptr);
-}
+LinkedList::LinkedList() : head(new ListElement(0, nullptr))
+{}
 
 LinkedList::~LinkedList()
 {

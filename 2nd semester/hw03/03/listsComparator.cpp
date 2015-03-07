@@ -2,17 +2,15 @@
 
 
 ListsComparator::ListsComparator() : size(0)
-{
+{}
 
-}
-
-int ListsComparator::compareTo(ListsComparator *list)
+comparison ListsComparator::compareTo(ListsComparator *list)
 {
     if (list->size > size)
-        return 1;
+        return bigger;
     if (list->size < size)
-        return -1;
-    return 0;
+        return lesser;
+    return equal;
 }
 
 int ListsComparator::getSize()

@@ -1,12 +1,20 @@
 #pragma once
+
+enum comparison
+{
+    equal,
+    bigger,
+    lesser
+};
+
 ///Class used for comparing lists. Comparison is based on lists' length.
 class ListsComparator
 {
 public:
     ///Default constructor
     ListsComparator();
-    ///Compares current object with list: 1 - list > current, 0 - list = current, -1 - list < current.
-    int compareTo(ListsComparator *list);
+    ///Compares current object with list: bigger - list > current, equal - list = current, lesser - list < current.
+    comparison compareTo(ListsComparator *list);
     ///Returns size of current list
     int getSize();
 

@@ -1,14 +1,12 @@
 #include <iostream>
 #include "sortedSet.h"
 
-SortedSet::SortedSet()
-{
-    head = nullptr;
-}
+SortedSet::SortedSet() : head(nullptr)
+{}
 
 SortedSet::~SortedSet()
 {
-    if (this->isEmpty())
+    if (isEmpty())
         return;
 
     SetElement *current = head;
@@ -26,11 +24,11 @@ SortedSet::~SortedSet()
 void SortedSet::add(LinkedList *newList)
 {
     SetElement *current = head;
-    if (this->isEmpty() || current->list->compareTo(newList) == -1 || current->list->compareTo(newList) == 0)
-        this->addFirst(newList);
+    if (isEmpty() || current->list->compareTo(newList) == lesser || current->list->compareTo(newList) == equal)
+        addFirst(newList);
     else
     {
-        while (current->next != nullptr && current->next->list->compareTo(newList) == 1)
+        while (current->next != nullptr && current->next->list->compareTo(newList) == bigger)
             current = current->next;
 
         SetElement *node = new SetElement(newList, current->next);
@@ -40,19 +38,19 @@ void SortedSet::add(LinkedList *newList)
 
 void SortedSet::remove(LinkedList *toRemove)
 {
-    if (this->isEmpty())
+    if (isEmpty())
         return;
 
     SetElement *current = head;
 
-    if (current->list->compareTo(toRemove) == 0)
+    if (current->list->compareTo(toRemove) == equal)
     {
         head = current->next;
         delete current;
         return;
     }
 
-    while (current->next != nullptr && current->next->list->compareTo(toRemove) != 0)
+    while (current->next != nullptr && current->next->list->compareTo(toRemove) != equal)
         current = current->next;
 
     if (current->next != nullptr)
@@ -65,7 +63,7 @@ void SortedSet::remove(LinkedList *toRemove)
 
 void SortedSet::print()
 {
-    if (this->isEmpty())
+    if (isEmpty())
         return;
     SetElement *current = head;
     while (current->next != nullptr)
