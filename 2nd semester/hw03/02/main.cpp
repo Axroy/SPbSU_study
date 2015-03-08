@@ -20,7 +20,7 @@ int main()
     std::cout << "Original array (randomly generated): \n";
     array->print();
 
-    std::cout << "Would you like to print your spiral to console or to a file?\n";
+    std::cout << "Would you like to print your spiral to the console or to a file?\n";
     std::cout << "(enter 'c' or 'f'): ";
 
     char command = '0';
@@ -29,8 +29,8 @@ int main()
     if (command == 'c')
     {
         std::cout << "\n";
-        Printer *printer = new ConsolePrinter;
-        printer->print(array);
+        ConsolePrinter consolePrinter;
+        consolePrinter.print(array);
     }
     else if (command == 'f')
     {
@@ -38,8 +38,12 @@ int main()
         const int maxLength = 100;
         char fileName[maxLength] = "";
         std::cin >> fileName;
-        Printer *filePrinter = new FilePrinter(fileName);
-        filePrinter->print(array);
+
+        FilePrinter filePrinter;
+        filePrinter.openFile(fileName);
+        filePrinter.print(array);
+        filePrinter.closeFile();
+        std::cout << "Array printed to file '" << fileName << "'!";
     }
     else
     {

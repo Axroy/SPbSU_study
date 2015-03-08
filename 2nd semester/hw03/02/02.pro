@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += main.cpp \
     squareArray.cpp \
     consolePrinter.cpp \
-    filePrinter.cpp
+    filePrinter.cpp \
+    printer.cpp
 
 include(deployment.pri)
 qtcAddDeployment()

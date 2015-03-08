@@ -19,7 +19,7 @@ SquareArray::SquareArray(int arraySize)
     srand(time(0));
     for (int i = 0; i < arraySize; i++)
         for (int j = 0; j < arraySize; j++)
-            array[i][j] = rand()%10;
+            array[i][j] = rand() % 10;
 
     size = arraySize;
 }

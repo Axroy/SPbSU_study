@@ -7,6 +7,9 @@ class Printer
 {
 public:
     ///Prints a square array
-    virtual void print(SquareArray *array) = 0;
+    void print(SquareArray *array);
+
+private:
+    virtual void out(int number) = 0;
 };
 
