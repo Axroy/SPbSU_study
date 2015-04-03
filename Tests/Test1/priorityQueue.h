@@ -7,6 +7,7 @@ public:
     PriorityQueue();
     void enqueue(T value, int priority);
     T dequeue();
+    T getFirstValue();
 
 
 private:
@@ -49,6 +50,12 @@ void PriorityQueue<T>::enqueue(T value, int priority)
         return;
     }
 
+    if (priority > first->priority)
+    {
+        QueueElement *afterEnqueued = first;
+        first = new QueueElement(value, priority, afterEnqueued);
+    }
+
     QueueElement *current = first;
     while (current->next != nullptr && current->next->priority > priority)
         current = current->next;
@@ -59,6 +66,12 @@ void PriorityQueue<T>::enqueue(T value, int priority)
         QueueElement *afterEnqueued = current->next->next;
         current->next = new QueueElement(value, priority, afterEnqueued);
     }
+}
+
+template <typename T>
+T PriorityQueue<T>::getFirstValue()
+{
+    return first->value;
 }
 
 template <typename T>

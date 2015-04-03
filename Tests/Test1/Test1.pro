@@ -18,6 +18,7 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 HEADERS += \
-    priorityQueue.h
+    priorityQueue.h \
+    priorityQueueTests.h
 
 QMAKE_CXXFLAGS += -std=c++11
