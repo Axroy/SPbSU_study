@@ -18,7 +18,7 @@ public:
 private slots:
     void onFirstNumberChanged(int value);
     void onSecondNumberChanged(int value);
-    void onOperationChanged(int value);
+    void onOperationChanged(int index);
 
 private:
     Ui::SimpleCalculator *ui;

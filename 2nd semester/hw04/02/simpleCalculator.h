@@ -16,7 +16,7 @@ public:
     int getResult();
     void changeFirstNumber(int value);
     void changeSecondNumber(int value);
-    void changeOperation(Operation operation);
+    void changeOperation(Operation newOperation);
 
 private:
     int firstNumber;
