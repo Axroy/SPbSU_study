@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>210</width>
+    <width>300</width>
     <height>70</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>210</width>
+    <width>300</width>
     <height>70</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>210</width>
+    <width>300</width>
     <height>70</height>
    </size>
   </property>
@@ -29,10 +29,41 @@
    <item>
     <layout class="QHBoxLayout" name="mainLayout">
      <item>
-      <widget class="QSpinBox" name="firstNumber"/>
+      <widget class="QSpinBox" name="firstNumber">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="minimum">
+        <number>-99999</number>
+       </property>
+       <property name="maximum">
+        <number>99999</number>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QComboBox" name="operation">
+       <property name="minimumSize">
+        <size>
+         <width>34</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>34</width>
+         <height>20</height>
+        </size>
+       </property>
        <property name="editable">
         <bool>false</bool>
        </property>
@@ -65,10 +96,41 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="secondNumber"/>
+      <widget class="QSpinBox" name="secondNumber">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="minimum">
+        <number>-99999</number>
+       </property>
+       <property name="maximum">
+        <number>99999</number>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLineEdit" name="result">
+       <property name="minimumSize">
+        <size>
+         <width>108</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
