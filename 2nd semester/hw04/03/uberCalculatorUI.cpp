@@ -66,7 +66,8 @@ void UberCalculatorUI::onDigitButtonClicked(int digit)
 
 void UberCalculatorUI::onPointButtonClicked()
 {
-    ui->resultField->insert(".");
+    if (ui->resultField->text().right(1) != ".")
+        ui->resultField->insert(".");
 }
 
 void UberCalculatorUI::onOperationButtonClicked(int index)
