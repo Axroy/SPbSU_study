@@ -43,7 +43,11 @@ float UberCalculator::getResult()
         case divide:
             return firstArgument / secondArgument;
             break;
+
+        case none:
+            return 0;
     }
+    return 0;
 }
 
 void UberCalculator::reset()
