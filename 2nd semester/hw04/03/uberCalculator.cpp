@@ -23,3 +23,32 @@ bool UberCalculator::hasNoOperation()
 {
     return operation == none;
 }
+
+float UberCalculator::getResult()
+{
+    switch (operation)
+    {
+        case plus:
+            return firstArgument + secondArgument;
+            break;
+
+        case minus:
+            return firstArgument - secondArgument;
+            break;
+
+        case multiply:
+            return firstArgument * secondArgument;
+            break;
+
+        case divide:
+            return firstArgument / secondArgument;
+            break;
+    }
+}
+
+void UberCalculator::reset()
+{
+    firstArgument = 0;
+    secondArgument = 0;
+    operation = none;
+}

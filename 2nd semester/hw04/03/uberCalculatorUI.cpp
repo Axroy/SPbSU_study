@@ -46,7 +46,10 @@ UberCalculatorUI::UberCalculatorUI(QWidget *parent) :
     connect(ui->multiply, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
     connect(ui->divide, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
 
+
     connect(ui->point, SIGNAL(clicked()), this, SLOT(onPointButtonClicked()));
+    connect(ui->equals, SIGNAL(clicked()), this, SLOT(onEqualsButtonClicked()));
+    connect(ui->reset, SIGNAL(clicked()), this, SLOT(onResetButtonClicked()));
 }
 
 UberCalculatorUI::~UberCalculatorUI()
@@ -74,4 +77,26 @@ void UberCalculatorUI::onOperationButtonClicked(int index)
         calculator.changeOperation((Operation)index);
         ui->resultField->clear();
     }
+    else
+    {
+        calculator.changeSecondArgument(ui->resultField->text().toFloat());
+        calculator.changeFirstArgument(calculator.getResult());
+        calculator.changeOperation((Operation)index);
+        ui->resultField->clear();
+    }
+}
+
+void UberCalculatorUI::onEqualsButtonClicked()
+{
+    if (calculator.hasNoOperation())
+        return;
+    calculator.changeSecondArgument(ui->resultField->text().toFloat());
+    ui->resultField->setText(QString::number(calculator.getResult()));
+    calculator.reset();
+}
+
+void UberCalculatorUI::onResetButtonClicked()
+{
+    ui->resultField->clear();
+    calculator.reset();
 }

@@ -21,6 +21,8 @@ private slots:
     void onDigitButtonClicked(int digit);
     void onPointButtonClicked();
     void onOperationButtonClicked(int index);
+    void onEqualsButtonClicked();
+    void onResetButtonClicked();
 
 private:
     Ui::UberCalculatorUI *ui;

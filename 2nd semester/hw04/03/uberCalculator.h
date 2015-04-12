@@ -17,6 +17,8 @@ public:
     void changeSecondArgument(float value);
     void changeOperation(Operation newOperation);
     bool hasNoOperation();
+    float getResult();
+    void reset();
 
 private:
     float firstArgument;
