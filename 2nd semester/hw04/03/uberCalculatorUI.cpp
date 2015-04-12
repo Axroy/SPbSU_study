@@ -10,41 +10,25 @@ UberCalculatorUI::UberCalculatorUI(QWidget *parent) :
     digitButtonMapper = new QSignalMapper(this);
     connect(digitButtonMapper, SIGNAL(mapped(int)), this, SLOT(onDigitButtonClicked(int)));
 
-    digitButtonMapper->setMapping(ui->number0, 0);
-    digitButtonMapper->setMapping(ui->number1, 1);
-    digitButtonMapper->setMapping(ui->number2, 2);
-    digitButtonMapper->setMapping(ui->number3, 3);
-    digitButtonMapper->setMapping(ui->number4, 4);
-    digitButtonMapper->setMapping(ui->number5, 5);
-    digitButtonMapper->setMapping(ui->number6, 6);
-    digitButtonMapper->setMapping(ui->number7, 7);
-    digitButtonMapper->setMapping(ui->number8, 8);
-    digitButtonMapper->setMapping(ui->number9, 9);
-
-    connect(ui->number0, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number1, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number2, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number3, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number4, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number5, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number6, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number7, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number8, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
-    connect(ui->number9, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
+    connectButtonToMapper(digitButtonMapper, ui->number0, 0);
+    connectButtonToMapper(digitButtonMapper, ui->number1, 1);
+    connectButtonToMapper(digitButtonMapper, ui->number2, 2);
+    connectButtonToMapper(digitButtonMapper, ui->number3, 3);
+    connectButtonToMapper(digitButtonMapper, ui->number4, 4);
+    connectButtonToMapper(digitButtonMapper, ui->number5, 5);
+    connectButtonToMapper(digitButtonMapper, ui->number6, 6);
+    connectButtonToMapper(digitButtonMapper, ui->number7, 7);
+    connectButtonToMapper(digitButtonMapper, ui->number8, 8);
+    connectButtonToMapper(digitButtonMapper, ui->number9, 9);
 
 
     operationButtonMapper = new QSignalMapper(this);
     connect(operationButtonMapper, SIGNAL(mapped(int)), this, SLOT(onOperationButtonClicked(int)));
 
-    operationButtonMapper->setMapping(ui->plus, (int)plus);
-    operationButtonMapper->setMapping(ui->minus, (int)minus);
-    operationButtonMapper->setMapping(ui->multiply, (int)multiply);
-    operationButtonMapper->setMapping(ui->divide, (int)divide);
-
-    connect(ui->plus, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
-    connect(ui->minus, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
-    connect(ui->multiply, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
-    connect(ui->divide, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
+    connectButtonToMapper(operationButtonMapper, ui->plus, (int)plus);
+    connectButtonToMapper(operationButtonMapper, ui->minus, (int)minus);
+    connectButtonToMapper(operationButtonMapper, ui->multiply, (int)multiply);
+    connectButtonToMapper(operationButtonMapper, ui->divide, (int)divide);
 
 
     connect(ui->point, SIGNAL(clicked()), this, SLOT(onPointButtonClicked()));
@@ -57,6 +41,12 @@ UberCalculatorUI::~UberCalculatorUI()
     delete digitButtonMapper;
     delete operationButtonMapper;
     delete ui;
+}
+
+void UberCalculatorUI::connectButtonToMapper(QSignalMapper *mapper, QPushButton *button, int value)
+{
+    connect(button, SIGNAL(clicked()), mapper, SLOT(map()));
+    mapper->setMapping(button, value);
 }
 
 void UberCalculatorUI::onDigitButtonClicked(int digit)

@@ -4,6 +4,7 @@
 #include <QSignalMapper>
 
 #include "uberCalculator.h"
+#include <QPushButton>
 
 namespace Ui {
 class UberCalculatorUI;
@@ -29,4 +30,6 @@ private:
     QSignalMapper *digitButtonMapper;
     QSignalMapper *operationButtonMapper;
     UberCalculator calculator;
+
+    void connectButtonToMapper(QSignalMapper *mapper, QPushButton *button, int value);
 };
