@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        uberCalculatorUI.cpp
+        uberCalculatorUI.cpp \
+    uberCalculator.cpp
 
-HEADERS  += uberCalculatorUI.h
+HEADERS  += uberCalculatorUI.h \
+    uberCalculator.h
 
 FORMS    += uberCalculatorUI.ui

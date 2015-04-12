@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <QSignalMapper>
 
+#include "uberCalculator.h"
+
 namespace Ui {
 class UberCalculatorUI;
 }
@@ -17,8 +19,12 @@ public:
 
 private slots:
     void onDigitButtonClicked(int digit);
+    void onPointButtonClicked();
+    void onOperationButtonClicked(int index);
 
 private:
     Ui::UberCalculatorUI *ui;
     QSignalMapper *digitButtonMapper;
+    QSignalMapper *operationButtonMapper;
+    UberCalculator calculator;
 };

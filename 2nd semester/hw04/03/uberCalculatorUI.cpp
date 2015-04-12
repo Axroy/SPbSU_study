@@ -31,15 +31,47 @@ UberCalculatorUI::UberCalculatorUI(QWidget *parent) :
     connect(ui->number7, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
     connect(ui->number8, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
     connect(ui->number9, SIGNAL(clicked()), digitButtonMapper, SLOT(map()));
+
+
+    operationButtonMapper = new QSignalMapper(this);
+    connect(operationButtonMapper, SIGNAL(mapped(int)), this, SLOT(onOperationButtonClicked(int)));
+
+    operationButtonMapper->setMapping(ui->plus, (int)plus);
+    operationButtonMapper->setMapping(ui->minus, (int)minus);
+    operationButtonMapper->setMapping(ui->multiply, (int)multiply);
+    operationButtonMapper->setMapping(ui->divide, (int)divide);
+
+    connect(ui->plus, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
+    connect(ui->minus, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
+    connect(ui->multiply, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
+    connect(ui->divide, SIGNAL(clicked()), operationButtonMapper, SLOT(map()));
+
+    connect(ui->point, SIGNAL(clicked()), this, SLOT(onPointButtonClicked()));
 }
 
 UberCalculatorUI::~UberCalculatorUI()
 {
     delete digitButtonMapper;
+    delete operationButtonMapper;
     delete ui;
 }
 
 void UberCalculatorUI::onDigitButtonClicked(int digit)
 {
-    ui->resultField->setText(QString::number(digit));
+    ui->resultField->insert(QString::number(digit));
+}
+
+void UberCalculatorUI::onPointButtonClicked()
+{
+    ui->resultField->insert(".");
+}
+
+void UberCalculatorUI::onOperationButtonClicked(int index)
+{
+    if (calculator.hasNoOperation())
+    {
+        calculator.changeFirstArgument(ui->resultField->text().toFloat());
+        calculator.changeOperation((Operation)index);
+        ui->resultField->clear();
+    }
 }
