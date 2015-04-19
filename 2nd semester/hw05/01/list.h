@@ -12,6 +12,8 @@ public:
     void remove(QString value);
     void print();
     bool isEmpty();
+    bool hasValue(QString value);
+    int numberOfElements();
 
 private:
     class ListElement
@@ -24,4 +26,5 @@ private:
     };
 
     ListElement *head;
+    int size;
 };

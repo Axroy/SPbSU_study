@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     table->removeValue("2222");
     table->printTable();
     std::cout << "\n" << table->numberOfEmptyCells();
+    std::cout << "\n\n";
+    table->showStats();
     delete table;
 
     return a.exec();

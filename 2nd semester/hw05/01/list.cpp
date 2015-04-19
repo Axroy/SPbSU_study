@@ -1,9 +1,8 @@
 #include <iostream>
 #include "list.h"
 
-List::List()
+List::List() : head(new ListElement(0, nullptr)), size(0)
 {
-    head = new ListElement(0, nullptr);
 }
 
 List::~List()
@@ -24,11 +23,12 @@ void List::add(QString value)
 {
     ListElement *node = new ListElement(value, head->next);
     head->next = node;
+    size++;
 }
 
 void List::remove(QString value)
 {
-    if (head->next == nullptr)
+    if (isEmpty())
         return;
 
     ListElement *current = head->next;
@@ -37,6 +37,7 @@ void List::remove(QString value)
     {
         head->next = current->next;
         delete current;
+        size--;
         return;
     }
 
@@ -48,12 +49,13 @@ void List::remove(QString value)
         ListElement *removedElement = current->next;
         current->next = removedElement->next;
         delete removedElement;
+        size--;
     }
 }
 
 void List::print()
 {
-    if (head->next == nullptr)
+    if (isEmpty())
         return;
 
     ListElement *current = head->next;
@@ -67,7 +69,25 @@ void List::print()
 
 bool List::isEmpty()
 {
-    return head->next == nullptr;
+    return size == 0;
+}
+
+bool List::hasValue(QString value)
+{
+    if (isEmpty())
+        return 0;
+    ListElement *current = head->next;
+    while (current->next != nullptr)
+    {
+        if (current->data == value)
+            return 1;
+    }
+    return 0;
+}
+
+int List::numberOfElements()
+{
+    return size;
 }
 
 
