@@ -62,7 +62,12 @@ void List::print()
         std::cout << current->data.toStdString() << " ";
         current = current->next;
     }
-    std::cout << current->data.toStdString();
+    std::cout << current->data.toStdString() << " ";
+}
+
+bool List::isEmpty()
+{
+    return head->next == nullptr;
 }
 
 

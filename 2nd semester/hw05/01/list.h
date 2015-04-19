@@ -11,6 +11,7 @@ public:
     void add(QString value);
     void remove(QString value);
     void print();
+    bool isEmpty();
 
 private:
     class ListElement

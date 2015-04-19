@@ -1,15 +1,16 @@
+#include <iostream>
 #include "hashTable.h"
 
 HashTable::HashTable() : size(100), table(new List*[size])
 {
     for (int i = 0; i < 100; i++)
-        table[i] = new List;
+        table[i] = new List();
 }
 
 HashTable::HashTable(int size) : size(size), table(new List*[size])
 {
     for (int i = 0; i < 100; i++)
-        table[i] = new List;
+        table[i] = new List();
 }
 
 HashTable::~HashTable()
@@ -19,26 +20,44 @@ HashTable::~HashTable()
     delete[] table;
 }
 
-/*void HashTable::addValue(QString string)
+void HashTable::addValue(QString value)
 {
-    table[hashFunction(string)] << string;
+    table[hashFunction(value)]->add(value);
+}
+
+void HashTable::removeValue(QString value)
+{
+    table[hashFunction(value)]->remove(value);
+}
+
+void HashTable::printTable()
+{
+    for (int i = 0; i < size; i++)
+        table[i]->print();
+}
+
+int HashTable::numberOfEmptyCells()
+{
+    int number = 0;
+    for (int i = 0; i < size; i++)
+        if (table[i]->isEmpty())
+            number++;
+
+    return number;
 }
 
 int HashTable::hashFunction(QString string)
 {
     int hash = 0;
-    int i = 0;
     char symbol = '0';
 
-    while (symbol != '\0')
+    for (int i = 0; i < string.size(); i++)
     {
-        symbol = string[i];
-        //symbol = getSymbol(line, i);
+        symbol = string.at(i).toLatin1();
         hash += pow(3, i) * symbol;
         hash = hash % size;
-        i++;
     }
 
     return abs(hash);
-}*/
+}
 

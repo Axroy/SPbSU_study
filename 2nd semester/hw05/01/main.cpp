@@ -1,23 +1,23 @@
 #include <QCoreApplication>
 #include <iostream>
 #include "hashTable.h"
-#include "list.h"
+#include "HashTableTests.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    /*HashTable *table = new HashTable;
-    delete table;*/
+    HashTableTests test;
+    QTest::qExec(&test);
 
-    List *list = new List;
-    list->add("14251345");
-    list->add("slghs");
-    list->print();
-    list->remove("14251345");
+    /*HashTable *table = new HashTable();
+    table->addValue("1111");
+    table->addValue("2222");
+    table->printTable();
     std::cout << "\n";
-    list->print();
-    delete list;
+    table->removeValue("2222");
+    table->printTable();
+    delete table;*/
 
     return a.exec();
 }

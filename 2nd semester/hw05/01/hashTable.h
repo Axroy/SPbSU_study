@@ -11,6 +11,9 @@ public:
     HashTable(int size);
     ~HashTable();
     void addValue(QString value);
+    void removeValue(QString value);
+    void printTable();
+    int numberOfEmptyCells();
 
 private:
     int size;
