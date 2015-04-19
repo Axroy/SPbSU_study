@@ -9,7 +9,7 @@ HashTable::HashTable() : size(100), table(new List*[size])
 
 HashTable::HashTable(int size) : size(size), table(new List*[size])
 {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < size; i++)
         table[i] = new List();
 }
 

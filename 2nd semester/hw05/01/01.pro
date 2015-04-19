@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-QT       += testlib
+
 QT       -= gui
 
 TARGET = 01
@@ -21,7 +21,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     hashTable.h \
-    list.h \
-    HashTableTests.h
+    list.h
 
 QMAKE_CXXFLAGS += -std=c++11
