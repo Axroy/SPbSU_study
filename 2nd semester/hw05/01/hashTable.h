@@ -3,6 +3,7 @@
 #include <QString>
 #include <cmath>
 #include "list.h"
+#include "hashFunctions.h"
 
 class HashTable
 {
@@ -21,10 +22,10 @@ public:
     int maxChainLength();
     float averageChainLength();
     void showStats();
+    void changeHashFunction(functions newFunction);
 
 private:
     int size;
     List **table;
-
-    int hashFunction(QString string);
+    HashFunctions *hash;
 };

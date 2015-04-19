@@ -16,10 +16,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     hashTable.cpp \
-    list.cpp
+    list.cpp \
+    hashFunctions.cpp
 
 HEADERS += \
     hashTable.h \
-    list.h
+    list.h \
+    hashFunctions.h
 
 QMAKE_CXXFLAGS += -std=c++11
