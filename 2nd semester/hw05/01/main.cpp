@@ -1,22 +1,101 @@
 #include <QCoreApplication>
 #include <iostream>
+#include <string>
 #include "hashTable.h"
+//#include "HashTableTests.h"
+
+enum Command
+{
+    quit,
+    add,
+    removeValue,
+    find,
+    stats,
+    hash,
+    print,
+};
+
+void printInfo()
+{
+    std::cout << "\n\n";
+    std::cout << "Accepted commands:\n";
+    std::cout << "0 - quit\n";
+    std::cout << "1 - add value to hash table\n";
+    std::cout << "2 - remove value from hash table\n";
+    std::cout << "3 - find value in hash table\n";
+    std::cout << "4 - show statistics\n";
+    std::cout << "5 - change hash function\n";
+    std::cout << "6 - print table\n";
+}
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    HashTable *table = new HashTable(5);
-    table->addValue("1111");
-    table->addValue("2222");
-    table->printTable();
-    std::cout << "\n";
-    table->removeValue("2222");
-    table->printTable();
-    std::cout << "\n" << table->numberOfEmptyCells();
-    std::cout << "\n\n";
-    table->showStats();
-    delete table;
+    //HashTableTests test;
+    //QTest::qExec(&test);
 
-    return a.exec();
+    std::cout << "Hash table for strings\n";
+
+    std::cout << "Enter size for the table: ";
+    int size = 0;
+    std::cin >> size;
+    HashTable *table = new HashTable(size);
+
+    int cmd = -1;
+    std::string input = "";
+
+    while (cmd != quit)
+    {
+        printInfo();
+        std::cout << "Enter command: ";
+        std::cin >> cmd;
+
+        switch (cmd)
+        {
+            case add:
+                std::cout << "Enter value to be added: ";
+                std::cin >> input;
+                table->addValue(QString::fromStdString(input));
+                break;
+
+            case removeValue:
+                std::cout << "Enter value to be removed: ";
+                std::cin >> input;
+                table->removeValue(QString::fromStdString(input));
+                break;
+
+            case find:
+                std::cout << "Enter value to be found: ";
+                std::cin >> input;
+                std::cout << "Position in the table: " << table->findValue(QString::fromStdString(input));
+                break;
+
+            case stats:
+                table->showStats();
+                break;
+
+            case hash:
+            {
+                int hashFunction = 0;
+                std::cout << "Available hash functions:\n";
+                std::cout << "0 - polynomial\n";
+                std::cout << "1 - sum of symbols\n";
+                std::cout << "Which do you want?:";
+                std::cin >> hashFunction;
+                table->changeHashFunction((Functions)hashFunction);
+                break;
+            }
+
+            case print:
+                table->printTable();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
+    return 0;
 }

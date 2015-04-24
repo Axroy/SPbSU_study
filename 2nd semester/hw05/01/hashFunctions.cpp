@@ -16,14 +16,14 @@ int HashFunctions::generateHash(QString string)
             return polynomialHash(string);
             break;
 
-        case sumOfLetters:
+        case symbolsSum:
             return sumHash(string);
             break;
     }
     return -1;
 }
 
-void HashFunctions::changeFunction(functions newFunction)
+void HashFunctions::changeFunction(Functions newFunction)
 {
     current = newFunction;
 }

@@ -48,7 +48,8 @@ int HashTable::numberOfFilledCells()
 {
     int number = 0;
     for (int i = 0; i < size; i++)
-        number += table[i]->numberOfElements();
+        if (!table[i]->isEmpty())
+            number++;
 
     return number;
 }
@@ -120,7 +121,7 @@ void HashTable::showStats()
     std::cout << "\n---------------------";
 }
 
-void HashTable::changeHashFunction(functions newFunction)
+void HashTable::changeHashFunction(Functions newFunction)
 {
     hash->changeFunction(newFunction);
 }

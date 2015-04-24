@@ -2,10 +2,10 @@
 
 #include <QString>
 
-enum functions
+enum Functions
 {
     polynomial,
-    sumOfLetters
+    symbolsSum
 };
 
 class HashFunctions
@@ -15,10 +15,10 @@ public:
     HashFunctions(int size);
 
     int generateHash(QString string);
-    void changeFunction(functions newFunction);
+    void changeFunction(Functions newFunction);
 
 private:
-    functions current;
+    Functions current;
     int tableSize;
 
     int polynomialHash(QString string);

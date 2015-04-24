@@ -76,12 +76,17 @@ bool List::hasValue(QString value)
 {
     if (isEmpty())
         return 0;
+
     ListElement *current = head->next;
     while (current->next != nullptr)
     {
         if (current->data == value)
             return 1;
+        current = current->next;
     }
+
+    if (current->data == value)
+        return 1;
     return 0;
 }
 

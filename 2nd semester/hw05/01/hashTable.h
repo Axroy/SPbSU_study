@@ -22,7 +22,7 @@ public:
     int maxChainLength();
     float averageChainLength();
     void showStats();
-    void changeHashFunction(functions newFunction);
+    void changeHashFunction(Functions newFunction);
 
 private:
     int size;
