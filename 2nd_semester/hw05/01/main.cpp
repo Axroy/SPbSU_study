@@ -1,8 +1,10 @@
 #include <QCoreApplication>
 #include <iostream>
 #include <string>
+
 #include "hashTable.h"
 #include "hashTableTests.h"
+#include "listTests.h"
 
 enum Command
 {
@@ -32,8 +34,12 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    HashTableTests test;
-    QTest::qExec(&test);
+    HashTableTests tableTests;
+    QTest::qExec(&tableTests);
+
+    std::cout << "\n";
+    ListTests listTests;
+    QTest::qExec(&listTests);
 
     std::cout << "Hash table for strings\n";
 

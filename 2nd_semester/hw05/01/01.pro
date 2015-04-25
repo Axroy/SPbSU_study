@@ -24,6 +24,7 @@ HEADERS += \
     hashTable.h \
     list.h \
     hashFunctions.h \
-    hashTableTests.h
+    hashTableTests.h \
+    listTests.h
 
 QMAKE_CXXFLAGS += -std=c++11
