@@ -1,10 +1,11 @@
 #include <iostream>
-#include "linkedList.h"
+#include "list.h"
 
-LinkedList::LinkedList() : head(new ListElement(0, nullptr))
-{}
+List::List() : head(new ListElement("0", nullptr)), size(0)
+{
+}
 
-LinkedList::~LinkedList()
+List::~List()
 {
     ListElement *current = head;
     ListElement *removedElement = head;
@@ -15,19 +16,19 @@ LinkedList::~LinkedList()
         delete removedElement;
         removedElement = current;
     }
-    delete current;
+    delete current->next;
 }
 
-void LinkedList::add(int value)
+void List::add(QString value)
 {
     ListElement *node = new ListElement(value, head->next);
     head->next = node;
     size++;
 }
 
-void LinkedList::remove(int value)
+void List::remove(QString value)
 {
-    if (head->next == nullptr)
+    if (isEmpty())
         return;
 
     ListElement *current = head->next;
@@ -48,26 +49,55 @@ void LinkedList::remove(int value)
         ListElement *removedElement = current->next;
         current->next = removedElement->next;
         delete removedElement;
+        size--;
     }
-    size--;
 }
 
-void LinkedList::print()
+void List::print()
 {
-    if (head->next == nullptr)
+    if (isEmpty())
         return;
 
     ListElement *current = head->next;
     while (current->next != nullptr)
     {
-        std::cout << current->data << " ";
+        std::cout << current->data.toStdString() << " ";
         current = current->next;
     }
-    std::cout << current->data;
+    std::cout << current->data.toStdString() << " ";
+}
+
+bool List::isEmpty()
+{
+    return size == 0;
+}
+
+bool List::hasValue(QString value)
+{
+    if (isEmpty())
+        return 0;
+
+    ListElement *current = head->next;
+    while (current->next != nullptr)
+    {
+        if (current->data == value)
+            return 1;
+        current = current->next;
+    }
+
+    if (current->data == value)
+        return 1;
+    return 0;
+}
+
+int List::numberOfElements()
+{
+    return size;
 }
 
 
-LinkedList::ListElement::ListElement(int value, LinkedList::ListElement *nextElement)
+
+List::ListElement::ListElement(QString value, List::ListElement *nextElement)
 {
     data = value;
     next = nextElement;

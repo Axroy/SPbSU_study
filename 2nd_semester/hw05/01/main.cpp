@@ -2,14 +2,14 @@
 #include <iostream>
 #include <string>
 #include "hashTable.h"
-//#include "HashTableTests.h"
+#include "hashTableTests.h"
 
 enum Command
 {
     quit,
     add,
     removeValue,
-    find,
+    findValue,
     stats,
     hash,
     print,
@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    //HashTableTests test;
-    //QTest::qExec(&test);
+    HashTableTests test;
+    QTest::qExec(&test);
 
     std::cout << "Hash table for strings\n";
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
                 table->removeValue(QString::fromStdString(input));
                 break;
 
-            case find:
+            case findValue:
                 std::cout << "Enter value to be found: ";
                 std::cin >> input;
                 std::cout << "Position in the table: " << table->findValue(QString::fromStdString(input));

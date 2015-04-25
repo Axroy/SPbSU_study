@@ -6,6 +6,7 @@
 
 QT       += core
 QT       -= gui
+QT       += testlib
 
 TARGET = 01
 CONFIG   += console
@@ -22,6 +23,7 @@ SOURCES += main.cpp \
 HEADERS += \
     hashTable.h \
     list.h \
-    hashFunctions.h
+    hashFunctions.h \
+    hashTableTests.h
 
 QMAKE_CXXFLAGS += -std=c++11
