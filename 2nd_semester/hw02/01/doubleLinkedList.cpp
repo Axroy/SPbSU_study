@@ -69,6 +69,22 @@ void DoubleLinkedList::print()
     std::cout << current->data;
 }
 
+int DoubleLinkedList::elementsNumber()
+{
+    if (head->next == nullptr)
+        return 0;
+
+    int result = 0;
+    ListElement *current = head->next;
+    while (current->next != nullptr)
+    {
+        result++;
+        current = current->next;
+    }
+    result++;
+    return result;
+}
+
 
 DoubleLinkedList::ListElement::ListElement(int value, DoubleLinkedList::ListElement *nextElement, DoubleLinkedList::ListElement *previousElement)
 {

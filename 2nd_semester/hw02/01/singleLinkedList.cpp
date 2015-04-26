@@ -66,6 +66,21 @@ void SingleLinkedList::print()
     std::cout << current->data;
 }
 
+int SingleLinkedList::elementsNumber()
+{
+    if (head->next == nullptr)
+        return 0;
+
+    int result = 0;
+    ListElement *current = head->next;
+    while (current->next != nullptr)
+    {
+        result++;
+        current = current->next;
+    }
+    result++;
+    return result;
+}
 
 
 SingleLinkedList::ListElement::ListElement(int value, SingleLinkedList::ListElement *nextElement)
