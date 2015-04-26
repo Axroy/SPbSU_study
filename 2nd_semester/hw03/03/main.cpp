@@ -1,10 +1,14 @@
 #include <iostream>
 #include "linkedList.h"
 #include "sortedSet.h"
+#include "sortedSetTests.h"
 
 int main()
 {
-    LinkedList *list1 = new LinkedList;
+    SortedSetTests test;
+    QTest::qExec(&test);
+
+    /*LinkedList *list1 = new LinkedList;
     LinkedList *list2 = new LinkedList;
     LinkedList *list3 = new LinkedList;
     LinkedList *list4 = new LinkedList;
@@ -40,7 +44,7 @@ int main()
     delete list1;
     delete list2;
     delete list3;
-    delete list4;
+    delete list4;*/
 
     return 0;
 }
