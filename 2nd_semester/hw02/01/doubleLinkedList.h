@@ -10,7 +10,7 @@ public:
     void add(int value);
     void remove(int value);
     void print();
-    int elementsNumber();
+    int getSize();
 
 private:
     class ListElement

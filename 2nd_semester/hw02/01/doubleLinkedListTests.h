@@ -23,7 +23,7 @@ private slots:
 
    void emptyTest()
    {
-       QVERIFY(list->elementsNumber() == 0);
+       QVERIFY(list->getSize() == 0);
    }
 
    void addingTest()
@@ -31,7 +31,7 @@ private slots:
        list->add(1);
        list->add(2);
        list->add(3);
-       QVERIFY(list->elementsNumber() == 3);
+       QVERIFY(list->getSize() == 3);
    }
 
    void removingTest()
@@ -41,7 +41,7 @@ private slots:
        list->add(3);
        list->remove(1);
        list->remove(3);
-       QVERIFY(list->elementsNumber() == 1);
+       QVERIFY(list->getSize() == 1);
    }
 
    void removingInexsistentValueTest()
@@ -50,13 +50,13 @@ private slots:
        list->add(2);
        list->add(3);
        list->remove(4);
-       QVERIFY(list->elementsNumber() == 3);
+       QVERIFY(list->getSize() == 3);
    }
 
    void emptyRemovingTest()
    {
        list->remove(4);
-       QVERIFY(list->elementsNumber() == 0);
+       QVERIFY(list->getSize() == 0);
    }
 
 private:
