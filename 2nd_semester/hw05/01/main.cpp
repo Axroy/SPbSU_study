@@ -5,6 +5,7 @@
 #include "hashTable.h"
 #include "hashTableTests.h"
 #include "listTests.h"
+#include "hashFunctionsTests.h"
 
 enum Command
 {
@@ -41,7 +42,11 @@ int main(int argc, char *argv[])
     ListTests listTests;
     QTest::qExec(&listTests);
 
-    std::cout << "Hash table for strings\n";
+    std::cout << "\n";
+    hashFunctionsTests hashTests;
+    QTest::qExec(&hashTests);
+
+    std::cout << "\n\nHash table for strings\n";
 
     std::cout << "Enter size for the table: ";
     int size = 0;
@@ -60,31 +65,32 @@ int main(int argc, char *argv[])
         switch (cmd)
         {
             case add:
-                std::cout << "Enter value to be added: ";
+                std::cout << "\nEnter value to be added: ";
                 std::cin >> input;
                 table->addValue(QString::fromStdString(input));
                 break;
 
             case removeValue:
-                std::cout << "Enter value to be removed: ";
+                std::cout << "\nEnter value to be removed: ";
                 std::cin >> input;
                 table->removeValue(QString::fromStdString(input));
                 break;
 
             case findValue:
-                std::cout << "Enter value to be found: ";
+                std::cout << "\nEnter value to be found: ";
                 std::cin >> input;
                 std::cout << "Position in the table: " << table->findValue(QString::fromStdString(input));
                 break;
 
             case stats:
+                std::cout << "\n";
                 table->showStats();
                 break;
 
             case hash:
             {
                 int hashFunction = 0;
-                std::cout << "Available hash functions:\n";
+                std::cout << "\nAvailable hash functions:\n";
                 std::cout << "0 - polynomial\n";
                 std::cout << "1 - sum of symbols\n";
                 std::cout << "Which do you want?:";
@@ -94,6 +100,7 @@ int main(int argc, char *argv[])
             }
 
             case print:
+                std::cout << "\n";
                 table->printTable();
                 break;
 

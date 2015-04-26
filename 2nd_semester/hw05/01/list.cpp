@@ -56,7 +56,10 @@ void List::remove(QString value)
 void List::print()
 {
     if (isEmpty())
+    {
+        std::cout << "nan, ";
         return;
+    }
 
     ListElement *current = head->next;
     while (current->next != nullptr)
@@ -64,7 +67,7 @@ void List::print()
         std::cout << current->data.toStdString() << " ";
         current = current->next;
     }
-    std::cout << current->data.toStdString() << " ";
+    std::cout << current->data.toStdString() << ", ";
 }
 
 bool List::isEmpty()
