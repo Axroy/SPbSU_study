@@ -1,16 +1,18 @@
+QT       += core
+QT       -= gui
+QT       += testlib
+
+TARGET = 02
+CONFIG   += console
+CONFIG   -= app_bundle
+
 TEMPLATE = app
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
 
 SOURCES += main.cpp \
     pointerStack.cpp \
     arrayStack.cpp \
     calculator.cpp \
     postfixConverter.cpp
-
-include(deployment.pri)
-qtcAddDeployment()
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -19,4 +21,5 @@ HEADERS += \
     pointerStack.h \
     arrayStack.h \
     calculator.h \
-    postfixConverter.h
+    postfixConverter.h \
+    calculatorTests.h

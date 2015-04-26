@@ -1,12 +1,14 @@
 #include "calculator.h"
 
+const int maxStringSize = 100;
+
 Calculator::Calculator()
 {
 }
 
 int Calculator::count(char *string)
 {
-    char postfixString[] = "";
+    char postfixString[maxStringSize] = "";
     convertToPostfix(string, postfixString);
     return postfixCount(postfixString);
 }
@@ -82,7 +84,7 @@ void Calculator::convertToPostfix(char *string, char *resultingString)
     PostfixConverter *converter = new PostfixConverter;
     int i = 0;
     int resStrPosition = 0;
-    while (string[i] != '\n')
+    while (string[i] != '\0' && string[i] != '\n')
     {
         switch (string[i])
         {
