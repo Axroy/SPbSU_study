@@ -31,10 +31,8 @@ void printInfo()
     std::cout << "6 - print table\n";
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    QCoreApplication a(argc, argv);
-
     HashTableTests tableTests;
     QTest::qExec(&tableTests);
 
@@ -108,7 +106,6 @@ int main(int argc, char *argv[])
                 break;
         }
     }
-
 
     return 0;
 }

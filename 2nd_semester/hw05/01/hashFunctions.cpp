@@ -30,7 +30,7 @@ void HashFunctions::changeFunction(Functions newFunction)
 
 int HashFunctions::polynomialHash(QString string)
 {
-    int hash = 0;
+    long int hash = 0;
     char symbol = '0';
 
     for (int i = 0; i < string.length(); i++)
@@ -39,12 +39,12 @@ int HashFunctions::polynomialHash(QString string)
         hash += pow(3, i) * symbol;
         hash = hash % tableSize;
     }
-    return hash;
+    return abs(hash);
 }
 
 int HashFunctions::sumHash(QString string)
 {
-    int hash = 0;
+    long int hash = 0;
     char symbol = '0';
 
     for (int i = 0; i < string.length(); i++)
@@ -53,5 +53,5 @@ int HashFunctions::sumHash(QString string)
         hash += symbol;
         hash = hash % tableSize;
     }
-    return hash;
+    return abs(hash);
 }
