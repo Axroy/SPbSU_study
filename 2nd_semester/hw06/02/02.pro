@@ -19,3 +19,5 @@ SOURCES += main.cpp
 
 HEADERS += \
     set.h
+
+QMAKE_CXXFLAGS += -std=c++11

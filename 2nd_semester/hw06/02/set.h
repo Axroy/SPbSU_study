@@ -9,8 +9,8 @@ public:
     void add(const T &value);
     void remove(const T &value);
     bool exists(const T &value);
-    Set intersection(Set *set);
-    Set association(Set *set);
+    Set<T> *intersection(Set<T> *set2);
+    Set<T> *association(Set<T> *set2);
 
 private:
     class SetElement
@@ -89,38 +89,49 @@ bool Set<T>::exists(const T &value)
 }
 
 template <typename T>
-Set Set<T>::intersection(Set *set)
+Set<T> *Set<T>::intersection(Set<T> *set2)
 {
-    Set *result = new Set;
-    if (isEmpty() || set->isEmpty())
+    Set<T> *result = new Set<T>;
+    if (isEmpty() || set2->isEmpty())
         return result;
 
     SetElement *current = first;
     while (current->next != nullptr)
-        if (set->exists(current->value))
+    {
+        if (set2->exists(current->value))
             result->add(current->value);
-    if (set->exists(current->value))
+        current = current->next;
+    }
+    if (set2->exists(current->value))
         result->add(current->value);
     return result;
 }
 
 template <typename T>
-Set Set<T>::association(Set *set)
+Set<T> *Set<T>::association(Set<T> *set2)
 {
-    Set *result = new Set;
+    Set<T> *result = new Set<T>;
     if (!isEmpty())
     {
         SetElement *current = first;
         while (current->next != nullptr)
+        {
             result->add(current->value);
+            current = current->next;
+        }
         result->add(current->value);
     }
-    if (!set->isEmpty())
+    if (!set2->isEmpty())
     {
-        SetElement *current = set->first;
+        SetElement *current = set2->first;
         while (current->next != nullptr)
+        {
+            if (!result->exists(current->value))
+                result->add(current->value);
+            current = current->next;
+        }
+        if (!result->exists(current->value))
             result->add(current->value);
-        result->add(current->value);
     }
     return result;
 }
