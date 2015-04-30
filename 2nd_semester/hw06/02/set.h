@@ -1,17 +1,26 @@
 #pragma once
 
 /// Template class for structure 'set'.
-///
 template <typename T>
 class Set
 {
 public:
     Set();
     ~Set();
+
+    ///Adds a value to the set, adds nothing if the value already exsists.
     void add(const T &value);
+
+    ///Removes a value from the set.
     void remove(const T &value);
+
+    ///Returns true if a value is in the set.
     bool exists(const T &value);
+
+    ///Returns a set containing elements which are in both set and set2.
     Set<T> *intersection(Set<T> *set2);
+
+    ///Returns a set containing elements which are either in set or in set2.
     Set<T> *association(Set<T> *set2);
 
 private:
