@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += testlib
 QT       -= gui
 
 TARGET = 02
@@ -18,6 +18,7 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 HEADERS += \
-    set.h
+    set.h \
+    setTests.h
 
 QMAKE_CXXFLAGS += -std=c++11

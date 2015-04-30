@@ -66,11 +66,24 @@ void Set<T>::remove(const T &value)
     if (isEmpty())
         return;
 
-    SetElement *current = first;
-    while (current->next != nullptr && current->value != value)
-        current = current->next;
+    SetElement *current = first->next;
+
     if (current->value == value)
+    {
+        first->next = current->next;
         delete current;
+        return;
+    }
+
+    while (current->next != nullptr && current->next->value != value)
+        current = current->next;
+
+    if (current->next != nullptr)
+    {
+        SetElement *toBeRemoved = current->next;
+        current->next = toBeRemoved->next;
+        delete toBeRemoved;
+    }
 }
 
 template <typename T>
