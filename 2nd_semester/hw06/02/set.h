@@ -1,5 +1,7 @@
 #pragma once
 
+/// Template class for structure 'set'.
+///
 template <typename T>
 class Set
 {
@@ -56,6 +58,8 @@ Set<T>::~Set()
 template <typename T>
 void Set<T>::add(const T &value)
 {
+    if (exists(value))
+        return;
     SetElement *newElement = new SetElement(value, first);
     first = newElement;
 }

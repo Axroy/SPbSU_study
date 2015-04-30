@@ -25,6 +25,7 @@ private slots:
    {
        set->add(1);
        set->add(-20);
+       set->add(-20);
        QVERIFY(set->exists(1) && set->exists(-20));
    }
 
