@@ -23,6 +23,9 @@ public:
     ///Returns a set containing elements which are either in set or in set2.
     Set<T> *association(Set<T> *set2);
 
+    ///Returns number of elements in the set.
+    int getSize();
+
 private:
     class SetElement
     {
@@ -34,6 +37,7 @@ private:
 
     bool isEmpty();
     SetElement *first;
+    int size;
 };
 
 
@@ -43,7 +47,7 @@ Set<T>::SetElement::SetElement(T newValue, Set::SetElement *nextElement) : value
 }
 
 template <typename T>
-Set<T>::Set() : first(nullptr)
+Set<T>::Set() : first(nullptr), size(0)
 {
 }
 
@@ -71,6 +75,7 @@ void Set<T>::add(const T &value)
         return;
     SetElement *newElement = new SetElement(value, first);
     first = newElement;
+    size++;
 }
 
 template <typename T>
@@ -85,6 +90,7 @@ void Set<T>::remove(const T &value)
     {
         first->next = current->next;
         delete current;
+        size--;
         return;
     }
 
@@ -96,6 +102,7 @@ void Set<T>::remove(const T &value)
         SetElement *toBeRemoved = current->next;
         current->next = toBeRemoved->next;
         delete toBeRemoved;
+        size--;
     }
 }
 
@@ -163,8 +170,14 @@ Set<T> *Set<T>::association(Set<T> *set2)
 }
 
 template <typename T>
+int Set<T>::getSize()
+{
+    return size;
+}
+
+template <typename T>
 bool Set<T>::isEmpty()
 {
-    return first == nullptr;
+    return size == 0;
 }
 

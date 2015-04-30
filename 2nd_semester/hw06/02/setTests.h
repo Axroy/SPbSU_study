@@ -27,6 +27,7 @@ private slots:
        set->add(-20);
        set->add(-20);
        QVERIFY(set->exists(1) && set->exists(-20));
+       QVERIFY(set->getSize() == 2);
    }
 
    void removal()
@@ -37,6 +38,7 @@ private slots:
        set->remove(0);
        QVERIFY(set->exists(65) && set->exists(12));
        QVERIFY(!set->exists(0));
+       QVERIFY(set->getSize() == 2);
    }
 
    void removingInexsistentValue()
@@ -45,6 +47,7 @@ private slots:
        set->add(-250);
        set->remove(0);
        QVERIFY(set->exists(5) && set->exists(-250));
+       QVERIFY(set->getSize() == 2);
    }
 
    void intersection()
@@ -61,6 +64,7 @@ private slots:
        Set<int> *intersectedSet = set->intersection(set2);
        QVERIFY(intersectedSet->exists(66) && intersectedSet->exists(8));
        QVERIFY(!intersectedSet->exists(-95) && !intersectedSet->exists(10));
+       QVERIFY(intersectedSet->getSize() == 2);
 
        delete set2;
        delete intersectedSet;
@@ -78,6 +82,7 @@ private slots:
        Set<int> *associatedSet = set->association(set2);
        QVERIFY(associatedSet->exists(45) && associatedSet->exists(-22));
        QVERIFY(associatedSet->exists(6) && associatedSet->exists(3));
+       QVERIFY(associatedSet->getSize() == 4);
 
        delete set2;
        delete associatedSet;
