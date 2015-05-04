@@ -2,16 +2,22 @@
 
 #include <QString>
 
+///Class for parse tree.
 class ParseTree
 {
 public:
     ParseTree();
     ~ParseTree();
+    ///Builds the tree for certain prefix expression in input.
     void build(QString input);
+    ///Prints the tree to console.
     void print();
+    ///Counts expression in the tree.
     int count();
 
+    ///Returns true if the trre is empty.
     bool isEmpty();
+    ///Returns number of nodes in the tree.
     int getSize();
 
 private:
