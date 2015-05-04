@@ -1,7 +1,7 @@
 #include <iostream>
 #include "parseTree.h"
 
-ParseTree::ParseTree() : root(nullptr)
+ParseTree::ParseTree() : root(nullptr), size(0)
 {
 }
 
@@ -26,6 +26,16 @@ int ParseTree::count()
     return root->count(0);
 }
 
+bool ParseTree::isEmpty()
+{
+    return size == 0;
+}
+
+int ParseTree::getSize()
+{
+    return size;
+}
+
 int ParseTree::build(ParseTreeNode *&node, QString input, int position)
 {
     if (input.at(position) == '\0')
@@ -34,18 +44,25 @@ int ParseTree::build(ParseTreeNode *&node, QString input, int position)
         position++;
 
     node = new ParseTreeNode(input.at(position), nullptr, nullptr);
+    size++;
 
     position += 2;
     if (input.at(position) == '(')
         position = build(node->left, input, position);
     else
+    {
         node->left = new ParseTreeNode(input.at(position), nullptr, nullptr);
+        size++;
+    }
 
     position += 2;
     if (input.at(position) == '(')
         position = build(node->right, input, position);
     else
+    {
         node->right = new ParseTreeNode(input.at(position), nullptr, nullptr);
+        size++;
+    }
 
     position++;
     return position;

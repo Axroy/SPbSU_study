@@ -4,5 +4,5 @@
 class Counter
 {
 public:
-    static int countExpression(std::string &fileName);
+    static int countExpression(std::string fileName);
 };

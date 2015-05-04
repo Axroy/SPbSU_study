@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += testlib
 QT       -= gui
 
 TARGET = 01
@@ -21,6 +21,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     parseTree.h \
-    counter.h
+    counter.h \
+    parseTreeTests.h
 
 QMAKE_CXXFLAGS += -std=c++11

@@ -11,6 +11,9 @@ public:
     void print();
     int count();
 
+    bool isEmpty();
+    int getSize();
+
 private:
     class ParseTreeNode
     {
@@ -27,6 +30,7 @@ private:
     };
 
     ParseTreeNode *root;
+    int size;
 
     int build(ParseTreeNode *&node, QString input, int position);
 };

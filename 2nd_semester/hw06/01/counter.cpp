@@ -4,7 +4,7 @@
 #include "parseTree.h"
 
 
-int Counter::countExpression(std::string &fileName)
+int Counter::countExpression(std::string fileName)
 {
     std::ifstream file(fileName);
     std::string input;
