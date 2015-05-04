@@ -6,6 +6,7 @@ class ParseTree
 {
 public:
     ParseTree();
+    ~ParseTree();
     void build(QString input);
     void print();
     int count();
@@ -15,6 +16,7 @@ private:
     {
     public:
         ParseTreeNode(QChar newValue, ParseTreeNode *newLeft, ParseTreeNode *newRight);
+        ~ParseTreeNode();
 
         QChar value;
         ParseTreeNode *left;

@@ -5,6 +5,12 @@ ParseTree::ParseTree() : root(nullptr)
 {
 }
 
+ParseTree::~ParseTree()
+{
+    if (root != nullptr)
+        delete root;
+}
+
 void ParseTree::build(QString input)
 {
     build(root, input, 0);
@@ -48,6 +54,14 @@ int ParseTree::build(ParseTreeNode *&node, QString input, int position)
 ParseTree::ParseTreeNode::ParseTreeNode(QChar newValue, ParseTree::ParseTreeNode *newLeft, ParseTree::ParseTreeNode *newRight)
     : value(newValue), left(newLeft), right(newRight)
 {
+}
+
+ParseTree::ParseTreeNode::~ParseTreeNode()
+{
+    if (left != nullptr)
+        delete left;
+    if (right != nullptr)
+        delete right;
 }
 
 void ParseTree::ParseTreeNode::print()
