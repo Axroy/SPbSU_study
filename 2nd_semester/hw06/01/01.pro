@@ -16,9 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    parseTree.cpp
+    parseTree.cpp \
+    counter.cpp
 
 HEADERS += \
-    parseTree.h
+    parseTree.h \
+    counter.h
 
 QMAKE_CXXFLAGS += -std=c++11
