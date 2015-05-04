@@ -7,6 +7,9 @@
 int Counter::countExpression(std::string fileName)
 {
     std::ifstream file(fileName);
+    if (file == nullptr)
+        return 0;
+
     std::string input;
     std::getline(file, input);
     file.close();

@@ -10,6 +10,13 @@ int main(int argc, char *argv[])
     QTest::qExec(&tests);
 
     QCoreApplication a(argc, argv);
-    std::cout << Counter::countExpression("file.txt");
+    printf("The program for calculating arithmetical expressions using parse tree.\n");
+
+    std::string fileName = "";
+    printf("Enter a name of file containing the expression in prefix form:\n");
+    std::cin >> fileName;
+
+    std::cout << Counter::countExpression(fileName);
+
     return a.exec();
 }
