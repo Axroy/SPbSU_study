@@ -19,6 +19,7 @@ void ParseTree::build(const QString &input)
 void ParseTree::print()
 {
     root->print();
+    std::cout << "\n";
 }
 
 int ParseTree::count()

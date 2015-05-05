@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     std::cout << ("Enter a name of file containing the expression in prefix form:\n");
     std::cin >> fileName;
 
-    std::cout << "Your result: " << Counter::countExpression(fileName);
+    std::cout << "Your result: " << Counter::countExpressionWithPrinting(fileName);
 
     return a.exec();
 }
