@@ -11,7 +11,7 @@ ParseTree::~ParseTree()
         delete root;
 }
 
-void ParseTree::build(QString input)
+void ParseTree::build(const QString &input)
 {
     build(root, input, 0);
 }
@@ -36,7 +36,7 @@ int ParseTree::getSize()
     return size;
 }
 
-int ParseTree::build(ParseTreeNode *&node, QString input, int position)
+int ParseTree::build(ParseTreeNode *&node, const QString &input, int position)
 {
     if (input.at(position) == '\0')
         return 0;

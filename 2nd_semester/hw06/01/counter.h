@@ -6,5 +6,5 @@ class Counter
 {
 public:
     ///Counts an expression from file with certain file name.
-    static int countExpression(std::string fileName);
+    static int countExpression(const std::string &fileName);
 };

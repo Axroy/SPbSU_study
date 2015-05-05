@@ -9,7 +9,7 @@ public:
     ParseTree();
     ~ParseTree();
     ///Builds the tree for certain prefix expression in input.
-    void build(QString input);
+    void build(const QString &input);
     ///Prints the tree to console.
     void print();
     ///Counts expression in the tree.
@@ -38,6 +38,6 @@ private:
     ParseTreeNode *root;
     int size;
 
-    int build(ParseTreeNode *&node, QString input, int position);
+    int build(ParseTreeNode *&node, const QString &input, int position);
 };
 
