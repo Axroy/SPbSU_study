@@ -115,10 +115,8 @@ bool Set<T>::exists(const T &value)
     SetElement *current = first;
     while (current->next != nullptr && current->value != value)
         current = current->next;
-    if (current->value == value)
-        return true;
-    else
-        return false;
+
+    return current->value == value;
 }
 
 template <typename T>
