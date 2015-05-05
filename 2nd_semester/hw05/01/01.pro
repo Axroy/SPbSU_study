@@ -18,7 +18,8 @@ TEMPLATE = app
 SOURCES += main.cpp \
     hashTable.cpp \
     list.cpp \
-    hashFunctions.cpp
+    polynomialHash.cpp \
+    symbolsSumHash.cpp
 
 HEADERS += \
     hashTable.h \
@@ -26,6 +27,8 @@ HEADERS += \
     hashFunctions.h \
     hashTableTests.h \
     listTests.h \
-    hashFunctionsTests.h
+    hashFunctionsTests.h \
+    polynomialHash.h \
+    symbolsSumHash.h
 
 QMAKE_CXXFLAGS += -std=c++11

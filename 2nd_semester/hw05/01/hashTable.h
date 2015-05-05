@@ -4,6 +4,15 @@
 #include <cmath>
 #include "list.h"
 #include "hashFunctions.h"
+#include "polynomialHash.h"
+#include "symbolsSumHash.h"
+
+enum HashType
+{
+    polynomial,
+    symbolsSum
+};
+
 
 ///Class resembling hash table.
 class HashTable
@@ -11,6 +20,7 @@ class HashTable
 public:
     HashTable();
     HashTable(int size);
+    HashTable(int size, HashType hashType);
     ~HashTable();
 
     ///Adds some string value to the table.
@@ -28,12 +38,12 @@ public:
     ///Prints to console number of filled, empty cells, load factor, number of conflicts, max and average chain length.
     void showStats();
     ///Changes hash function to one from HashFunctions class.
-    void changeHashFunction(Functions newFunction);
+    void changeHashFunction(HashType hashType);
 
 private:
     int size;
     List **table;
-    HashFunctions *hash;
+    HashFunctions *hashFunction;
 
     float loadFactor();
     int conflictsNumber();

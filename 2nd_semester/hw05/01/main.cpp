@@ -93,7 +93,7 @@ int main()
                 std::cout << "1 - sum of symbols\n";
                 std::cout << "Which do you want?:";
                 std::cin >> hashFunction;
-                table->changeHashFunction((Functions)hashFunction);
+                table->changeHashFunction((HashType)hashFunction);
                 break;
             }
 

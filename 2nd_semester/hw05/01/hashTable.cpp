@@ -1,16 +1,23 @@
 #include <iostream>
 #include "hashTable.h"
 
-HashTable::HashTable() : size(100), table(new List*[size]), hash(new HashFunctions(100))
+HashTable::HashTable() : size(100), table(new List*[size]), hashFunction(new PolynomialHash(100))
 {
     for (int i = 0; i < 100; i++)
         table[i] = new List();
 }
 
-HashTable::HashTable(int size) : size(size), table(new List*[size]), hash(new HashFunctions(size))
+HashTable::HashTable(int size) : size(size), table(new List*[size]), hashFunction(new PolynomialHash(size))
 {
     for (int i = 0; i < size; i++)
         table[i] = new List();
+}
+
+HashTable::HashTable(int size, HashType hashType) : size(size), table(new List*[size])
+{
+    for (int i = 0; i < size; i++)
+        table[i] = new List();
+    changeHashFunction(hashType);
 }
 
 HashTable::~HashTable()
@@ -22,17 +29,17 @@ HashTable::~HashTable()
 
 void HashTable::addValue(QString value)
 {
-    table[hash->generateHash(value)]->add(value);
+    table[hashFunction->hash(value)]->add(value);
 }
 
 void HashTable::removeValue(QString value)
 {
-    table[hash->generateHash(value)]->remove(value);
+    table[hashFunction->hash(value)]->remove(value);
 }
 
 int HashTable::findValue(QString value)
 {
-    int index = hash->generateHash(value);
+    int index = hashFunction->hash(value);
     if (table[index]->hasValue(value))
         return index;
     return -1;
@@ -121,8 +128,17 @@ void HashTable::showStats()
     std::cout << "\n---------------------";
 }
 
-void HashTable::changeHashFunction(Functions newFunction)
+void HashTable::changeHashFunction(HashType hashType)
 {
-    hash->changeFunction(newFunction);
+    switch (hashType)
+    {
+        case polynomial:
+            hashFunction = new PolynomialHash(size);
+            break;
+
+        case symbolsSum:
+            hashFunction = new SymbolsSumHash(size);
+            break;
+    }
 }
 
