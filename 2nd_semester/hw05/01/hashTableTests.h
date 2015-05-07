@@ -49,7 +49,8 @@ private slots:
    void differentHashTest()
    {
        table->addValue("1111");
-       table->changeHashFunction(symbolsSum);
+       HashFunctions *newFunction = new SymbolsSumHash(5);
+       table->changeHashFunction(newFunction);
        table->addValue("1111");
        QVERIFY(table->numberOfFilledCells() == 2);
    }

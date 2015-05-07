@@ -13,11 +13,10 @@ HashTable::HashTable(int size) : size(size), table(new List*[size]), hashFunctio
         table[i] = new List();
 }
 
-HashTable::HashTable(int size, HashType hashType) : size(size), table(new List*[size])
+HashTable::HashTable(int size, HashFunctions *function) : size(size), table(new List*[size]), hashFunction(function)
 {
     for (int i = 0; i < size; i++)
         table[i] = new List();
-    changeHashFunction(hashType);
 }
 
 HashTable::~HashTable()
@@ -27,17 +26,17 @@ HashTable::~HashTable()
     delete[] table;
 }
 
-void HashTable::addValue(QString value)
+void HashTable::addValue(const QString &value)
 {
     table[hashFunction->hash(value)]->add(value);
 }
 
-void HashTable::removeValue(QString value)
+void HashTable::removeValue(const QString &value)
 {
     table[hashFunction->hash(value)]->remove(value);
 }
 
-int HashTable::findValue(QString value)
+int HashTable::findValue(const QString &value)
 {
     int index = hashFunction->hash(value);
     if (table[index]->hasValue(value))
@@ -128,17 +127,10 @@ void HashTable::showStats()
     std::cout << "\n---------------------";
 }
 
-void HashTable::changeHashFunction(HashType hashType)
+void HashTable::changeHashFunction(HashFunctions *function)
 {
-    switch (hashType)
-    {
-        case polynomial:
-            hashFunction = new PolynomialHash(size);
-            break;
-
-        case symbolsSum:
-            hashFunction = new SymbolsSumHash(size);
-            break;
-    }
+    if (function == nullptr)
+        return;
+    hashFunction = function;
 }
 

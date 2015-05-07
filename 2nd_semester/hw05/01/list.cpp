@@ -19,14 +19,14 @@ List::~List()
     delete current->next;
 }
 
-void List::add(QString value)
+void List::add(const QString &value)
 {
     ListElement *node = new ListElement(value, head->next);
     head->next = node;
     size++;
 }
 
-void List::remove(QString value)
+void List::remove(const QString &value)
 {
     if (isEmpty())
         return;
@@ -75,7 +75,7 @@ bool List::isEmpty()
     return size == 0;
 }
 
-bool List::hasValue(QString value)
+bool List::hasValue(const QString &value)
 {
     if (isEmpty())
         return 0;
@@ -100,7 +100,7 @@ int List::numberOfElements()
 
 
 
-List::ListElement::ListElement(QString value, List::ListElement *nextElement)
+List::ListElement::ListElement(const QString &value, List::ListElement *nextElement)
 {
     data = value;
     next = nextElement;

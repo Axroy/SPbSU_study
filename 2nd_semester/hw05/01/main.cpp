@@ -87,13 +87,24 @@ int main()
 
             case hash:
             {
-                int hashFunction = 0;
+                int hashFunctionType = 0;
                 std::cout << "\nAvailable hash functions:\n";
                 std::cout << "0 - polynomial\n";
                 std::cout << "1 - sum of symbols\n";
                 std::cout << "Which do you want?:";
-                std::cin >> hashFunction;
-                table->changeHashFunction((HashType)hashFunction);
+                std::cin >> hashFunctionType;
+                HashFunctions *hashFunction = nullptr;
+                switch (hashFunctionType)
+                    {
+                        case polynomial:
+                            hashFunction = new PolynomialHash(size);
+                            break;
+
+                        case symbolsSum:
+                            hashFunction = new SymbolsSumHash(size);
+                            break;
+                    }
+                table->changeHashFunction(hashFunction);
                 break;
             }
 

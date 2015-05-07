@@ -20,15 +20,15 @@ class HashTable
 public:
     HashTable();
     HashTable(int size);
-    HashTable(int size, HashType hashType);
+    HashTable(int size, HashFunctions *function);
     ~HashTable();
 
     ///Adds some string value to the table.
-    void addValue(QString value);
+    void addValue(const QString &value);
     ///Removes some string value from the table.
-    void removeValue(QString value);
+    void removeValue(const QString &value);
     ///Returns position of some string value in the table. Returns -1 if can't find the value.
-    int findValue(QString value);
+    int findValue(const QString &value);
     ///Prints all non-empty cells of the table.
     void printTable();
     ///Returns number of filled cells.
@@ -38,7 +38,7 @@ public:
     ///Prints to console number of filled, empty cells, load factor, number of conflicts, max and average chain length.
     void showStats();
     ///Changes hash function to one from HashFunctions class.
-    void changeHashFunction(HashType hashType);
+    void changeHashFunction(HashFunctions *function);
 
 private:
     int size;
