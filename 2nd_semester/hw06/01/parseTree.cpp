@@ -7,8 +7,7 @@ ParseTree::ParseTree() : root(nullptr), size(0)
 
 ParseTree::~ParseTree()
 {
-    if (root != nullptr)
-        delete root;
+    delete root;
 }
 
 void ParseTree::build(const QString &input)
@@ -22,9 +21,9 @@ void ParseTree::print()
     std::cout << "\n";
 }
 
-int ParseTree::count()
+int ParseTree::calculate()
 {
-    return root->count(0);
+    return root->calculate();
 }
 
 bool ParseTree::isEmpty()
@@ -37,98 +36,42 @@ int ParseTree::getSize()
     return size;
 }
 
-int ParseTree::build(ParseTreeNode *&node, const QString &input, int position)
+int ParseTree::build(OperationNode *&node, const QString &input, int position)
 {
     if (input.at(position) == '\0')
         return 0;
     if (input.at(position) == '(')
         position++;
 
-    node = new ParseTreeNode(input.at(position), nullptr, nullptr);
+    node = new OperationNode(input.at(position), nullptr, nullptr);
     size++;
 
     position += 2;
     if (input.at(position) == '(')
-        position = build(node->left, input, position);
+    {
+        OperationNode *leftTree = nullptr;
+        position = build(leftTree, input, position);
+        node->left = leftTree;
+    }
     else
     {
-        node->left = new ParseTreeNode(input.at(position), nullptr, nullptr);
+        node->left = new ValueNode((input.at(position).digitValue()));
         size++;
     }
 
     position += 2;
     if (input.at(position) == '(')
-        position = build(node->right, input, position);
+    {
+        OperationNode *rightTree = nullptr;
+        position = build(rightTree, input, position);
+        node->right = rightTree;
+    }
     else
     {
-        node->right = new ParseTreeNode(input.at(position), nullptr, nullptr);
+        node->right = new ValueNode((input.at(position).digitValue()));
         size++;
     }
 
     position++;
     return position;
-}
-
-ParseTree::ParseTreeNode::ParseTreeNode(QChar newValue, ParseTree::ParseTreeNode *newLeft, ParseTree::ParseTreeNode *newRight)
-    : value(newValue), left(newLeft), right(newRight)
-{
-}
-
-ParseTree::ParseTreeNode::~ParseTreeNode()
-{
-    if (left != nullptr)
-        delete left;
-    if (right != nullptr)
-        delete right;
-}
-
-void ParseTree::ParseTreeNode::print()
-{
-    if (value == '*' || value == '/' || value == '+' || value == '-')
-        printf("(");
-
-    if (left == nullptr && right == nullptr)
-    {
-        std::cout << value.toLatin1();
-        return;
-    }
-    left->print();
-    std::cout << value.toLatin1();
-    right->print();
-
-    std::cout << ")";
-}
-
-int ParseTree::ParseTreeNode::count(int currentResult)
-{
-    int value1 = 0;
-    int value2 = 0;
-
-    if (left->value == '+' || left->value == '-' || left->value == '*' || left->value == '/')
-        value1 = left->count(currentResult);
-    else
-        value1 = (left->value.digitValue());
-
-    if (right->value == '+' || right->value == '-' || right->value == '*' || right->value == '/')
-        value2 = right->count(currentResult);
-    else
-        value2 = (right->value.digitValue());
-
-    switch (value.toLatin1())
-    {
-        case '+':
-            currentResult = value1 + value2;
-            break;
-        case '-':
-            currentResult = value1 - value2;
-            break;
-        case '*':
-            currentResult = value1 * value2;
-            break;
-        case '/':
-            currentResult = value1 / value2;
-            break;
-    }
-
-    return currentResult;
 }

@@ -41,13 +41,13 @@ private slots:
    void countingExampleExpression()
    {
        tree->build("(* (+ 1 1) 2)");
-       QVERIFY(tree->count() == 4);
+       QVERIFY(tree->calculate() == 4);
    }
 
    void countingLargeExpression()
    {
        tree->build("(- (/ 9 3) (* (+ 1 1) (* 8 6)))");
-       QVERIFY(tree->count() == -93);
+       QVERIFY(tree->calculate() == -93);
    }
 
 private:

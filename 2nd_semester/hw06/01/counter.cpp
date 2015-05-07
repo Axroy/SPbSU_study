@@ -16,7 +16,7 @@ int Counter::countExpression(const std::string &fileName)
 
     ParseTree *tree = new ParseTree;
     tree->build(QString::fromStdString(input));
-    int result = tree->count();
+    int result = tree->calculate();
     delete tree;
     return result;
 }
@@ -34,7 +34,7 @@ int Counter::countExpressionWithPrinting(const std::string &fileName)
     ParseTree *tree = new ParseTree;
     tree->build(QString::fromStdString(input));
     tree->print();
-    int result = tree->count();
+    int result = tree->calculate();
     delete tree;
     return result;
 }

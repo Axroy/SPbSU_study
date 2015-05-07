@@ -2,6 +2,14 @@
 
 #include <QString>
 
+#include "parseTreeNode.h"
+#include "operationNode.h"
+#include "sumNode.h"
+#include "substractionNode.h"
+#include "multiplicationNode.h"
+#include "divisionNode.h"
+#include "valueNode.h"
+
 ///Class for parse tree.
 class ParseTree
 {
@@ -12,32 +20,17 @@ public:
     void build(const QString &input);
     ///Prints the tree to console.
     void print();
-    ///Counts expression in the tree.
-    int count();
+    ///Calculates expression in the tree.
+    int calculate();
 
-    ///Returns true if the trre is empty.
+    ///Returns true if the tree is empty.
     bool isEmpty();
     ///Returns number of nodes in the tree.
     int getSize();
 
 private:
-    class ParseTreeNode
-    {
-    public:
-        ParseTreeNode(QChar newValue, ParseTreeNode *newLeft, ParseTreeNode *newRight);
-        ~ParseTreeNode();
-
-        QChar value;
-        ParseTreeNode *left;
-        ParseTreeNode *right;
-
-        void print();
-        int count(int currentResult);
-    };
-
-    ParseTreeNode *root;
+    OperationNode *root;
     int size;
 
-    int build(ParseTreeNode *&node, const QString &input, int position);
+    int build(OperationNode *&node, const QString &input, int position);
 };
-
