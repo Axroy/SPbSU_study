@@ -21,11 +21,6 @@ private slots:
        delete list;
    }
 
-   void empty()
-   {
-       QVERIFY(list->isEmpty());
-   }
-
    void addition()
    {
        list->add(1);
