@@ -59,6 +59,9 @@ SharedPointer<T>::~SharedPointer()
 template <typename T>
 void SharedPointer<T>::remove()
 {
+    if (object == nullptr)
+        return;
+
     linksNumber--;
     if (linksNumber == 0)
         delete object;
