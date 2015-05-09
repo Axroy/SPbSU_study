@@ -1,18 +1,26 @@
 #pragma once
 
+///A template class for smart pointer.
 template <typename T>
 class SharedPointer
 {
 public:
+    ///Creates new shared pointer on nullptr.
     SharedPointer();
+    ///Creates new shared pointer on newObject.
     SharedPointer(T *newObject);
+    ///Creates new shared pointer pointing on the same object as one in the parameter.
     SharedPointer(const SharedPointer<T> &pointer);
     ~SharedPointer();
+    ///For manual removal of the pointer.
     void remove();
+    ///For access to object's fields and functions.
     T *operator-> ();
+    ///Redefinition of dereference.
     T &operator* ();
+    ///Redefinition of assignment for shared pointers.
     SharedPointer<T> &operator= (const SharedPointer<T> &pointer);
-
+    ///Returns number of links with object.
     int getLinksNumber();
 
 private:
