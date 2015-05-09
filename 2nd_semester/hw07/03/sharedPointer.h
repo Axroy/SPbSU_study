@@ -4,6 +4,7 @@ template <typename T>
 class SharedPointer
 {
 public:
+    SharedPointer();
     SharedPointer(T *newObject);
     SharedPointer(const SharedPointer<T> &pointer);
     ~SharedPointer();
@@ -11,6 +12,8 @@ public:
     T *operator-> ();
     T &operator* ();
     SharedPointer<T> &operator= (const SharedPointer<T> &pointer);
+
+    int getLinksNumber();
 
 private:
     T *object;
@@ -21,15 +24,22 @@ template <typename T>
 int SharedPointer<T>::linksNumber = 0;
 
 template <typename T>
+SharedPointer<T>::SharedPointer() : object(nullptr)
+{
+}
+
+template <typename T>
 SharedPointer<T>::SharedPointer(T *newObject) : object(newObject)
 {
-    linksNumber++;
+    if (object != nullptr)
+        linksNumber++;
 }
 
 template <typename T>
 SharedPointer<T>::SharedPointer(const SharedPointer<T> &pointer) : object(pointer.object)
 {
-    linksNumber++;
+    if (object != nullptr)
+        linksNumber++;
 }
 
 template <typename T>
@@ -65,6 +75,13 @@ SharedPointer<T> &SharedPointer<T>::operator= (const SharedPointer<T> &pointer)
         return *this;
 
     object = pointer.object;
-    linksNumber++;
+    if (object != nullptr)
+        linksNumber++;
     return *this;
+}
+
+template <typename T>
+int SharedPointer<T>::getLinksNumber()
+{
+    return linksNumber;
 }

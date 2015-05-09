@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += testlib
 QT       -= gui
 
 TARGET = 03
@@ -18,6 +18,7 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 HEADERS += \
-    sharedPointer.h
+    sharedPointer.h \
+    sharedPointerTests.h
 
 QMAKE_CXXFLAGS += -std=c++11
