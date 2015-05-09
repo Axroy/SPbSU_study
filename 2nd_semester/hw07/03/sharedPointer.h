@@ -11,6 +11,7 @@ public:
     SharedPointer(T *newObject);
     ///Creates new shared pointer pointing on the same object as one in the parameter.
     SharedPointer(const SharedPointer<T> &pointer);
+    ///Deletes object when there are no pointers on it.
     ~SharedPointer();
     ///For manual removal of the pointer.
     void remove();
@@ -27,6 +28,8 @@ private:
     T *object;
     static int linksNumber;
 };
+
+
 
 template <typename T>
 int SharedPointer<T>::linksNumber = 0;
