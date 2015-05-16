@@ -24,6 +24,19 @@ SquareArray::SquareArray(int arraySize)
     size = arraySize;
 }
 
+SquareArray::SquareArray(int **stdArray, int arraySize)
+{
+    array = new int *[arraySize];
+    for (int i = 0; i < arraySize; i++)
+        array[i] = new int[arraySize];
+
+    for (int i = 0; i < arraySize; i++)
+        for (int j = 0; j < arraySize; j++)
+            array[i][j] = stdArray[i][j];
+
+    size = arraySize;
+}
+
 SquareArray::~SquareArray()
 {
     for (int i = 0; i < size; i++)

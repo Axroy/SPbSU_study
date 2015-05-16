@@ -8,6 +8,8 @@ public:
     SquareArray();
     ///Constructor with manual array size
     SquareArray(int arraySize);
+    ///Makes SquareArray from standard int[][].
+    SquareArray(int **stdArray, int arraySize);
     ///Destructor
     ~SquareArray();
     ///Prints an array to console

@@ -1,7 +1,6 @@
 TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
-CONFIG -= qt
 
 SOURCES += main.cpp \
     squareArray.cpp \
@@ -9,11 +8,12 @@ SOURCES += main.cpp \
     filePrinter.cpp \
     printer.cpp
 
-include(deployment.pri)
-qtcAddDeployment()
-
 HEADERS += \
     squareArray.h \
     printer.h \
     consolePrinter.h \
-    filePrinter.h
+    filePrinter.h \
+    filePrinterTests.h
+
+QT += testlib
+QT += core
