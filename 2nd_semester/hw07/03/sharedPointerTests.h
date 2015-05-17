@@ -23,6 +23,21 @@ private slots:
         QVERIFY(pointer.getLinksNumber() == 1);
     }
 
+    void removal()
+    {
+        SharedPointer<int> pointer(new int[10]);
+        pointer.remove();
+        QVERIFY(pointer.getLinksNumber() == 0);
+    }
+
+    void differentObjects()
+    {
+        SharedPointer<int> pointer1(new int[5]);
+        SharedPointer<int> pointer2(new int[2]);
+        QVERIFY(pointer1.getLinksNumber() == 1);
+        QVERIFY(pointer2.getLinksNumber() == 1);
+    }
+
     void copying()
     {
         SharedPointer<int> pointer1(new int[9]);

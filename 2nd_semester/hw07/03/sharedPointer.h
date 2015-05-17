@@ -25,32 +25,46 @@ public:
     int getLinksNumber();
 
 private:
-    T *object;
-    static int linksNumber;
+    struct PointerData
+    {
+        PointerData(T *object, int linksNumber) : object(object), linksNumber(linksNumber)
+        {
+
+        }
+        ~PointerData()
+        {
+            delete object;
+        }
+
+        T *object;
+        int linksNumber;
+    };
+
+    PointerData *pointerData;
 };
 
 
 
 template <typename T>
-int SharedPointer<T>::linksNumber = 0;
-
-template <typename T>
-SharedPointer<T>::SharedPointer() : object(nullptr)
+SharedPointer<T>::SharedPointer() : pointerData(new PointerData(nullptr, 0))
 {
+
 }
 
 template <typename T>
-SharedPointer<T>::SharedPointer(T *newObject) : object(newObject)
+SharedPointer<T>::SharedPointer(T *newObject) : pointerData(new PointerData(newObject, 1))
 {
-    if (object != nullptr)
-        linksNumber++;
+    if (newObject == nullptr)
+        pointerData->linksNumber = 0;
 }
 
 template <typename T>
-SharedPointer<T>::SharedPointer(const SharedPointer<T> &pointer) : object(pointer.object)
+SharedPointer<T>::SharedPointer(const SharedPointer<T> &pointer) : pointerData(pointer.pointerData)
 {
-    if (object != nullptr)
-        linksNumber++;
+    if (pointerData->object == nullptr)
+        pointerData->linksNumber = 0;
+    else
+        pointerData->linksNumber++;
 }
 
 template <typename T>
@@ -62,40 +76,40 @@ SharedPointer<T>::~SharedPointer()
 template <typename T>
 void SharedPointer<T>::remove()
 {
-    if (object == nullptr)
+    if (pointerData->object == nullptr)
         return;
 
-    linksNumber--;
-    if (linksNumber == 0)
-        delete object;
+    pointerData->linksNumber--;
+    if (pointerData->linksNumber == 0)
+        delete pointerData->object;
 }
 
 template <typename T>
 T *SharedPointer<T>::operator->()
 {
-    return object;
+    return pointerData->object;
 }
 
 template <typename T>
 T &SharedPointer<T>::operator*()
 {
-    return *object;
+    return *pointerData->object;
 }
 
 template <typename T>
 SharedPointer<T> &SharedPointer<T>::operator= (const SharedPointer<T> &pointer)
 {
-    if (object == pointer.object)
+    if (pointerData->object == pointer.pointerData->object)
         return *this;
 
-    object = pointer.object;
-    if (object != nullptr)
-        linksNumber++;
+    pointerData->object = pointer.pointerData->object;
+    if (pointerData->object != nullptr)
+        pointerData->linksNumber++;
     return *this;
 }
 
 template <typename T>
 int SharedPointer<T>::getLinksNumber()
 {
-    return linksNumber;
+    return pointerData->linksNumber;
 }
