@@ -4,15 +4,19 @@ template <typename T>
 class Vector
 {
 public:
+    class DifferentSizes{};
+
     Vector();
     Vector(int size, T *values);
     Vector(const Vector<T> &vector);
     ~Vector();
-    Vector<T> operator+ (const Vector<T> &vector);
-    Vector<T> operator- (const Vector<T> &vector);
+    Vector<T> operator+ (const Vector<T> &vector)throw (DifferentSizes);
+    Vector<T> operator- (const Vector<T> &vector)throw (DifferentSizes);
     Vector<T> operator* (const T &scalar);
     Vector<T> operator= (const Vector<T> &vector);
     bool operator== (const Vector<T> &vector);
+    bool isNull();
+
 
 private:
     int size;
@@ -48,8 +52,11 @@ Vector<T>::~Vector()
 }
 
 template <typename T>
-Vector<T> Vector<T>::operator+(const Vector<T> &vector)
+Vector<T> Vector<T>::operator+(const Vector<T> &vector)throw (DifferentSizes)
 {
+    if (size != vector.size)
+        throw DifferentSizes();
+
     T *resultCoordinates = new T[size];
     for (int i = 0; i < size; i++)
         resultCoordinates[i] = coordinates[i] + vector.coordinates[i];
@@ -59,8 +66,11 @@ Vector<T> Vector<T>::operator+(const Vector<T> &vector)
 }
 
 template <typename T>
-Vector<T> Vector<T>::operator-(const Vector<T> &vector)
+Vector<T> Vector<T>::operator-(const Vector<T> &vector)throw (DifferentSizes)
 {
+    if (size != vector.size)
+        throw DifferentSizes();
+
     T *resultCoordinates = new T[size];
     for (int i = 0; i < size; i++)
         resultCoordinates[i] = coordinates[i] - vector.coordinates[i];
@@ -102,6 +112,15 @@ bool Vector<T>::operator==(const Vector<T> &vector)
 
     for (int i = 0; i < size; i++)
         if (coordinates[i] != vector.coordinates[i])
+            return false;
+    return true;
+}
+
+template <typename T>
+bool Vector<T>::isNull()
+{
+    for (int i = 0; i < size; i++)
+        if (coordinates[i] != 0)
             return false;
     return true;
 }

@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
         std::cout << "equal!";
 
     Vector<int> vector3 = vector1 + vector2;
+    delete[] coordinates;
 
     return a.exec();
 }
