@@ -4,11 +4,11 @@
 #include <QtTest>
 #include "filePrinter.h"
 
-class filePrinterTests : public QObject
+class FilePrinterTests : public QObject
 {
    Q_OBJECT
 public:
-   explicit filePrinterTests(QObject *parent = 0) : QObject(parent) {}
+   explicit FilePrinterTests(QObject *parent = 0) : QObject(parent) {}
 
 private slots:
 

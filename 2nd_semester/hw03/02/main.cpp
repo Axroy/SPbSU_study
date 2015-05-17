@@ -6,7 +6,7 @@
 
 int main()
 {
-    filePrinterTests tests;
+    FilePrinterTests tests;
     QTest::qExec(&tests);
 
     std::cout << "The program shows elements of a square array going spiral-like from it's center.";

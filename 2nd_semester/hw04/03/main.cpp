@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-    uberCalculatorTests tests;
+    UberCalculatorTests tests;
     QTest::qExec(&tests);
 
     QApplication a(argc, argv);

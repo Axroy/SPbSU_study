@@ -4,11 +4,11 @@
 #include <QtTest/QtTest>
 #include "uberCalculator.h"
 
-class uberCalculatorTests : public QObject
+class UberCalculatorTests : public QObject
 {
    Q_OBJECT
 public:
-   explicit uberCalculatorTests(QObject *parent = 0) : QObject(parent) {}
+   explicit UberCalculatorTests(QObject *parent = 0) : QObject(parent) {}
 
 private slots:
 
