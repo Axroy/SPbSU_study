@@ -1,11 +1,12 @@
 #pragma once
 
+
+class DifferentSizes{};
+
 template <typename T>
 class Vector
 {
 public:
-    class DifferentSizes{};
-
     Vector();
     Vector(int size, T *values);
     Vector(const Vector<T> &vector);
@@ -16,7 +17,8 @@ public:
     Vector<T> operator= (const Vector<T> &vector);
     bool operator== (const Vector<T> &vector);
     bool isNull();
-
+    T at(int position);
+    int getSize();
 
 private:
     int size;
@@ -84,7 +86,7 @@ Vector<T> Vector<T>::operator*(const T &scalar)
 {
     for (int i = 0; i < size; i++)
         coordinates[i] *= scalar;
-    return this;
+    return *this;
 }
 
 template <typename T>
@@ -123,4 +125,16 @@ bool Vector<T>::isNull()
         if (coordinates[i] != 0)
             return false;
     return true;
+}
+
+template <typename T>
+T Vector<T>::at(int position)
+{
+    return coordinates[position];
+}
+
+template <typename T>
+int Vector<T>::getSize()
+{
+    return size;
 }
