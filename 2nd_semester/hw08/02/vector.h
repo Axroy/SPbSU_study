@@ -1,23 +1,38 @@
 #pragma once
 
-
+///An exception thrown when two vectors have different sizes.
 class DifferentSizes{};
 
+///Template class for vectors.
 template <typename T>
 class Vector
 {
 public:
+    ///Creates vector with default size (current = 10) and null coordinates.
     Vector();
+
+    ///Creates vector with certain size and coordinates.
     Vector(int size, T *values);
+
+    ///Creates new vector equal to given.
     Vector(const Vector<T> &vector);
+
     ~Vector();
+
+    ///Redefinition of different operators which can be used with vectors.
     Vector<T> operator+ (const Vector<T> &vector)throw (DifferentSizes);
     Vector<T> operator- (const Vector<T> &vector)throw (DifferentSizes);
     Vector<T> operator* (const T &scalar);
     Vector<T> operator= (const Vector<T> &vector);
     bool operator== (const Vector<T> &vector);
+
+    ///Returns true if all coordinates = 0.
     bool isNull();
+
+    ///Returns coordinate from certain position.
     T at(int position);
+
+    ///Returns size of a vector.
     int getSize();
 
 private:
