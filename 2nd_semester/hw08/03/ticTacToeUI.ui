@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>300</width>
     <height>300</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>200</width>
+    <height>200</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>300</width>
+    <height>300</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>TicTacToeUI</string>
@@ -16,12 +28,19 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="infoLine">
       <property name="text">
-       <string>Crosses' turn</string>
+       <string>New game: crosses' turn</string>
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="restartButton">
+      <property name="text">
+       <string>RESTART</string>
       </property>
      </widget>
     </item>

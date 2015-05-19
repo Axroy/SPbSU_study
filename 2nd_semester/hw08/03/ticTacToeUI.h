@@ -25,5 +25,6 @@ private:
 
 private slots:
     void onButtonClicked(int index);
+    void onRestartButtonClicked();
 };
 
