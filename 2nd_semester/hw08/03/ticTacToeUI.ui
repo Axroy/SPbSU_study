@@ -35,6 +35,12 @@
       <property name="readOnly">
        <bool>true</bool>
       </property>
+      <property name="placeholderText">
+       <string/>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item>
@@ -45,7 +51,14 @@
      </widget>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridLayout"/>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+     </layout>
     </item>
    </layout>
   </widget>

@@ -17,11 +17,15 @@ public:
     ~TicTacToeUI();
 
 private:
+    void disableGameButtons();
+    void enableGameButtons();
+
     Ui::TicTacToeUI *ui;
     QSignalMapper *buttonMapper;
     QPushButton **buttons;
     Turn turn;
     int fieldSize;
+    int winLength;
 
 private slots:
     void onButtonClicked(int index);

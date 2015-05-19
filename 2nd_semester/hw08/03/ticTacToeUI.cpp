@@ -6,7 +6,8 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
     ui(new Ui::TicTacToeUI)
 {
     ui->setupUi(this);
-    fieldSize = 3;
+    fieldSize = 8;
+    winLength = 4;
     turn = cross;
 
     buttons = new QPushButton*[fieldSize];
@@ -17,9 +18,12 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
         for (int j = 0; j < fieldSize; j++)
         {
             ui->gridLayout->addWidget(&buttons[i][j], i, j);
-            buttons[i][j].setMaximumHeight(50);
-            buttons[i][j].setMaximumWidth(50);
-            ui->gridLayout->setSpacing(0);
+            buttons[i][j].setMaximumHeight(100);
+            buttons[i][j].setMaximumWidth(100);
+            //buttons[i][j].setFixedSize(buttons[i][j].size());
+            //buttons[i][j].adjustSize();
+            buttons[i][j].setMinimumWidth(20);
+            buttons[i][j].setMinimumHeight(20);
         }
 
     /*for (int i = 0; i < fieldSize; i++)
@@ -42,16 +46,37 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
             buttons[i][j].setText("");
 
     connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(onRestartButtonClicked()));
+
+    ui->centralWidget->setFocus();
+
+    /*for (int i = 0; i < fieldSize; i++)
+        for (int j = 0; j < fieldSize; j++)
+            buttons[i][j].setMinimumSize(buttons[i][j].);*/
 }
+
 
 TicTacToeUI::~TicTacToeUI()
 {
     delete ui;
 }
 
+void TicTacToeUI::disableGameButtons()
+{
+    for (int i = 0; i < fieldSize; i++)
+        for (int j = 0; j < fieldSize; j++)
+            buttons[i][j].setDisabled(true);
+}
+
+void TicTacToeUI::enableGameButtons()
+{
+    for (int i = 0; i < fieldSize; i++)
+        for (int j = 0; j < fieldSize; j++)
+            buttons[i][j].setEnabled(true);
+}
+
 void TicTacToeUI::onButtonClicked(int index)
 {
-    TicTacToe model(fieldSize, fieldSize);
+    TicTacToe model(fieldSize, winLength);
 
     if (buttons[index / fieldSize][index % fieldSize].text() == "X" ||
             buttons[index / fieldSize][index % fieldSize].text() == "O")
@@ -80,9 +105,7 @@ void TicTacToeUI::onButtonClicked(int index)
             ui->infoLine->setText("CROSSES WIN");
         ui->restartButton->setFocus();
 
-        for (int i = 0; i < fieldSize; i++)
-            for (int j = 0; j < fieldSize; j++)
-                buttons[i][j].setDisabled(true);
+        disableGameButtons();
 
         return;
     }
@@ -90,21 +113,19 @@ void TicTacToeUI::onButtonClicked(int index)
     if (model.checkDraw(buttons))
     {
         ui->infoLine->setText("DRAW");
+        ui->restartButton->setFocus();
 
-        for (int i = 0; i < fieldSize; i++)
-            for (int j = 0; j < fieldSize; j++)
-                buttons[i][j].setDisabled(true);
+        disableGameButtons();
     }
 }
 
 void TicTacToeUI::onRestartButtonClicked()
 {
+    turn = cross;
+    enableGameButtons();
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
-        {
             buttons[i][j].setText("");
-            buttons[i][j].setEnabled(true);
-        }
 
     ui->infoLine->setText("New game: crosses' turn");
 }
