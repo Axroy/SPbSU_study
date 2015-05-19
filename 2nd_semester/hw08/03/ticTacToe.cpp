@@ -116,7 +116,7 @@ bool TicTacToe::checkDraw(QPushButton **buttons)
 {
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
-            if (buttons[i][j].text() == "")
+            if (buttons[i][j].text() == " ")
                 return false;
     return true;
 }

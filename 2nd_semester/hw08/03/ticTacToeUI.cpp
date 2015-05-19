@@ -20,17 +20,8 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
             ui->gridLayout->addWidget(&buttons[i][j], i, j);
             buttons[i][j].setMaximumHeight(100);
             buttons[i][j].setMaximumWidth(100);
-            //buttons[i][j].setFixedSize(buttons[i][j].size());
-            //buttons[i][j].adjustSize();
-            buttons[i][j].setMinimumWidth(20);
-            buttons[i][j].setMinimumHeight(20);
         }
 
-    /*for (int i = 0; i < fieldSize; i++)
-    {
-        ui->gridLayout->setColumnMinimumWidth(i, 30);
-        ui->gridLayout->setRowMinimumHeight(i, 30);
-    }*/
 
     buttonMapper = new QSignalMapper(this);
     connect(buttonMapper, SIGNAL(mapped(int)), this, SLOT(onButtonClicked(int)));
@@ -43,15 +34,11 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
 
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
-            buttons[i][j].setText("");
+            buttons[i][j].setText(" ");
 
     connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(onRestartButtonClicked()));
 
     ui->centralWidget->setFocus();
-
-    /*for (int i = 0; i < fieldSize; i++)
-        for (int j = 0; j < fieldSize; j++)
-            buttons[i][j].setMinimumSize(buttons[i][j].);*/
 }
 
 
@@ -125,7 +112,7 @@ void TicTacToeUI::onRestartButtonClicked()
     enableGameButtons();
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
-            buttons[i][j].setText("");
+            buttons[i][j].setText(" ");
 
     ui->infoLine->setText("New game: crosses' turn");
 }
