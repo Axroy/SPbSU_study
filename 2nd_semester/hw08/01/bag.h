@@ -4,7 +4,10 @@ class Bag
 {
 public:
     Bag();
+    ~Bag();
     void insert(int value);
+    void remove(int value);
+    bool exists(int value);
 
 private:
     class AVLTreeNode
@@ -26,5 +29,9 @@ private:
     AVLTreeNode *root;
 
     void insert(AVLTreeNode *&node, int value);
+    int deleteLeftmostNode(AVLTreeNode *&node);
+    int deleteLeftmostNode(AVLTreeNode *&node, AVLTreeNode *parent);
+    void remove(AVLTreeNode *&node, int value);
+    bool exists(AVLTreeNode *&node, int value);
 };
 

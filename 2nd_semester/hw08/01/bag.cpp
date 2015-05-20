@@ -4,9 +4,25 @@ Bag::Bag() : root(nullptr)
 {
 }
 
+Bag::~Bag()
+{
+    while (root != nullptr)
+        deleteLeftmostNode(root);
+}
+
 void Bag::insert(int value)
 {
     insert(root, value);
+}
+
+void Bag::remove(int value)
+{
+    remove(root, value);
+}
+
+bool Bag::exists(int value)
+{
+    return exists(root, value);
 }
 
 void Bag::insert(Bag::AVLTreeNode *&node, int value)
@@ -31,6 +47,122 @@ void Bag::insert(Bag::AVLTreeNode *&node, int value)
     }
 
     return;
+}
+
+int Bag::deleteLeftmostNode(Bag::AVLTreeNode *&node)
+{
+    if (node->left != nullptr)
+    {
+        deleteLeftmostNode(node->left);
+    }
+    else
+    {
+        int value = node->value;
+        if (node->right != nullptr)
+        {
+            AVLTreeNode *current = node;
+            node = node->right;
+            delete current;
+        }
+        else
+        {
+            node = nullptr;
+            delete node;
+        }
+
+        return value;
+    }
+    return 0;
+}
+
+int Bag::deleteLeftmostNode(Bag::AVLTreeNode *&node, Bag::AVLTreeNode *parent)
+{
+    if (node->left != nullptr)
+    {
+        deleteLeftmostNode(node->left, node);
+    }
+    else
+    {
+        int value = node->value;
+        if (node->right != nullptr)
+        {
+            AVLTreeNode *current = node;
+            node = node->right;
+            delete current;
+        }
+        else
+        {
+            node = nullptr;
+            delete node;
+        }
+
+        parent = parent->balance();
+
+        return value;
+    }
+    return 0;
+}
+
+void Bag::remove(Bag::AVLTreeNode *&node, int value)
+{
+    if (node == nullptr)
+        return;
+
+    if (node->value < value)
+    {
+        remove(node->right, value);
+        node = node->balance();
+        return;
+    }
+    if (node->value > value)
+    {
+        remove(node->left, value);
+        node = node->balance();
+        return;
+    }
+
+
+    if (node->left == nullptr && node->right == nullptr)
+    {
+        node = nullptr;
+        delete node;
+        return;
+    }
+
+    if (node->left == nullptr)
+    {
+        AVLTreeNode *current = node;
+        node = node->right;
+        delete current;
+        return;
+    }
+
+    if (node->right == nullptr)
+    {
+        AVLTreeNode *current = node;
+        node = node->left;
+        delete current;
+        return;
+    }
+
+    node->value = deleteLeftmostNode(node->right);
+
+    return;
+}
+
+bool Bag::exists(Bag::AVLTreeNode *&node, int value)
+{
+    if (node == nullptr)
+        return false;
+
+    if (node->value == value)
+        return true;
+    if (node->value < value)
+        return exists(node->right, value);
+    if (node->value > value)
+        return exists(node->left, value);
+
+    return false;
 }
 
 Bag::AVLTreeNode::AVLTreeNode(int value, Bag::AVLTreeNode *left, Bag::AVLTreeNode *right) : value(value), left(left), right(right)
