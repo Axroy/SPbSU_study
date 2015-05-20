@@ -6,8 +6,8 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
     ui(new Ui::TicTacToeUI)
 {
     ui->setupUi(this);
-    fieldSize = 8;
-    winLength = 4;
+    fieldSize = 3;
+    winLength = 3;
     turn = cross;
 
     buttons = new QPushButton*[fieldSize];
@@ -32,9 +32,14 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
             buttonMapper->setMapping(&buttons[i][j], fieldSize * i + j);
         }
 
+    QFont font = buttons[0][0].font();
+    font.setPointSize(16);
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
+        {
+            buttons[i][j].setFont(font);
             buttons[i][j].setText(" ");
+        }
 
     connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(onRestartButtonClicked()));
 
