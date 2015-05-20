@@ -1,4 +1,5 @@
 #pragma once
+#include <QString>
 
 class Bag
 {
@@ -8,6 +9,7 @@ public:
     void insert(int value);
     void remove(int value);
     bool exists(int value);
+    QString print();
     bool isEmpty();
     int height();
 
@@ -35,5 +37,6 @@ private:
     int deleteLeftmostNode(AVLTreeNode *&node, AVLTreeNode *parent);
     void remove(AVLTreeNode *&node, int value);
     bool exists(AVLTreeNode *&node, int value);
+    QString print(AVLTreeNode *node, QString &string);
 };
 

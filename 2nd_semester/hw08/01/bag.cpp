@@ -25,6 +25,37 @@ bool Bag::exists(int value)
     return exists(root, value);
 }
 
+QString Bag::print()
+{
+    QString result = "";
+    return print(root, result).trimmed();
+}
+
+QString Bag::print(AVLTreeNode *node, QString &string)
+{
+    if (node == nullptr)
+        return string;
+
+    string += "(";
+
+    string += QString::number(node->value);
+    string += " ";
+
+    if (node->left == nullptr)
+        string += "null ";
+    else
+        print(node->left, string);
+
+    if (node->right == nullptr)
+        string += "null";
+    else
+        print(node->right, string);
+
+    string += ") ";
+
+    return string;
+}
+
 bool Bag::isEmpty()
 {
     return root == nullptr;

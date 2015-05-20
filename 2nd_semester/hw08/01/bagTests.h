@@ -68,6 +68,17 @@ private slots:
        QVERIFY(!bag->exists(0));
    }
 
+   void printing()
+   {
+       bag->insert(56);
+       bag->insert(0);
+       bag->insert(12);
+       bag->insert(-90);
+       bag->insert(20);
+       QString correctResult = "(12 (0 (-90 null null) null) (56 (20 null null) null) )";
+       QVERIFY(bag->print() == correctResult);
+   }
+
 private:
    Bag *bag;
 };
