@@ -34,13 +34,38 @@ private slots:
        QVERIFY(bag->exists(-12));
    }
 
-   void balancing()
+   void additionWithBalancing()
    {
        bag->insert(1);
        bag->insert(2);
        bag->insert(3);
        QVERIFY(bag->height() == 2);
        QVERIFY(bag->exists(1) && bag->exists(2) && bag->exists(3));
+   }
+
+   void removal()
+   {
+       bag->insert(4);
+       bag->insert(34);
+       bag->remove(34);
+       QVERIFY(!bag->exists(34));
+       QVERIFY(bag->exists(4));
+   }
+
+   void removalWithBalancing()
+   {
+       bag->insert(1);
+       bag->insert(2);
+       bag->insert(4);
+       bag->insert(5);
+       bag->remove(1);
+       QVERIFY(!bag->exists(1));
+       QVERIFY(bag->height() == 2);
+   }
+
+   void checkExistenceOfNonExistent()
+   {
+       QVERIFY(!bag->exists(0));
    }
 
 private:
