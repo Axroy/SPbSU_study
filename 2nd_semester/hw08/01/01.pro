@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += testlib
 QT       -= gui
 
 TARGET = 01
@@ -19,6 +19,7 @@ SOURCES += main.cpp \
     bag.cpp
 
 HEADERS += \
-    bag.h
+    bag.h \
+    bagTests.h
 
 QMAKE_CXXFLAGS += -std=c++11

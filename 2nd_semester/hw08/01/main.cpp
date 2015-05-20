@@ -1,13 +1,13 @@
 #include <QCoreApplication>
 #include "bag.h"
+#include "bagTests.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    BagTests tests;
+    QTest::qExec(&tests);
 
-    Bag *bag = new Bag();
-    for (int i = 0; i < 10; i++)
-        bag->insert(i);
+    QCoreApplication a(argc, argv);
 
     return a.exec();
 }

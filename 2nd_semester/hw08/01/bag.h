@@ -8,6 +8,8 @@ public:
     void insert(int value);
     void remove(int value);
     bool exists(int value);
+    bool isEmpty();
+    int height();
 
 private:
     class AVLTreeNode

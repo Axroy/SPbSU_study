@@ -25,6 +25,16 @@ bool Bag::exists(int value)
     return exists(root, value);
 }
 
+bool Bag::isEmpty()
+{
+    return root == nullptr;
+}
+
+int Bag::height()
+{
+    return root->height;
+}
+
 void Bag::insert(Bag::AVLTreeNode *&node, int value)
 {
     if (node == nullptr)
