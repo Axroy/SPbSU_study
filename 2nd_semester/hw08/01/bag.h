@@ -1,16 +1,25 @@
 #pragma once
 #include <QString>
 
+///Class representing set with possibility of repeating elements.
+///Based on the AVL tree.
 class Bag
 {
 public:
     Bag();
     ~Bag();
+    ///Adds value to the bag.
     void insert(int value);
+    ///Removes value from the bag.
     void remove(int value);
+    ///Returns true if a value exists in the bag.
     bool exists(int value);
+    ///Returns string with structure of bag in following
+    ///representation: (value left_subtree right_subtree).
     QString print();
+    ///Returns true if the bag contains no elements.
     bool isEmpty();
+    ///Returns number of levels in tree.
     int height();
 
 private:
