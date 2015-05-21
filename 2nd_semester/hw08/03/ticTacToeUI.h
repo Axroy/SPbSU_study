@@ -19,6 +19,7 @@ public:
 private:
     void disableGameButtons();
     void enableGameButtons();
+    bool checkDraw();
 
     Ui::TicTacToeUI *ui;
     QSignalMapper *buttonMapper;
@@ -26,6 +27,7 @@ private:
     Turn turn;
     int fieldSize;
     int winLength;
+    int emptyButtons;
 
 private slots:
     void onButtonClicked(int index);

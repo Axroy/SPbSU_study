@@ -8,7 +8,7 @@ enum Turn
     circle
 };
 
-///Class for checking for draw and win.
+///Class used for checking for win.
 class TicTacToe
 {
 public:
@@ -18,10 +18,6 @@ public:
     ///Returns true if vicrory is achieved
     ///Gets coordinates of button pressed and array of buttons.
     bool checkWin(int coordinateI, int coordinateJ, QPushButton **buttons);
-
-    ///Returns true if draw is achieved.
-    ///Gets array of buttons.
-    bool checkDraw(QPushButton **buttons);
 
 private:
     int fieldSize;

@@ -9,6 +9,7 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
     fieldSize = 3;
     winLength = 3;
     turn = cross;
+    emptyButtons = fieldSize * fieldSize;
 
     buttons = new QPushButton*[fieldSize];
     for (int i = 0; i < fieldSize; i++)
@@ -66,6 +67,11 @@ void TicTacToeUI::enableGameButtons()
             buttons[i][j].setEnabled(true);
 }
 
+bool TicTacToeUI::checkDraw()
+{
+    return emptyButtons == 0;
+}
+
 void TicTacToeUI::onButtonClicked(int index)
 {
     TicTacToe model(fieldSize, winLength);
@@ -87,6 +93,7 @@ void TicTacToeUI::onButtonClicked(int index)
             ui->infoLine->setText("Crosses' turn");
             break;
     }
+    emptyButtons--;
 
     if (model.checkWin(index / fieldSize, index % fieldSize, buttons))
     {
@@ -102,7 +109,7 @@ void TicTacToeUI::onButtonClicked(int index)
         return;
     }
 
-    if (model.checkDraw(buttons))
+    if (checkDraw())
     {
         ui->infoLine->setText("DRAW");
         ui->restartButton->setFocus();
@@ -114,6 +121,7 @@ void TicTacToeUI::onButtonClicked(int index)
 void TicTacToeUI::onRestartButtonClicked()
 {
     turn = cross;
+    emptyButtons = fieldSize *fieldSize;
     enableGameButtons();
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
