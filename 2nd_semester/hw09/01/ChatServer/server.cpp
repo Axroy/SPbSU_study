@@ -77,9 +77,9 @@ void Server::sessionOpened()
 
 void Server::connected()
 {
-    QTcpSocket *clientConnection = tcpServer->nextPendingConnection();
-    connect(clientConnection, SIGNAL(disconnected()), clientConnection, SLOT(deleteLater()));
-    connect(clientConnection, SIGNAL(readyRead()), this, SLOT(readMessage()));
+    tcpSocket = tcpServer->nextPendingConnection();
+    connect(tcpSocket, SIGNAL(disconnected()), tcpSocket, SLOT(deleteLater()));
+    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     statusLabel->setText("Connected");
     chatField->setEnabled(true);
     messageField->setEnabled(true);
@@ -90,9 +90,10 @@ void Server::connected()
 void Server::readMessage()
 {
     QDataStream in(tcpSocket);
-    in.setVersion(QDataStream::Qt_4_0);
+    //in.setVersion(QDataStream::Qt_4_0);
 
-    if (blockSize == 0) {
+    if (blockSize == 0)
+    {
         if (tcpSocket->bytesAvailable() < (int)sizeof(quint16))
             return;
 
@@ -105,6 +106,7 @@ void Server::readMessage()
     QString message;
     in >> message;
     chatField->append("CLIENT: " + message);
+    blockSize = 0;
 }
 
 void Server::sendMessage()
@@ -116,7 +118,7 @@ void Server::sendMessage()
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_4_0);
+    //out.setVersion(QDataStream::Qt_4_0);
     out << (quint16)0;
     out << messageField->toPlainText();
     out.device()->seek(0);
