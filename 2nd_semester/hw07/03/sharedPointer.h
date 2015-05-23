@@ -16,11 +16,11 @@ public:
     ///For manual removal of the pointer.
     void remove();
     ///For access to object's fields and functions.
-    T *operator-> ();
+    T *operator ->();
     ///Redefinition of dereference.
-    T &operator* ();
+    T &operator *();
     ///Redefinition of assignment for shared pointers.
-    SharedPointer<T> &operator= (const SharedPointer<T> &pointer);
+    SharedPointer<T> &operator =(const SharedPointer<T> &pointer);
     ///Returns number of links with object.
     int getLinksNumber();
 
@@ -85,19 +85,19 @@ void SharedPointer<T>::remove()
 }
 
 template <typename T>
-T *SharedPointer<T>::operator->()
+T *SharedPointer<T>::operator ->()
 {
     return pointerData->object;
 }
 
 template <typename T>
-T &SharedPointer<T>::operator*()
+T &SharedPointer<T>::operator *()
 {
     return *pointerData->object;
 }
 
 template <typename T>
-SharedPointer<T> &SharedPointer<T>::operator= (const SharedPointer<T> &pointer)
+SharedPointer<T> &SharedPointer<T>::operator =(const SharedPointer<T> &pointer)
 {
     if (pointerData->object == pointer.pointerData->object)
         return *this;
