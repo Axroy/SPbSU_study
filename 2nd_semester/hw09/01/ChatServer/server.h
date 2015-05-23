@@ -27,5 +27,5 @@ private:
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;
     QNetworkSession *networkSession;
-    qint16 blockSize;
+    quint16 blockSize;
 };

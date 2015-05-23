@@ -40,9 +40,9 @@ Client::Client(QWidget *parent)
     statusLabel = new QLabel(tr("You should run the "
                                 "Chat Server as well."));
 
-    setConnectionButton = new QPushButton(tr("Set connection"));
-    setConnectionButton->setDefault(true);
-    setConnectionButton->setEnabled(false);
+    setupConnectionButton = new QPushButton(tr("Setup connection"));
+    setupConnectionButton->setDefault(true);
+    setupConnectionButton->setEnabled(false);
 
 
     QGridLayout *mainLayout = new QGridLayout;
@@ -51,7 +51,7 @@ Client::Client(QWidget *parent)
     mainLayout->addWidget(portLabel, 1, 0);
     mainLayout->addWidget(portLineEdit, 1, 1);
     mainLayout->addWidget(statusLabel, 2, 0, 1, 2);
-    mainLayout->addWidget(setConnectionButton, 3, 0, 1, 2);
+    mainLayout->addWidget(setupConnectionButton, 3, 0, 1, 2);
     setLayout(mainLayout);
 
     setWindowTitle(tr("Chat Client"));
@@ -82,16 +82,16 @@ Client::Client(QWidget *parent)
         networkSession = new QNetworkSession(manager.defaultConfiguration(), this);
         connect(networkSession, SIGNAL(opened()), this, SLOT(sessionOpened()));
 
-        setConnectionButton->setEnabled(false);
+        setupConnectionButton->setEnabled(false);
         statusLabel->setText(tr("Opening network session."));
         networkSession->open();
     }
 
-    connect(setConnectionButton, SIGNAL(clicked()), this, SLOT(setConnection()));
+    connect(setupConnectionButton, SIGNAL(clicked()), this, SLOT(setupConnection()));
     connect(tcpSocket, SIGNAL(connected()), this, SLOT(connected()));
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     connect(enterButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
-    connect(portLineEdit, SIGNAL(textChanged(QString)), this, SLOT(enableSetConnectionButton()));
+    connect(portLineEdit, SIGNAL(textChanged(QString)), this, SLOT(enableSetupConnectionButton()));
 }
 
 
@@ -100,7 +100,7 @@ void Client::sessionOpened()
     statusLabel->setText(tr("You should run the "
                             "Chat Server as well."));
 
-    setConnectionButton->setEnabled(true);
+    setupConnectionButton->setEnabled(true);
 }
 
 void Client::connected()
@@ -112,11 +112,11 @@ void Client::connected()
     chatField->append("<New chat started>");
 }
 
-void Client::setConnection()
+void Client::setupConnection()
 {
-    setConnectionButton->setEnabled(false);
+    setupConnectionButton->setEnabled(false);
     blockSize = 0;
-    //tcpSocket->abort();
+    tcpSocket->abort();
     tcpSocket->connectToHost(hostCombo->currentText(), portLineEdit->text().toInt());
 }
 
@@ -138,33 +138,13 @@ void Client::readMessage()
 
     QString message;
     in >> message;
-    chatField->append("SERVER: " + message);
-    if (message == "")
-        chatField->append("NOTHING");
+    chatField->append("SERVER:\n" + message);
     blockSize = 0;
-
-    /*QDataStream in(tcpSocket);
-    if (blockSize == 0)
-    {
-        if (tcpSocket->bytesAvailable() < (int)sizeof(quint16))
-            return;
-        in >> blockSize;
-    }
-    if (tcpSocket->bytesAvailable() >= blockSize)
-    {
-        QString message;
-        in >> message;
-        chatField->append("server: " + message);
-        blockSize = 0;
-    }*/
 }
 
 void Client::sendMessage()
 {
-    chatField->append("CLIENT: ");
-    chatField->append(messageField->toPlainText());
-    chatField->append("");
-    messageField->clear();
+    chatField->append("CLIENT:\n" + messageField->toPlainText());
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
@@ -176,21 +156,10 @@ void Client::sendMessage()
 
     tcpSocket->write(block);
 
-
-    /*QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out << (quint16)0;
-    out << messageField->toPlainText();
-
-    chatField->append("me: " + messageField->toPlainText());
     messageField->clear();
-
-    out.device()->seek(0);
-    out << (quint16)(block.size() - sizeof(quint16));
-    tcpSocket->write(block);*/
 }
 
-void Client::enableSetConnectionButton()
+void Client::enableSetupConnectionButton()
 {
-    setConnectionButton->setEnabled(true);
+    setupConnectionButton->setEnabled(true);
 }

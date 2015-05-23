@@ -14,10 +14,10 @@ public:
 private slots:
     void sessionOpened();
     void connected();
-    void setConnection();
+    void setupConnection();
     void readMessage();
     void sendMessage();
-    void enableSetConnectionButton();
+    void enableSetupConnectionButton();
 
 private:
     QTextEdit *chatField;
@@ -29,9 +29,9 @@ private:
     QLabel *portLabel;
     QComboBox *hostCombo;
     QLineEdit *portLineEdit;
-    QPushButton *setConnectionButton;
+    QPushButton *setupConnectionButton;
 
     QTcpSocket *tcpSocket;
     QNetworkSession *networkSession;
-    qint16 blockSize;
+    quint16 blockSize;
 };

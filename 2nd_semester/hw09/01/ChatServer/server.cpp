@@ -80,7 +80,7 @@ void Server::connected()
 {
     blockSize = 0;
     tcpSocket = tcpServer->nextPendingConnection();
-    //connect(tcpSocket, SIGNAL(disconnected()), tcpSocket, SLOT(deleteLater()));
+    connect(tcpSocket, SIGNAL(disconnected()), tcpSocket, SLOT(deleteLater()));
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     statusLabel->setText("Connected");
     chatField->setEnabled(true);
@@ -107,16 +107,13 @@ void Server::readMessage()
 
     QString message;
     in >> message;
-    chatField->append("CLIENT: " + message);
+    chatField->append("CLIENT:\n" + message);
     blockSize = 0;
 }
 
 void Server::sendMessage()
 {
-    chatField->append("SERVER: ");
-    chatField->append(messageField->toPlainText());
-    chatField->append("");
-    messageField->clear();
+    chatField->append("SERVER:\n" + messageField->toPlainText());
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
@@ -127,4 +124,5 @@ void Server::sendMessage()
     out << (quint16)(block.size() - sizeof(quint16));
 
     tcpSocket->write(block);
+    messageField->clear();
 }
