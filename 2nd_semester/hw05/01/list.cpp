@@ -53,6 +53,18 @@ void List::remove(const QString &value)
     }
 }
 
+QString List::pop()
+{
+    QString result = "";
+
+    if (isEmpty())
+        return result;
+
+    result = head->next->data;
+    remove(result);
+    return result;
+}
+
 void List::print()
 {
     if (isEmpty())

@@ -14,6 +14,8 @@ public:
     void add(const QString &value);\
     ///Removes a value from the list.
     void remove(const QString &value);
+    ///Removes first value from the list and returns it.
+    QString pop();
     ///Prints list to console.
     void print();
     ///Returns true if the list has no elements.

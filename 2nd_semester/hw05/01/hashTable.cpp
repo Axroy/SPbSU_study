@@ -131,6 +131,20 @@ void HashTable::changeHashFunction(HashFunctions *function)
 {
     if (function == nullptr)
         return;
+
+    List **oldTable = table;
+    table = new List*[size];
+    for (int i = 0; i < size; i++)
+        table[i] = new List();
+
     hashFunction = function;
+
+    for (int i = 0; i < size; i++)
+        while (!oldTable[i]->isEmpty())
+            addValue(oldTable[i]->pop());
+
+    for (int i = 0; i < size; i++)
+        delete oldTable[i];
+    delete[] oldTable;
 }
 
