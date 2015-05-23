@@ -3,6 +3,7 @@
 #include <QtNetwork>
 #include <QtWidgets>
 #include <QTcpServer>
+#include <QTcpSocket>
 
 class Server : public QWidget
 {

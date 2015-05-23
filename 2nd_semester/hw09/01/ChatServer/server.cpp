@@ -1,7 +1,7 @@
 #include "server.h"
 
 Server::Server(QWidget *parent)
-    : QWidget(parent), tcpServer(0), tcpSocket(0), networkSession(0)
+    : QWidget(parent), tcpServer(0), tcpSocket(0), networkSession(0), blockSize(0)
 {
     statusLabel = new QLabel;
 
@@ -40,6 +40,7 @@ Server::Server(QWidget *parent)
 
     connect(tcpServer, SIGNAL(newConnection()), this, SLOT(connected()));
     connect(enterButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
+    //connect(tcpSocket, SIGNAL(readyRead())
 }
 
 
@@ -77,8 +78,9 @@ void Server::sessionOpened()
 
 void Server::connected()
 {
+    blockSize = 0;
     tcpSocket = tcpServer->nextPendingConnection();
-    connect(tcpSocket, SIGNAL(disconnected()), tcpSocket, SLOT(deleteLater()));
+    //connect(tcpSocket, SIGNAL(disconnected()), tcpSocket, SLOT(deleteLater()));
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     statusLabel->setText("Connected");
     chatField->setEnabled(true);
@@ -90,7 +92,7 @@ void Server::connected()
 void Server::readMessage()
 {
     QDataStream in(tcpSocket);
-    //in.setVersion(QDataStream::Qt_4_0);
+    in.setVersion(QDataStream::Qt_4_0);
 
     if (blockSize == 0)
     {
@@ -118,7 +120,7 @@ void Server::sendMessage()
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
-    //out.setVersion(QDataStream::Qt_4_0);
+    out.setVersion(QDataStream::Qt_4_0);
     out << (quint16)0;
     out << messageField->toPlainText();
     out.device()->seek(0);

@@ -1,7 +1,7 @@
 #include "client.h"
 
 Client::Client(QWidget *parent)
-    : QWidget(parent), tcpSocket(new QTcpSocket(this)), networkSession(0)
+    : QWidget(parent), tcpSocket(new QTcpSocket(/*this*/)), networkSession(0), blockSize(0)
 {
     hostLabel = new QLabel(tr("&Server name:"));
     portLabel = new QLabel(tr("S&erver port:"));
@@ -116,15 +116,14 @@ void Client::setConnection()
 {
     setConnectionButton->setEnabled(false);
     blockSize = 0;
-    tcpSocket->abort();
-    tcpSocket->connectToHost(hostCombo->currentText(),
-                             portLineEdit->text().toInt());
+    //tcpSocket->abort();
+    tcpSocket->connectToHost(hostCombo->currentText(), portLineEdit->text().toInt());
 }
 
 void Client::readMessage()
 {
     QDataStream in(tcpSocket);
-    //in.setVersion(QDataStream::Qt_4_0);
+    in.setVersion(QDataStream::Qt_4_0);
 
     if (blockSize == 0)
     {
@@ -140,7 +139,24 @@ void Client::readMessage()
     QString message;
     in >> message;
     chatField->append("SERVER: " + message);
+    if (message == "")
+        chatField->append("NOTHING");
     blockSize = 0;
+
+    /*QDataStream in(tcpSocket);
+    if (blockSize == 0)
+    {
+        if (tcpSocket->bytesAvailable() < (int)sizeof(quint16))
+            return;
+        in >> blockSize;
+    }
+    if (tcpSocket->bytesAvailable() >= blockSize)
+    {
+        QString message;
+        in >> message;
+        chatField->append("server: " + message);
+        blockSize = 0;
+    }*/
 }
 
 void Client::sendMessage()
@@ -152,13 +168,26 @@ void Client::sendMessage()
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
-    //out.setVersion(QDataStream::Qt_4_0);
+    out.setVersion(QDataStream::Qt_4_0);
     out << (quint16)0;
     out << messageField->toPlainText();
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
 
     tcpSocket->write(block);
+
+
+    /*QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out << (quint16)0;
+    out << messageField->toPlainText();
+
+    chatField->append("me: " + messageField->toPlainText());
+    messageField->clear();
+
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+    tcpSocket->write(block);*/
 }
 
 void Client::enableSetConnectionButton()
