@@ -4,10 +4,6 @@
 
 #include "parseTreeNode.h"
 #include "operationNode.h"
-#include "sumNode.h"
-#include "substractionNode.h"
-#include "multiplicationNode.h"
-#include "divisionNode.h"
 #include "valueNode.h"
 
 ///Class for parse tree.
