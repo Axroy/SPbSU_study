@@ -1,10 +1,14 @@
 #include <iostream>
+#include "filePrinterTests.h"
 #include "squareArray.h"
 #include "consolePrinter.h"
 #include "filePrinter.h"
 
 int main()
 {
+    FilePrinterTests tests;
+    QTest::qExec(&tests);
+
     std::cout << "The program shows elements of a square array going spiral-like from it's center.";
     std::cout << "So, its size must be an odd number.\n";
     std::cout << "Enter the array's size: ";

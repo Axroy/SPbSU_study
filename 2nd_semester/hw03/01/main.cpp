@@ -4,6 +4,7 @@
 #include "heapSorter.h"
 #include "insertionSorter.h"
 #include "bubbleSorter.h"
+#include "sortersTests.h"
 
 ///Prints an array with known size
 void print(int *array, int size)
@@ -14,7 +15,10 @@ void print(int *array, int size)
 
 int main()
 {
-    std::cout << "The program sorts an array with different sorting algorythms.\n";
+    SortersTests tests;
+    QTest::qExec(&tests);
+
+    std::cout << "\nThe program sorts an array with different sorting algorythms.\n";
     const int size = 10;
     int array[size] = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 

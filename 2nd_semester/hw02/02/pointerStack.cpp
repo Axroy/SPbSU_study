@@ -33,6 +33,9 @@ void PointerStack::push(int value)
 
 int PointerStack::pop()
 {
+    if (top->next == nullptr)
+        return 0;
+
     int result = top->next->data;
     StackElement *toRemove = top->next;
     top->next = toRemove->next;

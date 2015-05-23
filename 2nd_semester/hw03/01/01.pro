@@ -1,7 +1,12 @@
+QT       += core
+QT       -= gui
+QT       += testlib
+
+TARGET = 01
+CONFIG   += console
+CONFIG   -= app_bundle
+
 TEMPLATE = app
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
 
 SOURCES += main.cpp \
     quickSorter.cpp \
@@ -9,13 +14,11 @@ SOURCES += main.cpp \
     insertionSorter.cpp \
     bubbleSorter.cpp
 
-include(deployment.pri)
-qtcAddDeployment()
-
 HEADERS += \
     sorter.h \
     quickSorter.h \
     heapSorter.h \
     insertionSorter.h \
-    bubbleSorter.h
+    bubbleSorter.h \
+    sortersTests.h
 

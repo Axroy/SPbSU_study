@@ -15,6 +15,8 @@ public:
     void remove(LinkedList *toRemove);
     ///Prints sizes of elements in the set
     void print();
+    ///Returns size of the set.
+    int getSize();
 
 private:
     class SetElement
@@ -30,4 +32,6 @@ private:
 
     bool isEmpty();
     void addFirst(LinkedList *newList);
+
+    int size;
 };

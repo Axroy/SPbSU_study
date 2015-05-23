@@ -1,7 +1,7 @@
 #include <iostream>
 #include "sortedSet.h"
 
-SortedSet::SortedSet() : head(nullptr)
+SortedSet::SortedSet() : head(nullptr), size(0)
 {}
 
 SortedSet::~SortedSet()
@@ -34,6 +34,7 @@ void SortedSet::add(LinkedList *newList)
         SetElement *node = new SetElement(newList, current->next);
         current->next = node;
     }
+    size++;
 }
 
 void SortedSet::remove(LinkedList *toRemove)
@@ -47,6 +48,7 @@ void SortedSet::remove(LinkedList *toRemove)
     {
         head = current->next;
         delete current;
+        size--;
         return;
     }
 
@@ -58,6 +60,7 @@ void SortedSet::remove(LinkedList *toRemove)
         SetElement *removedElement = current->next;
         current->next = removedElement->next;
         delete removedElement;
+        size--;
     }
 }
 
@@ -72,6 +75,11 @@ void SortedSet::print()
         current = current->next;
     }
     std::cout << current->list->getSize();
+}
+
+int SortedSet::getSize()
+{
+    return size;
 }
 
 bool SortedSet::isEmpty()

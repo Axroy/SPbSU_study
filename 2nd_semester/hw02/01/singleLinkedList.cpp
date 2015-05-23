@@ -1,10 +1,8 @@
 #include <iostream>
 #include "singleLinkedList.h"
 
-SingleLinkedList::SingleLinkedList()
+SingleLinkedList::SingleLinkedList() : head(new ListElement(0, nullptr))
 {
-    //SingleLinkedList *list = new SingleLinkedList;
-    head = new ListElement(0, nullptr);
 }
 
 SingleLinkedList::~SingleLinkedList()
@@ -25,6 +23,7 @@ void SingleLinkedList::add(int value)
 {
     ListElement *node = new ListElement(value, head->next);
     head->next = node;
+    size++;
 }
 
 void SingleLinkedList::remove(int value)
@@ -38,6 +37,7 @@ void SingleLinkedList::remove(int value)
     {
         head->next = current->next;
         delete current;
+        size--;
         return;
     }
 
@@ -49,6 +49,7 @@ void SingleLinkedList::remove(int value)
         ListElement *removedElement = current->next;
         current->next = removedElement->next;
         delete removedElement;
+        size--;
     }
 }
 
@@ -66,7 +67,10 @@ void SingleLinkedList::print()
     std::cout << current->data;
 }
 
-
+int SingleLinkedList::getSize()
+{
+    return size;
+}
 
 SingleLinkedList::ListElement::ListElement(int value, SingleLinkedList::ListElement *nextElement)
 {
