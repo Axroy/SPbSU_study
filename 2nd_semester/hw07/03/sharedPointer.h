@@ -102,6 +102,7 @@ SharedPointer<T> &SharedPointer<T>::operator= (const SharedPointer<T> &pointer)
     if (pointerData->object == pointer.pointerData->object)
         return *this;
 
+    this->remove();
     pointerData->object = pointer.pointerData->object;
     if (pointerData->object != nullptr)
         pointerData->linksNumber++;
