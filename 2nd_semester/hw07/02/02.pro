@@ -16,10 +16,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    uniqueList.cpp
+    uniqueList.cpp \
+    linkedList.cpp
 
 HEADERS += \
     uniqueList.h \
-    uniqueListTests.h
+    uniqueListTests.h \
+    linkedList.h
 
 QMAKE_CXXFLAGS += -std=c++11
