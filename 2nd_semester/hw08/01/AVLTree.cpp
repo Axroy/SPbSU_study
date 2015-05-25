@@ -1,37 +1,37 @@
-#include "bag.h"
+#include "AVLTree.h"
 
-Bag::Bag() : root(nullptr)
+AVLTree::AVLTree() : root(nullptr)
 {
 }
 
-Bag::~Bag()
+AVLTree::~AVLTree()
 {
     while (root != nullptr)
         deleteLeftmostNode(root);
 }
 
-void Bag::insert(int value)
+void AVLTree::insert(int value)
 {
     insert(root, value);
 }
 
-void Bag::remove(int value)
+void AVLTree::remove(int value)
 {
     remove(root, value);
 }
 
-bool Bag::exists(int value)
+bool AVLTree::exists(int value)
 {
     return exists(root, value);
 }
 
-QString Bag::print()
+QString AVLTree::print()
 {
     QString result = "";
     return print(root, result).trimmed();
 }
 
-QString Bag::print(AVLTreeNode *node, QString &string)
+QString AVLTree::print(AVLTreeNode *node, QString &string)
 {
     if (node == nullptr)
         return string;
@@ -56,17 +56,17 @@ QString Bag::print(AVLTreeNode *node, QString &string)
     return string;
 }
 
-bool Bag::isEmpty()
+bool AVLTree::isEmpty()
 {
     return root == nullptr;
 }
 
-int Bag::height()
+int AVLTree::height()
 {
     return root->height;
 }
 
-void Bag::insert(Bag::AVLTreeNode *&node, int value)
+void AVLTree::insert(AVLTree::AVLTreeNode *&node, int value)
 {
     if (node == nullptr)
     {
@@ -90,7 +90,7 @@ void Bag::insert(Bag::AVLTreeNode *&node, int value)
     return;
 }
 
-int Bag::deleteLeftmostNode(Bag::AVLTreeNode *&node)
+int AVLTree::deleteLeftmostNode(AVLTree::AVLTreeNode *&node)
 {
     if (node->left != nullptr)
     {
@@ -116,7 +116,7 @@ int Bag::deleteLeftmostNode(Bag::AVLTreeNode *&node)
     return 0;
 }
 
-int Bag::deleteLeftmostNode(Bag::AVLTreeNode *&node, Bag::AVLTreeNode *parent)
+int AVLTree::deleteLeftmostNode(AVLTree::AVLTreeNode *&node, AVLTree::AVLTreeNode *parent)
 {
     if (node->left != nullptr)
     {
@@ -144,7 +144,7 @@ int Bag::deleteLeftmostNode(Bag::AVLTreeNode *&node, Bag::AVLTreeNode *parent)
     return 0;
 }
 
-void Bag::remove(Bag::AVLTreeNode *&node, int value)
+void AVLTree::remove(AVLTree::AVLTreeNode *&node, int value)
 {
     if (node == nullptr)
         return;
@@ -191,7 +191,7 @@ void Bag::remove(Bag::AVLTreeNode *&node, int value)
     return;
 }
 
-bool Bag::exists(Bag::AVLTreeNode *&node, int value)
+bool AVLTree::exists(AVLTree::AVLTreeNode *&node, int value)
 {
     if (node == nullptr)
         return false;
@@ -206,17 +206,17 @@ bool Bag::exists(Bag::AVLTreeNode *&node, int value)
     return false;
 }
 
-Bag::AVLTreeNode::AVLTreeNode(int value, Bag::AVLTreeNode *left, Bag::AVLTreeNode *right) : value(value), left(left), right(right)
+AVLTree::AVLTreeNode::AVLTreeNode(int value, AVLTree::AVLTreeNode *left, AVLTree::AVLTreeNode *right) : value(value), left(left), right(right)
 {
     updateHeight();
 }
 
-int Bag::AVLTreeNode::balanceFactor()
+int AVLTree::AVLTreeNode::balanceFactor()
 {
     return right->getHeight() - left->getHeight();
 }
 
-int Bag::AVLTreeNode::getHeight()
+int AVLTree::AVLTreeNode::getHeight()
 {
     if (this == nullptr)
         return 0;
@@ -224,7 +224,7 @@ int Bag::AVLTreeNode::getHeight()
         return height;
 }
 
-void Bag::AVLTreeNode::updateHeight()
+void AVLTree::AVLTreeNode::updateHeight()
 {
     int heightLeft = left->getHeight();
     int heightRight = right->getHeight();
@@ -235,7 +235,7 @@ void Bag::AVLTreeNode::updateHeight()
         height = heightRight + 1;
 }
 
-Bag::AVLTreeNode *Bag::AVLTreeNode::rotateRight()
+AVLTree::AVLTreeNode *AVLTree::AVLTreeNode::rotateRight()
 {
     AVLTreeNode *pivot = left;
     left = pivot->right;
@@ -246,7 +246,7 @@ Bag::AVLTreeNode *Bag::AVLTreeNode::rotateRight()
     return pivot;
 }
 
-Bag::AVLTreeNode *Bag::AVLTreeNode::rotateLeft()
+AVLTree::AVLTreeNode *AVLTree::AVLTreeNode::rotateLeft()
 {
     AVLTreeNode *pivot = right;
     right = pivot->left;
@@ -257,7 +257,7 @@ Bag::AVLTreeNode *Bag::AVLTreeNode::rotateLeft()
     return pivot;
 }
 
-Bag::AVLTreeNode *Bag::AVLTreeNode::balance()
+AVLTree::AVLTreeNode *AVLTree::AVLTreeNode::balance()
 {
     updateHeight();
 

@@ -1,51 +1,43 @@
 #pragma once
-#include <QString>
+#include "AVLTree.h"
 
 ///Class representing set with possibility of repeating elements.
 ///Based on the AVL tree.
 class Bag
 {
 public:
-    Bag();
-    ~Bag();
+    Bag() : tree(new AVLTree){}
+    ~Bag()
+    {
+        delete tree;
+    }
     ///Adds value to the bag.
-    void insert(int value);
+    void insert(int value)
+    {
+        tree->insert(value);
+    }
     ///Removes value from the bag.
-    void remove(int value);
+    void remove(int value)
+    {
+        tree->remove(value);
+    }
     ///Returns true if a value exists in the bag.
-    bool exists(int value);
+    bool exists(int value)
+    {
+        return tree->exists(value);
+    }
     ///Returns string with structure of bag in following
     ///representation: (value left_subtree right_subtree).
-    QString print();
+    QString print()
+    {
+        return tree->print();
+    }
     ///Returns true if the bag contains no elements.
-    bool isEmpty();
-    ///Returns number of levels in tree.
-    int height();
+    bool isEmpty()
+    {
+        return tree->isEmpty();
+    }
 
 private:
-    class AVLTreeNode
-    {
-    public:
-        AVLTreeNode(int value, AVLTreeNode *left, AVLTreeNode *right);
-        int balanceFactor();
-        int getHeight();
-        void updateHeight();
-        AVLTreeNode *rotateRight();
-        AVLTreeNode *rotateLeft();
-        AVLTreeNode *balance();
-
-        int value;
-        int height;
-        AVLTreeNode *left;
-        AVLTreeNode *right;
-    };
-    AVLTreeNode *root;
-
-    void insert(AVLTreeNode *&node, int value);
-    int deleteLeftmostNode(AVLTreeNode *&node);
-    int deleteLeftmostNode(AVLTreeNode *&node, AVLTreeNode *parent);
-    void remove(AVLTreeNode *&node, int value);
-    bool exists(AVLTreeNode *&node, int value);
-    QString print(AVLTreeNode *node, QString &string);
+    AVLTree *tree;
 };
-

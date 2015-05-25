@@ -1,5 +1,4 @@
 #include <QCoreApplication>
-#include "bag.h"
 #include "bagTests.h"
 
 int main(int argc, char *argv[])

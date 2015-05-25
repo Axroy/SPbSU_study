@@ -2,7 +2,7 @@
 
 #include <QtCore/QObject>
 #include <QtTest/QtTest>
-#include "bag.h"
+#include "Bag.h"
 
 class BagTests : public QObject
 {
@@ -34,12 +34,11 @@ private slots:
        QVERIFY(bag->exists(-12));
    }
 
-   void additionWithBalancing()
+   void multipleAddition()
    {
        bag->insert(1);
        bag->insert(2);
        bag->insert(3);
-       QVERIFY(bag->height() == 2);
        QVERIFY(bag->exists(1) && bag->exists(2) && bag->exists(3));
    }
 
@@ -52,15 +51,15 @@ private slots:
        QVERIFY(bag->exists(4));
    }
 
-   void removalWithBalancing()
+   void multipleRemoval()
    {
        bag->insert(1);
        bag->insert(2);
        bag->insert(4);
-       bag->insert(5);
        bag->remove(1);
-       QVERIFY(!bag->exists(1));
-       QVERIFY(bag->height() == 2);
+       bag->remove(4);
+       bag->remove(2);
+       QVERIFY(bag->isEmpty());
    }
 
    void checkExistenceOfNonExistent()

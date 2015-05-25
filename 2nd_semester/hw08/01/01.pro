@@ -16,10 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    bag.cpp
+    AVLTree.cpp
 
 HEADERS += \
-    bag.h \
-    bagTests.h
+    bagTests.h \
+    AVLTree.h \
+    bag.h
 
 QMAKE_CXXFLAGS += -std=c++11
