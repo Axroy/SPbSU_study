@@ -14,6 +14,7 @@ public:
 private slots:
     void sessionOpened();
     void connected();
+    void disconnected();
     void setupConnection();
     void readMessage();
     void sendMessage();

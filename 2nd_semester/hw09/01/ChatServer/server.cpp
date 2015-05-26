@@ -40,7 +40,6 @@ Server::Server(QWidget *parent)
 
     connect(tcpServer, SIGNAL(newConnection()), this, SLOT(connected()));
     connect(enterButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
-    //connect(tcpSocket, SIGNAL(readyRead())
 }
 
 
@@ -56,7 +55,6 @@ void Server::sessionOpened()
         return;
     }
 
-    QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // use the first non-localhost IPv4 address
     for (int i = 0; i < ipAddressesList.size(); ++i)
@@ -81,12 +79,24 @@ void Server::connected()
     blockSize = 0;
     tcpSocket = tcpServer->nextPendingConnection();
     connect(tcpSocket, SIGNAL(disconnected()), tcpSocket, SLOT(deleteLater()));
+    connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     statusLabel->setText("Connected");
     chatField->setEnabled(true);
     messageField->setEnabled(true);
     enterButton->setEnabled(true);
     chatField->append("<New chat started>");
+}
+
+void Server::disconnected()
+{
+    statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
+                            "Run the Chat Client now.")
+                         .arg(ipAddress).arg(tcpServer->serverPort()));
+    chatField->append("<Client disconnected>");
+    chatField->setDisabled(true);
+    messageField->setDisabled(true);
+    enterButton->setDisabled(true);
 }
 
 void Server::readMessage()

@@ -92,6 +92,7 @@ Client::Client(QWidget *parent)
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     connect(enterButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
     connect(portLineEdit, SIGNAL(textChanged(QString)), this, SLOT(enableSetupConnectionButton()));
+    connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 }
 
 
@@ -110,6 +111,17 @@ void Client::connected()
     messageField->setEnabled(true);
     enterButton->setEnabled(true);
     chatField->append("<New chat started>");
+}
+
+void Client::disconnected()
+{
+    statusLabel->setText(tr("You should run the "
+                            "Chat Server as well."));
+    chatField->append("<Server disconnected>");
+    chatField->setDisabled(true);
+    messageField->setDisabled(true);
+    enterButton->setDisabled(true);
+    setupConnectionButton->setEnabled(true);
 }
 
 void Client::setupConnection()

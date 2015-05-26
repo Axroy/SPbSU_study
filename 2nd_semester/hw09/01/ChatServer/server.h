@@ -15,6 +15,7 @@ public:
 private slots:
     void sessionOpened();
     void connected();
+    void disconnected();
     void readMessage();
     void sendMessage();
 
@@ -28,4 +29,5 @@ private:
     QTcpSocket *tcpSocket;
     QNetworkSession *networkSession;
     quint16 blockSize;
+    QString ipAddress;
 };
