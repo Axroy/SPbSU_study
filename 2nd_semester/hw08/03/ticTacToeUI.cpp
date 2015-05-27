@@ -8,6 +8,7 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
     ui->setupUi(this);
     fieldSize = 3;
     winLength = 3;
+    model = new TicTacToe(fieldSize, winLength);
     turn = cross;
     emptyButtons = fieldSize * fieldSize;
 
@@ -74,8 +75,6 @@ bool TicTacToeUI::checkDraw()
 
 void TicTacToeUI::onButtonClicked(int index)
 {
-    TicTacToe model(fieldSize, winLength);
-
     if (buttons[index / fieldSize][index % fieldSize].text() == "X" ||
             buttons[index / fieldSize][index % fieldSize].text() == "O")
         return;
@@ -91,11 +90,12 @@ void TicTacToeUI::onButtonClicked(int index)
             buttons[index / fieldSize][index % fieldSize].setText("O");
             turn = cross;
             ui->infoLine->setText("Crosses' turn");
-            break;
+            break;     
     }
+    model->takeTurn(index / fieldSize, index % fieldSize, turn);
     emptyButtons--;
 
-    if (model.checkWin(index / fieldSize, index % fieldSize, buttons))
+    if (model->checkWin(index / fieldSize, index % fieldSize))
     {
         //The winners are those whose the previous (winning) turn was
         if (turn == cross)
@@ -120,6 +120,7 @@ void TicTacToeUI::onButtonClicked(int index)
 
 void TicTacToeUI::onRestartButtonClicked()
 {
+    model->reset();
     turn = cross;
     emptyButtons = fieldSize *fieldSize;
     enableGameButtons();

@@ -24,6 +24,7 @@ private:
     Ui::TicTacToeUI *ui;
     QSignalMapper *buttonMapper;
     QPushButton **buttons;
+    TicTacToe *model;
     Turn turn;
     int fieldSize;
     int winLength;

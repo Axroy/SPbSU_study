@@ -2,9 +2,31 @@
 
 TicTacToe::TicTacToe(int fieldSize, int winLength) : fieldSize(fieldSize), winLength(winLength)
 {
+    buttons = new QChar*[fieldSize];
+    for (int i = 0; i < fieldSize; i++)
+        buttons[i] = new QChar[fieldSize];
+
+    for (int i = 0; i < fieldSize; i++)
+        for (int j = 0; j < fieldSize; j++)
+            buttons[i][j] = ' ';
 }
 
-bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons)
+TicTacToe::~TicTacToe()
+{
+    for (int i = 0; i < fieldSize; i++)
+        delete[] buttons[i];
+    delete[] buttons;
+}
+
+void TicTacToe::takeTurn(int coordinateI, int coordinateJ, Turn turn)
+{
+    if (turn == cross)
+        buttons[coordinateI][coordinateJ] = 'X';
+    else
+        buttons[coordinateI][coordinateJ] = 'O';
+}
+
+bool TicTacToe::checkWin(int coordinateI, int coordinateJ)
 {
     //Column case
     int winCounter = 1;
@@ -12,7 +34,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     int i = coordinateI - 1;
     while (i >= 0 && maxCounter < winLength)
     {
-        if (buttons[i][coordinateJ].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[i][coordinateJ] == buttons[coordinateI][coordinateJ])
             winCounter++;
         i--;
         maxCounter++;
@@ -21,7 +43,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     maxCounter = 1;
     while (i < fieldSize && maxCounter < winLength)
     {
-        if (buttons[i][coordinateJ].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[i][coordinateJ] == buttons[coordinateI][coordinateJ])
             winCounter++;
         i++;
         maxCounter++;
@@ -36,7 +58,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     int j = coordinateJ - 1;
     while (j >= 0 && maxCounter < winLength)
     {
-        if (buttons[coordinateI][j].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[coordinateI][j] == buttons[coordinateI][coordinateJ])
             winCounter++;
         j--;
         maxCounter++;
@@ -45,7 +67,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     maxCounter = 1;
     while (j < fieldSize && maxCounter < winLength)
     {
-        if (buttons[coordinateI][j].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[coordinateI][j] == buttons[coordinateI][coordinateJ])
             winCounter++;
         j++;
         maxCounter++;
@@ -61,7 +83,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     j = coordinateJ - 1;
     while (j >= 0 && i >= 0 && maxCounter < winLength)
     {
-        if (buttons[i][j].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
             winCounter++;
         i--;
         j--;
@@ -72,7 +94,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     maxCounter = 1;
     while (j < fieldSize && i < fieldSize && maxCounter < winLength)
     {
-        if (buttons[i][j].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
             winCounter++;
         i++;
         j++;
@@ -89,7 +111,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     j = coordinateJ + 1;
     while (j < fieldSize && i >= 0 && maxCounter < winLength)
     {
-        if (buttons[i][j].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
             winCounter++;
         i--;
         j++;
@@ -100,7 +122,7 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
     maxCounter = 1;
     while (j >= 0 && i < fieldSize && maxCounter < winLength)
     {
-        if (buttons[i][j].text() == buttons[coordinateI][coordinateJ].text())
+        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
             winCounter++;
         i++;
         j--;
@@ -110,5 +132,12 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ, QPushButton **buttons
         return true;
 
     return false;
+}
+
+void TicTacToe::reset()
+{
+    for (int i = 0; i < fieldSize; i++)
+        for (int j = 0; j < fieldSize; j++)
+            buttons[i][j] = ' ';
 }
 
