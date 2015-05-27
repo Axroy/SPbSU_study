@@ -28,6 +28,9 @@ void TicTacToe::takeTurn(int coordinateI, int coordinateJ, Turn turn)
 
 bool TicTacToe::checkWin(int coordinateI, int coordinateJ)
 {
+    if (buttons[coordinateI][coordinateJ] == ' ')
+        return false;
+
     //Column case
     int winCounter = 1;
     int maxCounter = 1;
