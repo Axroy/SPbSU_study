@@ -69,6 +69,17 @@ private slots:
         model->reset();
     }
 
+    void twoWinLines()
+    {
+        model->takeTurn(0, 0, cross);
+        model->takeTurn(1, 0, cross);
+        model->takeTurn(2, 2, cross);
+        model->takeTurn(2, 1, cross);
+        model->takeTurn(2, 0, cross);
+        QVERIFY(model->checkWin(2, 0));
+        model->reset();
+    }
+
 private:
     TicTacToe *model;
     int fieldSize;
