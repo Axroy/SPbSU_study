@@ -8,6 +8,14 @@ enum Turn
     circle
 };
 
+enum Bypass
+{
+    row,
+    column,
+    mainDiagonal,
+    antiDiagonal
+};
+
 ///Class used for checking for win.
 class TicTacToe
 {
@@ -28,6 +36,8 @@ public:
     void reset();
 
 private:
+    bool lineCheck(int coordinateI, int coordinateJ, Bypass bypass);
+
     QChar** buttons;
     int fieldSize;
     int winLength;

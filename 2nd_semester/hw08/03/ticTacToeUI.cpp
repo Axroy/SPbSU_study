@@ -6,8 +6,8 @@ TicTacToeUI::TicTacToeUI(QWidget *parent) :
     ui(new Ui::TicTacToeUI)
 {
     ui->setupUi(this);
-    fieldSize = 3;
-    winLength = 3;
+    fieldSize = 8;
+    winLength = 4;
     model = new TicTacToe(fieldSize, winLength);
     turn = cross;
     emptyButtons = fieldSize * fieldSize;

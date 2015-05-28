@@ -31,110 +31,10 @@ bool TicTacToe::checkWin(int coordinateI, int coordinateJ)
     if (buttons[coordinateI][coordinateJ] == ' ')
         return false;
 
-    //Column case
-    int winCounter = 1;
-    int maxCounter = 1;
-    int i = coordinateI - 1;
-    while (i >= 0 && maxCounter < winLength)
-    {
-        if (buttons[i][coordinateJ] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        i--;
-        maxCounter++;
-    }
-    i = coordinateI + 1;
-    maxCounter = 1;
-    while (i < fieldSize && maxCounter < winLength)
-    {
-        if (buttons[i][coordinateJ] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        i++;
-        maxCounter++;
-    }
-    if (winCounter == winLength)
-        return true;
-
-
-    //Row case
-    winCounter = 1;
-    maxCounter = 1;
-    int j = coordinateJ - 1;
-    while (j >= 0 && maxCounter < winLength)
-    {
-        if (buttons[coordinateI][j] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        j--;
-        maxCounter++;
-    }
-    j = coordinateJ + 1;
-    maxCounter = 1;
-    while (j < fieldSize && maxCounter < winLength)
-    {
-        if (buttons[coordinateI][j] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        j++;
-        maxCounter++;
-    }
-    if (winCounter == winLength)
-        return true;
-
-
-    //Top left to down right diagonal case
-    winCounter = 1;
-    maxCounter = 1;
-    i = coordinateI - 1;
-    j = coordinateJ - 1;
-    while (j >= 0 && i >= 0 && maxCounter < winLength)
-    {
-        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        i--;
-        j--;
-        maxCounter++;
-    }
-    i = coordinateI + 1;
-    j = coordinateJ + 1;
-    maxCounter = 1;
-    while (j < fieldSize && i < fieldSize && maxCounter < winLength)
-    {
-        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        i++;
-        j++;
-        maxCounter++;
-    }
-    if (winCounter == winLength)
-        return true;
-
-
-    //Top right to down left diagonal case
-    winCounter = 1;
-    maxCounter = 1;
-    i = coordinateI - 1;
-    j = coordinateJ + 1;
-    while (j < fieldSize && i >= 0 && maxCounter < winLength)
-    {
-        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        i--;
-        j++;
-        maxCounter++;
-    }
-    i = coordinateI + 1;
-    j = coordinateJ - 1;
-    maxCounter = 1;
-    while (j >= 0 && i < fieldSize && maxCounter < winLength)
-    {
-        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
-            winCounter++;
-        i++;
-        j--;
-        maxCounter++;
-    }
-    if (winCounter == winLength)
-        return true;
-
-    return false;
+    return (lineCheck(coordinateI, coordinateJ, column)
+            || lineCheck(coordinateI, coordinateJ, row)
+            || lineCheck(coordinateI, coordinateJ, mainDiagonal)
+            || lineCheck(coordinateI, coordinateJ, antiDiagonal));
 }
 
 void TicTacToe::reset()
@@ -142,5 +42,54 @@ void TicTacToe::reset()
     for (int i = 0; i < fieldSize; i++)
         for (int j = 0; j < fieldSize; j++)
             buttons[i][j] = ' ';
+}
+
+bool TicTacToe::lineCheck(int coordinateI, int coordinateJ, Bypass bypass)
+{
+    //Don't know how to name these.
+    //They are needed to specify bypass.
+    int x = 0;
+    int y = 0;
+    switch (bypass)
+    {
+        case row:
+            x = 1;
+            y = 0;
+        break;
+
+        case column:
+            x = 0;
+            y = 1;
+        break;
+
+        case mainDiagonal:
+            x = 1;
+            y = 1;
+        break;
+
+        case antiDiagonal:
+            x = -1;
+            y = 1;
+            break;
+    }
+
+    int winCounter = 0;
+    int i = 0;
+    int j = 0;
+    for (int k = -winLength; k <= winLength; k++)
+    {
+        i = y * k + coordinateI;
+        j = x * k + coordinateJ;
+        if (i < 0 || i >= fieldSize || j < 0 || j >= fieldSize)
+            continue;
+        if (buttons[i][j] == buttons[coordinateI][coordinateJ])
+            winCounter++;
+        else
+            winCounter = 0;
+
+        if (winCounter == winLength)
+            return true;
+    }
+    return false;
 }
 
