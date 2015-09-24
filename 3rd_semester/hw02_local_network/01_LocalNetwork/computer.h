@@ -6,13 +6,14 @@ class Computer
 {
 public:
 	Computer();
-	Computer(const QString &operatingSystem);
-	void setOperatingSystem(const QString &system);
+	void setOperatingSystem(const QChar &system);
 	void setInfectedStatus(bool status);
+	bool isInfected();
+	QChar getOperatingSystem();
 
 private:
-	bool isInfected;
-	QString operatingSystem;
+	bool infected;
+	QChar operatingSystem;
 
 };
 

@@ -1,21 +1,27 @@
 #include "computer.h"
 
-Computer::Computer() : isInfected(false), operatingSystem("Windows")
+Computer::Computer() : infected(false), operatingSystem('W')
 {
 }
 
-Computer::Computer(const QString &operatingSystem) : operatingSystem(operatingSystem)
-{
-}
-
-void Computer::setOperatingSystem(const QString &system)
+void Computer::setOperatingSystem(const QChar &system)
 {
 	operatingSystem = system;
 }
 
 void Computer::setInfectedStatus(bool status)
 {
-	isInfected = status;
+	infected = status;
+}
+
+QChar Computer::getOperatingSystem()
+{
+	return operatingSystem;
+}
+
+bool Computer::isInfected()
+{
+	return infected;
 }
 
 
