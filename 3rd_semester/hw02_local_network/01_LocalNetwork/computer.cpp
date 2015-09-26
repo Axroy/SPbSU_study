@@ -1,7 +1,7 @@
 #include <QTime>
 #include "computer.h"
 
-Computer::Computer() : infected(false), operatingSystem('W')
+Computer::Computer() : infected(false), recentlyInfected(false), operatingSystem('W')
 {
 }
 
@@ -15,13 +15,18 @@ void Computer::setInfectedStatus(bool status)
 	infected = status;
 }
 
-void Computer::tryToInfect()
+void Computer::setRecentlyInfectedStatus(bool status)
+{
+	recentlyInfected = status;
+}
+
+bool Computer::tryToInfect()
 {
 	if (infected)
-		return;
+		return false;
 
 	qsrand(QTime::currentTime().msec());
-	float infectionChance = 0;
+	int infectionChance = 0;
 	switch (operatingSystem.toLatin1())
 	{
 		case 'W':
@@ -34,8 +39,9 @@ void Computer::tryToInfect()
 			infectionChance = 20;
 			break;
 	}
-	if (qrand() % 100 < infectionChance)
+	if (qrand() % 100 <= infectionChance)
 		infected = true;
+	return infected;
 }
 
 QChar Computer::getOperatingSystem()
@@ -46,6 +52,11 @@ QChar Computer::getOperatingSystem()
 bool Computer::isInfected()
 {
 	return infected;
+}
+
+bool Computer::isRecentlyInfected()
+{
+	return recentlyInfected;
 }
 
 

@@ -1,14 +1,15 @@
 #include <QCoreApplication>
 #include <iostream>
 
-#include "network.h"
+#include "localNetworkModel.h"
 
 int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 
-	Network *test = new Network("input.txt");
-	test->printStatus();
+	LocalNetworkModel *model = new LocalNetworkModel();
+	for (int i = 0; i < 10; i++)
+		model->nextTurn();
 
 	return a.exec();
 }

@@ -1,7 +1,12 @@
 #include "localNetworkModel.h"
 
-LocalNetworkModel::LocalNetworkModel()
+LocalNetworkModel::LocalNetworkModel() : model(new Network("input.txt"))
 {
+}
 
+void LocalNetworkModel::nextTurn()
+{
+	model->spreadInfection();
+	model->printStatus();
 }
 

@@ -41,7 +41,19 @@ Network::Network(const QString &fileName)
 
 void Network::printStatus()
 {
-	//std::cout << size << "\n";
+	std::cout << "\nRecently infected following computers:\n";
+	bool noRecentInfections = true;
+	for (int i = 0; i< size; i++)
+	{
+		if (computers[i].isRecentlyInfected())
+		{
+			std::cout << "# " << i << "\n";
+			noRecentInfections = false;
+		}
+	}
+	if (noRecentInfections)
+		std::cout << "none\n";
+	std::cout << "\n";
 
 	for (int i = 0; i < size; i++)
 	{
@@ -88,7 +100,7 @@ void Network::spreadInfection()
 			for (int j = 0; j < size; j++)
 			{
 				if (connections[i][j] == 1)
-					computers[j].tryToInfect();
+					computers[j].setRecentlyInfectedStatus(computers[j].tryToInfect());
 			}
 	}
 }

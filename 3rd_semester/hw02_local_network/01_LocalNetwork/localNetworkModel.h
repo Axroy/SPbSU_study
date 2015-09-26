@@ -1,6 +1,6 @@
 #pragma once
 
-#include "computer.h"
+#include "network.h"
 
 class LocalNetworkModel
 {
@@ -9,6 +9,6 @@ public:
 	void nextTurn();
 
 private:
-	Computer **connectionsMatrix;
+	Network *model;
 };
 
