@@ -24,6 +24,7 @@ public:
 	Network(const QString &fileName);
 
 	void printStatus();
+	void spreadInfection();
 
 private:
 	int size;

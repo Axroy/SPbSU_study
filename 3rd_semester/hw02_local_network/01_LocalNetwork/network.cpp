@@ -80,3 +80,16 @@ void Network::printStatus()
 	}*/
 }
 
+void Network::spreadInfection()
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (computers[i].isInfected())
+			for (int j = 0; j < size; j++)
+			{
+				if (connections[i][j] == 1)
+					computers[j].tryToInfect();
+			}
+	}
+}
+

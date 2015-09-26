@@ -8,6 +8,7 @@ public:
 	Computer();
 	void setOperatingSystem(const QChar &system);
 	void setInfectedStatus(bool status);
+	void tryToInfect();
 	bool isInfected();
 	QChar getOperatingSystem();
 
