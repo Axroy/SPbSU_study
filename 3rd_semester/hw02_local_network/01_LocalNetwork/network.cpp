@@ -41,13 +41,13 @@ Network::Network(const QString &fileName)
 
 void Network::printStatus()
 {
-	std::cout << "\nRecently infected following computers:\n";
+	std::cout << "Recently infected the following computers:\n";
 	bool noRecentInfections = true;
 	for (int i = 0; i< size; i++)
 	{
 		if (computers[i].isRecentlyInfected())
 		{
-			std::cout << "# " << i << "\n";
+			std::cout << "#" << i << "\n";
 			noRecentInfections = false;
 		}
 	}
@@ -55,7 +55,25 @@ void Network::printStatus()
 		std::cout << "none\n";
 	std::cout << "\n";
 
+	std::cout << "Number:    ";
 	for (int i = 0; i < size; i++)
+		std::cout << i + 1 << " ";
+	std::cout << "\n";
+
+	std::cout << "OS:        ";
+	for (int i = 0; i < size; i++)
+		std::cout << computers[i].getOperatingSystem().toLatin1() << " ";
+	std::cout << "\n";
+
+	std::cout << "Infection: ";
+	for (int i = 0; i < size; i++)
+		if (computers[i].isInfected())
+			std::cout << "X ";
+		else
+			std::cout << "O ";
+	std::cout << "\n";
+
+	/*for (int i = 0; i < size; i++)
 	{
 		std::cout << "Computer #" << i << " ";
 
@@ -66,10 +84,10 @@ void Network::printStatus()
 				std::cout << "Windows";
 				break;
 			case 'L':
-				std::cout << "Linux";
+				std::cout << "Linux  ";
 				break;
 			case 'M':
-			std::cout << "Mac";
+			std::cout << "Mac    ";
 			break;
 		}
 		std::cout << " ";
@@ -80,15 +98,6 @@ void Network::printStatus()
 			std::cout << "Not infected";
 
 		std::cout << "\n";
-	}
-
-	/*for (int i = 0; i < size; i++)
-	{
-		std::cout << "\n";
-		for (int j = 0; j < size; j++)
-		{
-			std::cout << connections[i][j] << " ";
-		}
 	}*/
 }
 
