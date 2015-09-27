@@ -76,33 +76,6 @@ void Network::printStatus()
 		else
 			std::cout << "O ";
 	std::cout << "\n";
-
-	/*for (int i = 0; i < size; i++)
-	{
-		std::cout << "Computer #" << i << " ";
-
-		QChar operatingSystem = computers[i].getOperatingSystem();
-		switch (operatingSystem.toLatin1())
-		{
-			case 'W':
-				std::cout << "Windows";
-				break;
-			case 'L':
-				std::cout << "Linux  ";
-				break;
-			case 'M':
-			std::cout << "Mac    ";
-			break;
-		}
-		std::cout << " ";
-
-		if (computers[i].isInfected())
-			std::cout << "Infected";
-		else
-			std::cout << "Not infected";
-
-		std::cout << "\n";
-	}*/
 }
 
 void Network::spreadInfection()
