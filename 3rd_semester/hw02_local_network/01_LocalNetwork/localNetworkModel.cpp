@@ -17,6 +17,7 @@ void LocalNetworkModel::nextTurn()
 {
 	model->spreadInfection();	
 	std::cout << "\n\n" << "Turn: " << turn << "\n";
+	turn++;
 	model->printStatus();
 }
 
