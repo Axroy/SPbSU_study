@@ -13,6 +13,13 @@ LocalNetworkModel::~LocalNetworkModel()
 	delete model;
 }
 
+void LocalNetworkModel::simulate()
+{
+	while (!model->allInfected())
+		nextTurn();
+	std::cout << "\n\nAll computers are infected!!!";
+}
+
 void LocalNetworkModel::nextTurn()
 {
 	model->spreadInfection();	

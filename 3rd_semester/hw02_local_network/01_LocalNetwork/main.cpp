@@ -11,10 +11,14 @@ int main(int argc, char *argv[])
 	QTextStream input(stdin);
 	QString fileName = input.readLine();
 
-	LocalNetworkModel *model = new LocalNetworkModel(fileName);
-	for (int i = 0; i < 10; i++)
-		model->nextTurn();
+	if (!QFile(fileName).exists())
+	{
+		std::cout << "The file doesn't exist!";
+		return a.exec();
+	}
 
+	LocalNetworkModel *model = new LocalNetworkModel(fileName);
+	model->simulate();
 	delete model;
 
 	return a.exec();

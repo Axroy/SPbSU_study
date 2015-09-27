@@ -8,9 +8,11 @@ public:
 	LocalNetworkModel();
 	LocalNetworkModel(const QString &fileName);
 	~LocalNetworkModel();
-	void nextTurn();
+	void simulate();
 
 private:
+	void nextTurn();
+
 	Network *model;
 	int turn;
 };

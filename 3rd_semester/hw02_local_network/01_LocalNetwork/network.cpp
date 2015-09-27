@@ -11,6 +11,7 @@ Network::Network(const QString &fileName)
 	QFile input(fileName);
 	if (!input.open(QIODevice::ReadOnly | QIODevice::Text))
 			return;
+
 	QTextStream in(&input);
 
 	size = in.readLine().toInt();
@@ -121,5 +122,13 @@ void Network::spreadInfection()
 					computers[j].setRecentlyInfectedStatus(computers[j].tryToInfect());
 			}
 	}
+}
+
+bool Network::allInfected()
+{
+	for (int i = 0; i < size; i++)
+		if (!computers[i].isInfected())
+			return false;
+	return true;
 }
 

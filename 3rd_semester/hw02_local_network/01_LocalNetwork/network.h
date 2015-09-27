@@ -26,6 +26,7 @@ public:
 
 	void printStatus();
 	void spreadInfection();
+	bool allInfected();
 
 private:
 	int size;
