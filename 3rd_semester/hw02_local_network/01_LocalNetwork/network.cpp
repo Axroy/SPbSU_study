@@ -118,6 +118,22 @@ void Network::spreadInfection()
 	}
 }
 
+void Network::spreadInfectionForSure()
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (computers[i].isInfected())
+			for (int j = 0; j < size; j++)
+			{
+				if (connections[i][j] == 1)
+				{
+					computers[j].setInfectedStatus(true);
+					computers[j].setRecentlyInfectedStatus(true);
+				}
+			}
+	}
+}
+
 bool Network::allInfected()
 {
 	for (int i = 0; i < size; i++)
@@ -125,4 +141,10 @@ bool Network::allInfected()
 			return false;
 	return true;
 }
+
+bool Network::computerInfected(int number)
+{
+	return computers[number].isInfected();
+}
+
 

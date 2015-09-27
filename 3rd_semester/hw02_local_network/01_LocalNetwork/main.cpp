@@ -2,12 +2,17 @@
 #include <iostream>
 
 #include "localNetworkModel.h"
+#include "networkTests.h"
 
 int main(int argc, char *argv[])
 {
+	NetworkTests tests;
+	QTest::qExec(&tests);
+
+
 	QCoreApplication a(argc, argv);
 
-	std::cout << "Enter input file name: ";
+	std::cout << "\n\nEnter input file name: ";
 	QTextStream input(stdin);
 	QString fileName = input.readLine();
 

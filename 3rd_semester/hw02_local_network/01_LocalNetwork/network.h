@@ -36,10 +36,20 @@ public:
 	 */
 	void spreadInfection();
 	/**
+	 * @brief Chance of infection here is 100%
+	 */
+	void spreadInfectionForSure();
+	/**
 	 * @brief allInfected
 	 * @return true if all computers in the network are infected, false otherwise
 	 */
 	bool allInfected();
+	/**
+	 * @brief computerInfected
+	 * @param number of computer in network (starting with 0)
+	 * @return true if infected, false otherwise
+	 */
+	bool computerInfected(int number);
 
 private:
 	int size;

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += testlib
 QT       -= gui
 
 TARGET = 01_LocalNetwork
@@ -25,4 +25,5 @@ QMAKE_CXXFLAGS += -std=c++11
 HEADERS += \
     localNetworkModel.h \
     computer.h \
-    network.h
+    network.h \
+    networkTests.h
