@@ -22,6 +22,7 @@ public:
 	 * @param fileName - name of the input file
 	 */
 	Network(const QString &fileName);
+	~Network();
 
 	void printStatus();
 	void spreadInfection();

@@ -6,6 +6,8 @@ class LocalNetworkModel
 {
 public:
 	LocalNetworkModel();
+	LocalNetworkModel(const QString &fileName);
+	~LocalNetworkModel();
 	void nextTurn();
 
 private:
