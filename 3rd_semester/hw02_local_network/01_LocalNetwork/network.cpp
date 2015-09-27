@@ -56,7 +56,7 @@ void Network::printStatus()
 	{
 		if (computers[i].isRecentlyInfected())
 		{
-			std::cout << "#" << i << "\n";
+			std::cout << "#" << i + 1 << "\n";
 			noRecentInfections = false;
 		}
 	}
