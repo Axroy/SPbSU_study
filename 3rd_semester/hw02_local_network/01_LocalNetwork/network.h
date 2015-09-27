@@ -10,7 +10,6 @@
 class Network
 {
 public:
-	Network();
 	/**
 	 * @brief Creates a network using data file in following format:
 	 *

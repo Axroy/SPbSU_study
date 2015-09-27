@@ -1,11 +1,5 @@
 #include "network.h"
 
-Network::Network() : size(10), connections(new int *[size]), computers(new Computer[size])
-{
-	for (int i = 0; i < size; i++)
-		connections[i] = new int[size];
-}
-
 Network::Network(const QString &fileName)
 {
 	QFile input(fileName);

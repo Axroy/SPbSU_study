@@ -6,7 +6,6 @@
 class LocalNetworkModel
 {
 public:
-	LocalNetworkModel();
 	/**
 	 * @brief LocalNetworkModel constructor
 	 * @param fileName - name of data file in following format:
