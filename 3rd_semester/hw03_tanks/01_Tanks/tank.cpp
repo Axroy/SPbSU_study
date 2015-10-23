@@ -14,6 +14,5 @@ QRectF Tank::boundingRect() const
 
 void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-	painter->drawRect(QRectF(- width, - height,
-							 width, height));
+	painter->drawRect(QRectF(- width, - height, width, height));
 }

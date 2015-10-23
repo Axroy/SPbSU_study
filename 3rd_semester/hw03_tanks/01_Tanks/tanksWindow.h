@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+
+#include "tank.h"
 
 namespace Ui {
 class TanksWindow;
@@ -16,5 +19,6 @@ public:
 
 private:
 	Ui::TanksWindow *ui;
+	QGraphicsScene *scene;
 };
 
