@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         tanksWindow.cpp \
-    tank.cpp
+    tank.cpp \
+    gun.cpp
 
 HEADERS  += tanksWindow.h \
-    tank.h
+    tank.h \
+    gun.h
 
 FORMS    += tanksWindow.ui

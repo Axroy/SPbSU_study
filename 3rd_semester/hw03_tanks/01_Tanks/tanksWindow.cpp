@@ -12,7 +12,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 
 	Tank *testTank = new Tank(100, 30);
 	scene->addItem(testTank);
-	testTank->setRotation(45);
+	testTank->rotateGun(25);
 
 }
 
