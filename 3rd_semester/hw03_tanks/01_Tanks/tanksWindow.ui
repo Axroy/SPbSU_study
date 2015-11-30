@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>590</width>
+    <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,10 +59,10 @@
         <item>
          <widget class="QScrollBar" name="angleScrollBar">
           <property name="minimum">
-           <number>-180</number>
+           <number>-90</number>
           </property>
           <property name="maximum">
-           <number>180</number>
+           <number>270</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

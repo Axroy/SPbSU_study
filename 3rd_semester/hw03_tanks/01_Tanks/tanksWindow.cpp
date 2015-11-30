@@ -19,6 +19,11 @@ TanksWindow::TanksWindow(QWidget *parent) :
 
 	tank = new Tank(100, 30);
 	scene->addItem(tank);
+	tank->setTransformOriginPoint(50, 15);
+
+	missile = new Missile(4);
+	scene->addItem(missile);
+	missile->setPos(50, 50);
 
 	this->setFocus();
 }
@@ -31,6 +36,7 @@ TanksWindow::~TanksWindow()
 void TanksWindow::paintEvent(QPaintEvent *event)
 {
 	tank->rotateGun(currentAngle);
+	tank->setRotation(currentAngle);
 }
 
 void TanksWindow::keyPressEvent(QKeyEvent *event)

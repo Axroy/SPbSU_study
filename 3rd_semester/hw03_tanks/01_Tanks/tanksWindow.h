@@ -5,6 +5,7 @@
 #include <QtWidgets>
 
 #include "tank.h"
+#include "missile.h"
 
 namespace Ui {
 class TanksWindow;
@@ -28,6 +29,7 @@ private:
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
 	Tank *tank;
+	Missile *missile;
 	QTimer *timer;
 	int currentAngle;
 	int currentPower;
