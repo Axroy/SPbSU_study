@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QtWidgets>
 
 #include "tank.h"
 
@@ -17,8 +18,18 @@ public:
 	explicit TanksWindow(QWidget *parent = 0);
 	~TanksWindow();
 
+private slots:
+	void paintEvent(QPaintEvent *event);
+	void keyPressEvent(QKeyEvent *event);
+	void updateAngle(int angle);
+	void updatePower(int power);
+
 private:
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
+	Tank *tank;
+	QTimer *timer;
+	int currentAngle;
+	int currentPower;
 };
 
