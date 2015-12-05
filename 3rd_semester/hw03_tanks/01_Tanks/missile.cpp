@@ -2,7 +2,6 @@
 
 Missile::Missile(qreal radius) : radius(radius)
 {
-
 }
 
 QRectF Missile::boundingRect() const

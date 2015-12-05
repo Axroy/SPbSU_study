@@ -1,8 +1,12 @@
 #include "tank.h"
 
 
-Tank::Tank(qreal width, qreal height) : width(width), height(height), gun(new Gun(width / 2, height / 3))
+Tank::Tank(qreal width, qreal height, QGraphicsScene *scene) : width(width), height(height),
+	gun(new Gun(width / 2, height / 3))
 {
+	scene->addItem(gun);
+	this->setTransformOriginPoint(-width / 2, -height / 2);
+	gun->setTransformOriginPoint(-width / 2, -height / 6);
 }
 
 QRectF Tank::boundingRect() const
@@ -15,10 +19,10 @@ QRectF Tank::boundingRect() const
 void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	painter->drawRect(QRectF(- width, - height, width, height));
-	gun->paint(painter, option, widget);
 }
 
 void Tank::rotateGun(int angle)
 {
 	gun->setRotation(angle);
 }
+

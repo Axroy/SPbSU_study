@@ -3,13 +3,13 @@
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QPainter>
-
+#include <QGraphicsScene>
 #include "gun.h"
 
 class Tank : public QGraphicsItem
 {
 public:
-	Tank(qreal width, qreal height);
+	Tank(qreal width, qreal height, QGraphicsScene *scene);
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void rotateGun(int angle);

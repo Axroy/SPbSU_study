@@ -6,6 +6,7 @@
 
 #include "tank.h"
 #include "missile.h"
+#include "landscape.h"
 
 namespace Ui {
 class TanksWindow;
@@ -24,6 +25,7 @@ private slots:
 	void keyPressEvent(QKeyEvent *event);
 	void updateAngle(int angle);
 	void updatePower(int power);
+	void moveTank(Tank *tank, int x);
 
 private:
 	Ui::TanksWindow *ui;
@@ -31,6 +33,7 @@ private:
 	Tank *tank;
 	Missile *missile;
 	QTimer *timer;
+	Landscape land;
 	int currentAngle;
 	int currentPower;
 };

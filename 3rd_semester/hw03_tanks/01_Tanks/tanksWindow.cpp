@@ -17,13 +17,21 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->angleScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updateAngle(int)));
 	connect(ui->powerScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updatePower(int)));
 
-	tank = new Tank(100, 30);
+	tank = new Tank(15, 5, scene);
 	scene->addItem(tank);
-	tank->setTransformOriginPoint(50, 15);
+	moveTank(tank, 60);
 
-	missile = new Missile(4);
-	scene->addItem(missile);
-	missile->setPos(50, 50);
+	QPainterPath landPath;
+	landPath.moveTo(land.getPoint(0));
+	for (int i = 0; i < land.getPointsNumber(); i++)
+		landPath.lineTo(land.getPoint(i));
+	scene->addPath(landPath);
+
+	scene->addLine(-50, 0 ,100, 0, QPen(Qt::green));
+	scene->addLine(0, -50, 0, 100, QPen(Qt::blue));
+	scene->addLine(0, 0, 0, 0);
+
+	ui->graphicsView->scale(2, 2);
 
 	this->setFocus();
 }
@@ -36,7 +44,6 @@ TanksWindow::~TanksWindow()
 void TanksWindow::paintEvent(QPaintEvent *event)
 {
 	tank->rotateGun(currentAngle);
-	tank->setRotation(currentAngle);
 }
 
 void TanksWindow::keyPressEvent(QKeyEvent *event)
@@ -47,11 +54,11 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		break;
 
 	case Qt::Key_Up:
-		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + 1);
+		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + 2);
 		break;
 
 	case Qt::Key_Down:
-		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - 1);
+		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - 2);
 		break;
 
 	case Qt::Key_Left:
@@ -77,4 +84,10 @@ void TanksWindow::updateAngle(int angle)
 void TanksWindow::updatePower(int power)
 {
 	currentPower = power;
+}
+
+void TanksWindow::moveTank(Tank *tank, int x)
+{
+	int y = land.getYCoordinate(x);
+	tank->setPos(x, y);
 }
