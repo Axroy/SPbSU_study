@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>798</width>
-    <height>421</height>
+    <height>445</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -83,6 +83,24 @@
          <string>FIRE</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="moveLeftButton">
+          <property name="text">
+           <string>Move left</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="moveRightButton">
+          <property name="text">
+           <string>Move right</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>

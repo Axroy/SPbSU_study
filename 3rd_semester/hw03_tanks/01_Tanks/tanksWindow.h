@@ -25,9 +25,12 @@ private slots:
 	void keyPressEvent(QKeyEvent *event);
 	void updateAngle(int angle);
 	void updatePower(int power);
-	void moveTank(Tank *tank, int x);
+	void moveLeft();
+	void moveRight();
 
 private:
+	void moveTank(Tank *tank, int x);
+
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
 	Tank *tank;
@@ -36,5 +39,6 @@ private:
 	Landscape land;
 	int currentAngle;
 	int currentPower;
+	const int moveSize = 10;
 };
 

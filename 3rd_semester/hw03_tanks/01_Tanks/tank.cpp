@@ -7,6 +7,7 @@ Tank::Tank(qreal width, qreal height, QGraphicsScene *scene) : width(width), hei
 	scene->addItem(gun);
 	this->setTransformOriginPoint(-width / 2, -height / 2);
 	gun->setTransformOriginPoint(-width / 2, -height / 6);
+	gun->setParentItem(this);
 }
 
 QRectF Tank::boundingRect() const

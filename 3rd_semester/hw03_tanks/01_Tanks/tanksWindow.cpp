@@ -16,9 +16,12 @@ TanksWindow::TanksWindow(QWidget *parent) :
 
 	connect(ui->angleScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updateAngle(int)));
 	connect(ui->powerScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updatePower(int)));
+	connect(ui->moveLeftButton, SIGNAL(clicked(bool)), this, SLOT(moveLeft()));
+	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 
 	tank = new Tank(15, 5, scene);
 	scene->addItem(tank);
+	tank->setTransformOriginPoint(0, 0);
 	moveTank(tank, 60);
 
 	QPainterPath landPath;
@@ -62,9 +65,11 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		break;
 
 	case Qt::Key_Left:
+		ui->moveLeftButton->click();
 		break;
 
 	case Qt::Key_Right:
+		ui->moveRightButton->click();
 		break;
 
 	case Qt::Key_Exit:
@@ -84,6 +89,16 @@ void TanksWindow::updateAngle(int angle)
 void TanksWindow::updatePower(int power)
 {
 	currentPower = power;
+}
+
+void TanksWindow::moveLeft()
+{
+	moveTank(tank, tank->pos().x() - moveSize);
+}
+
+void TanksWindow::moveRight()
+{
+	moveTank(tank, tank->pos().x() + moveSize);
 }
 
 void TanksWindow::moveTank(Tank *tank, int x)
