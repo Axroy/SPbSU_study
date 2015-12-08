@@ -30,6 +30,7 @@ private slots:
 
 private:
 	void moveTank(Tank *tank, int x);
+	void enableControls(bool status);
 
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;

@@ -24,7 +24,7 @@
        <widget class="QGraphicsView" name="graphicsView"/>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="labelsLayout">
         <item>
          <widget class="QLabel" name="powerLabel">
           <property name="text">
@@ -48,7 +48,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="scrollbarsLayout">
         <item>
          <widget class="QScrollBar" name="powerScrollBar">
           <property name="maximum">
@@ -85,7 +85,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="moveButtonsLayout">
         <item>
          <widget class="QPushButton" name="moveLeftButton">
           <property name="text">

@@ -21,7 +21,6 @@ TanksWindow::TanksWindow(QWidget *parent) :
 
 	tank = new Tank(15, 5, scene);
 	scene->addItem(tank);
-	tank->setTransformOriginPoint(0, 0);
 	moveTank(tank, 60);
 
 	QPainterPath landPath;
@@ -105,4 +104,13 @@ void TanksWindow::moveTank(Tank *tank, int x)
 {
 	int y = land.getYCoordinate(x);
 	tank->setPos(x, y);
+}
+
+void TanksWindow::enableControls(bool status)
+{
+	ui->angleScrollBar->setEnabled(status);
+	ui->powerScrollBar->setEnabled(status);
+	ui->moveLeftButton->setEnabled(status);
+	ui->moveRightButton->setEnabled(status);
+	ui->fireButton->setEnabled(status);
 }
