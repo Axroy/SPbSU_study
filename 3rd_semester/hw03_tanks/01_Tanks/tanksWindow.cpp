@@ -19,21 +19,24 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->moveLeftButton, SIGNAL(clicked(bool)), this, SLOT(moveLeft()));
 	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 
-	tank = new Tank(15, 5, scene);
+	tank = new Tank(15, 5, Qt::red, scene);
 	scene->addItem(tank);
 	moveTank(tank, 60);
 
 	QPainterPath landPath;
 	landPath.moveTo(land.getPoint(0));
-	for (int i = 0; i < land.getPointsNumber(); i++)
+	for (int i = 0; i < land.getNumberOfPoints(); i++)
 		landPath.lineTo(land.getPoint(i));
 	scene->addPath(landPath);
 
-	scene->addLine(-50, 0 ,100, 0, QPen(Qt::green));
+	//Testing grid
+	/*scene->addLine(-50, 0 ,100, 0, QPen(Qt::green));
 	scene->addLine(0, -50, 0, 100, QPen(Qt::blue));
-	scene->addLine(0, 0, 0, 0);
+	scene->addLine(0, 0, 0, 0);*/
 
 	ui->graphicsView->scale(2, 2);
+	ui->graphicsView->setSceneRect(ui->graphicsView->rect());
+	ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
 
 	this->setFocus();
 }

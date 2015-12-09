@@ -2,12 +2,17 @@
 
 Landscape::Landscape()
 {
-	points = new QVector<QPoint>(5);
+	points = new QVector<QPoint>(10);
 	points->append(QPoint(0, 0));
 	points->append(QPoint(10, -10));
 	points->append(QPoint(50, -10));
 	points->append(QPoint(70, -50));
 	points->append(QPoint(100, 0));
+	points->append(QPoint(150, 10));
+	points->append(QPoint(200, 25));
+	points->append(QPoint(300, -30));
+	points->append(QPoint(320, 0));
+	points->append(QPoint(340, -20));
 }
 
 QPoint Landscape::getPoint(int index)
@@ -15,7 +20,7 @@ QPoint Landscape::getPoint(int index)
 	return points->at(index);
 }
 
-int Landscape::getPointsNumber()
+int Landscape::getNumberOfPoints()
 {
 	return points->size();
 }

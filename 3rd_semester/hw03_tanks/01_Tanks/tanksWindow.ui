@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
-    <height>445</height>
+    <width>700</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -21,7 +21,23 @@
     <item>
      <layout class="QVBoxLayout" name="mainLayout">
       <item>
-       <widget class="QGraphicsView" name="graphicsView"/>
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="interactive">
+         <bool>false</bool>
+        </property>
+        <property name="renderHints">
+         <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="labelsLayout">

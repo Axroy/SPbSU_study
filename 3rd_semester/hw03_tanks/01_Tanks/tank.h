@@ -9,7 +9,7 @@
 class Tank : public QGraphicsItem
 {
 public:
-	Tank(qreal width, qreal height, QGraphicsScene *scene);
+	Tank(qreal width, qreal height, QColor color, QGraphicsScene *scene);
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void rotateGun(int angle);
@@ -17,6 +17,7 @@ public:
 private:
 	qreal width;
 	qreal height;
+	QColor color;
 	Gun *gun;
 };
 

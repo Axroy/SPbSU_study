@@ -7,7 +7,7 @@
 class Gun : public QGraphicsItem
 {
 public:
-	Gun(qreal width, qreal height);
+	Gun(qreal width, qreal height, QColor color);
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -15,5 +15,6 @@ public:
 private:
 	qreal width;
 	qreal height;
+	QColor color;
 };
 

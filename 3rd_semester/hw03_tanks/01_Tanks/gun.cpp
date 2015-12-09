@@ -1,6 +1,6 @@
 #include "gun.h"
 
-Gun::Gun(qreal width, qreal height) : width(width), height(height)
+Gun::Gun(qreal width, qreal height, QColor color) : width(width), height(height), color(color)
 {
 }
 
@@ -14,5 +14,6 @@ QRectF Gun::boundingRect() const
 void Gun::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	painter->drawRect(QRectF(- width, - height, width, height));
+	painter->fillRect(QRectF(- width, - height, width, height), color);
 }
 

@@ -9,11 +9,10 @@ class Landscape
 public:
 	Landscape();
 	QPoint getPoint(int index);
-	int getPointsNumber();
+	int getNumberOfPoints();
 	int getYCoordinate(int x);
 private:
 	QPair<QPoint, QPoint> getClosestPoints(int x);
-
 	QVector<QPoint> *points;
 };
 
