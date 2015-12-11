@@ -34,6 +34,8 @@ private:
 	void moveTank(Tank *player, int x);
 	void enableControls(bool status);
 	void switchPlayers();
+	void gameReset();
+	void turnEndReset();
 
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;

@@ -9,7 +9,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	scene = new QGraphicsScene(this);
+	scene = new QGraphicsScene(0, 0, 1000, 1000, this);
 	ui->graphicsView->setScene(scene);
 
 	drawingTimer = new QTimer(this);
@@ -126,6 +126,7 @@ void TanksWindow::updateMissilePosition()
 	if (currentAngle < 0)
 		sign = -1;
 
+	///TODO выделить куда-нибудь все константы
 	double cosAngle = cos(currentAngle * 3.14 / 180) * sign;
 	double sinAngle = sin(currentAngle * 3.14 / 180) * sign;
 
@@ -172,20 +173,12 @@ void TanksWindow::updatePositions()
 		winMessage->show();
 		if (!winMessage->isEnabled())
 			delete winMessage;
-
-		isFiring = false;
-		shootingTimer->stop();
-		currentTimeFromShot = 0;
-		enableControls(true);
-		delete missile;
+		gameReset();
 	}
 	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
 	{
-		isFiring = false;
-		shootingTimer->stop();
-		currentTimeFromShot = 0;
-		enableControls(true);
-		delete missile;
+		turnEndReset();
+		currentAngle = -currentAngle;
 		switchPlayers();
 	}
 	scene->update();
@@ -214,4 +207,23 @@ void TanksWindow::switchPlayers()
 	Tank *temp = enemyPlayer;
 	enemyPlayer = currentPlayer;
 	currentPlayer = temp;
+}
+
+void TanksWindow::gameReset()
+{
+	moveTank(currentPlayer, 60);
+	moveTank(enemyPlayer, 300);
+	currentAngle = 0;
+	currentPower = 0;
+	turnEndReset();
+}
+
+void TanksWindow::turnEndReset()
+{
+	currentTimeFromShot = 0;
+	isFiring = false;
+	shootingTimer->stop();
+	enableControls(true);
+	if (missile != nullptr)
+		delete missile;
 }
