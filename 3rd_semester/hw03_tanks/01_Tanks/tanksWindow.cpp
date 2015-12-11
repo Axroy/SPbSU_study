@@ -65,27 +65,27 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Enter:
 		break;
 
-	case Qt::Key_Up:
+	case Qt::Key_Right:
 		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + 2);
 		break;
 
-	case Qt::Key_Down:
+	case Qt::Key_Left:
 		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - 2);
 		break;
 
-	case Qt::Key_Left:
+	case Qt::Key_A:
 		ui->moveLeftButton->click();
 		break;
 
-	case Qt::Key_Right:
+	case Qt::Key_D:
 		ui->moveRightButton->click();
 		break;
 
-	case Qt::Key_A:
+	case Qt::Key_Down:
 		ui->powerScrollBar->setValue(ui->powerScrollBar->value() - 2);
 		break;
 
-	case Qt::Key_D:
+	case Qt::Key_Up:
 		ui->powerScrollBar->setValue(ui->powerScrollBar->value() + 2);
 		break;
 
@@ -168,19 +168,20 @@ void TanksWindow::updatePositions()
 
 	if (missile->collidesWithItem(enemyPlayer))
 	{
-		QMessageBox *winMessage = new QMessageBox;
-		winMessage->setText("Enemy tank shot!");
-		winMessage->show();
-		if (!winMessage->isEnabled())
-			delete winMessage;
-		gameReset();
+		QMessageBox::StandardButton winMessage = QMessageBox::question(this, "Repeat?",
+															"Repeat the game?", QMessageBox::Yes | QMessageBox::No);
+		if (winMessage == QMessageBox::Yes)
+			gameReset();
+		else
+			QApplication::exit();
 	}
-	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
-	{
-		turnEndReset();
-		currentAngle = -currentAngle;
-		switchPlayers();
-	}
+	else
+		if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
+		{
+			turnEndReset();
+			currentAngle = -currentAngle;
+			switchPlayers();
+		}
 	scene->update();
 }
 
