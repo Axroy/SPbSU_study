@@ -105,7 +105,7 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 void TanksWindow::shoot()
 {
 	currentMissilePosition = currentPlayer->getGunEndPos();
-	missile = new Missile(2, currentMissilePosition);
+	missile = new Missile(tankHeight / 3, currentMissilePosition);
 	scene->addItem(missile);
 	isFiring = true;
 	shootingTimer->start(15);
@@ -122,8 +122,12 @@ void TanksWindow::updateMissilePosition()
 	int startX = currentPlayer->getGunEndPos().x();
 	int startY = currentPlayer->getGunEndPos().y();
 
-	double cosAngle = cos(currentAngle * 3.14 / 180);
-	double sinAngle = sin(currentAngle * 3.14 / 180);
+	int sign = 1;
+	if (currentAngle < 0)
+		sign = -1;
+
+	double cosAngle = cos(currentAngle * 3.14 / 180) * sign;
+	double sinAngle = sin(currentAngle * 3.14 / 180) * sign;
 
 	double velocityX = currentPower * cosAngle;
 	double velocityY = currentPower * sinAngle;
@@ -156,7 +160,7 @@ void TanksWindow::moveRight()
 
 void TanksWindow::updatePositions()
 {
-	currentPlayer->rotateGun(-currentAngle);
+	currentPlayer->rotateGun(currentAngle - 90);
 
 	if (!isFiring)
 		return;

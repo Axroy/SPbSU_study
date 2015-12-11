@@ -81,7 +81,7 @@
         <item>
          <widget class="QScrollBar" name="angleScrollBar">
           <property name="minimum">
-           <number>0</number>
+           <number>-90</number>
           </property>
           <property name="maximum">
            <number>90</number>
