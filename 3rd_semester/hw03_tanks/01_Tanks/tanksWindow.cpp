@@ -34,7 +34,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	moveTank(enemyPlayer, 300);
 
 	QPainterPath landPath;
-	landPath.moveTo(land.getPoint(0));
+	landPath.moveTo(land.getFirstPoint());
 	for (int i = 0; i < land.getNumberOfPoints(); i++)
 		landPath.lineTo(land.getPoint(i));
 	scene->addPath(landPath);
@@ -186,6 +186,9 @@ void TanksWindow::updatePositions()
 
 void TanksWindow::moveTank(Tank *player, int x)
 {
+	if (x < land.getFirstPoint().x() || x > land.getLastPoint().x())
+		return;
+
 	int y = land.getYCoordinate(x);
 	player->setDownCenterPos(QPoint(x, y));
 }

@@ -20,6 +20,16 @@ QPoint Landscape::getPoint(int index)
 	return points->at(index);
 }
 
+QPoint Landscape::getFirstPoint()
+{
+	return points->at(0);
+}
+
+QPoint Landscape::getLastPoint()
+{
+	return points->at(points->size() - 1);
+}
+
 int Landscape::getNumberOfPoints()
 {
 	return points->size();

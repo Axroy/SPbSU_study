@@ -9,6 +9,8 @@ class Landscape
 public:
 	Landscape();
 	QPoint getPoint(int index);
+	QPoint getFirstPoint();
+	QPoint getLastPoint();
 	int getNumberOfPoints();
 	int getYCoordinate(int x);
 private:
