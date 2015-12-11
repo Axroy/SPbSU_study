@@ -1,7 +1,8 @@
 #include "missile.h"
 
-Missile::Missile(qreal radius) : radius(radius)
+Missile::Missile(qreal radius, QPointF position) : radius(radius)
 {
+	setPos(position);
 }
 
 QRectF Missile::boundingRect() const

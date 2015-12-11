@@ -25,6 +25,9 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
@@ -78,7 +81,7 @@
         <item>
          <widget class="QScrollBar" name="angleScrollBar">
           <property name="minimum">
-           <number>-270</number>
+           <number>0</number>
           </property>
           <property name="maximum">
            <number>90</number>
@@ -95,6 +98,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="fireButton">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>FIRE</string>
         </property>
@@ -104,6 +110,9 @@
        <layout class="QHBoxLayout" name="moveButtonsLayout">
         <item>
          <widget class="QPushButton" name="moveLeftButton">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>Move left</string>
           </property>
@@ -111,6 +120,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="moveRightButton">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="text">
            <string>Move right</string>
           </property>

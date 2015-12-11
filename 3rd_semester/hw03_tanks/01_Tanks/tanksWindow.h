@@ -21,25 +21,32 @@ public:
 	~TanksWindow();
 
 private slots:
-	void paintEvent(QPaintEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void shoot();
+	void updateMissilePosition();
 	void updateAngle(int angle);
 	void updatePower(int power);
 	void moveLeft();
 	void moveRight();
+	void updatePositions();
 
 private:
-	void moveTank(Tank *tank, int x);
+	void moveTank(Tank *player, int x);
 	void enableControls(bool status);
 
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
-	Tank *tank;
+	Tank *currentPlayer;
+	Tank *enemyPlayer;
 	Missile *missile;
-	QTimer *timer;
+	QTimer *drawingTimer;
+	QTimer *shootingTimer;
 	Landscape land;
 	int currentAngle;
 	int currentPower;
-	const int moveSize = 10;
+	QPointF currentMissilePosition;
+	float currentTimeFromShot;
+	const int moveSize = 1;
+	bool isFiring;
 };
 

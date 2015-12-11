@@ -7,6 +7,7 @@ Tank::Tank(qreal width, qreal height, QColor color, QGraphicsScene *scene) : wid
 	scene->addItem(gun);
 	this->setTransformOriginPoint(-width / 2, -height / 2);
 	gun->setTransformOriginPoint(-width / 2, -height / 6);
+	gun->setPos(0, -height / 2 + height / 6);
 	gun->setParentItem(this);
 }
 

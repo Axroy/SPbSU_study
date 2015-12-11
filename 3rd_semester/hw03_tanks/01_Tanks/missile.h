@@ -7,7 +7,7 @@
 class Missile : public QGraphicsItem
 {
 public:
-	Missile(qreal radius);
+	Missile(qreal radius, QPointF position);
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
