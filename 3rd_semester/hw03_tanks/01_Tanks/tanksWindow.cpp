@@ -102,7 +102,7 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 
 void TanksWindow::shoot()
 {
-	currentMissilePosition = currentPlayer->pos();
+	currentMissilePosition = currentPlayer->getGunEndPos();
 	missile = new Missile(2, currentMissilePosition);
 	scene->addItem(missile);
 	isFiring = true;
@@ -117,8 +117,8 @@ void TanksWindow::updateMissilePosition()
 
 	currentTimeFromShot += 0.1;
 
-	int startX = currentPlayer->pos().x();
-	int startY = currentPlayer->pos().y();
+	int startX = currentPlayer->getGunEndPos().x();
+	int startY = currentPlayer->getGunEndPos().y();
 
 	double cosAngle = cos(currentAngle * 3.14 / 180);
 	double sinAngle = sin(currentAngle * 3.14 / 180);
@@ -144,12 +144,12 @@ void TanksWindow::updatePower(int power)
 
 void TanksWindow::moveLeft()
 {
-	moveTank(currentPlayer, currentPlayer->pos().x() - moveSize);
+	moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() - moveSize);
 }
 
 void TanksWindow::moveRight()
 {
-	moveTank(currentPlayer, currentPlayer->pos().x() + moveSize);
+	moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() + moveSize);
 }
 
 void TanksWindow::updatePositions()
@@ -173,7 +173,7 @@ void TanksWindow::updatePositions()
 		enableControls(true);
 		delete missile;
 	}
-	if (missile->pos().y() > land.getYCoordinate(missile->pos().x()))
+	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
 	{
 		isFiring = false;
 		shootingTimer->stop();
@@ -187,7 +187,7 @@ void TanksWindow::updatePositions()
 void TanksWindow::moveTank(Tank *player, int x)
 {
 	int y = land.getYCoordinate(x);
-	player->setPos(x, y);
+	player->setDownCenterPos(QPoint(x, y));
 }
 
 void TanksWindow::enableControls(bool status)

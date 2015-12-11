@@ -13,6 +13,9 @@ public:
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void rotateGun(int angle);
+	QPoint getGunEndPos();
+	QPoint getDownCenterPos();
+	void setDownCenterPos(QPoint pos);
 
 private:
 	qreal width;

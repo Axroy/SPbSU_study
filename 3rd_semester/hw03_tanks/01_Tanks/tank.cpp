@@ -29,3 +29,18 @@ void Tank::rotateGun(int angle)
 	gun->setRotation(angle);
 }
 
+QPoint Tank::getGunEndPos()
+{
+	return gun->mapToScene(gun->pos().x(), gun->pos().y() + height / 6).toPoint();
+}
+
+QPoint Tank::getDownCenterPos()
+{
+	return QPoint(pos().x() - width / 2, pos().y());
+}
+
+void Tank::setDownCenterPos(QPoint pos)
+{
+	setPos(pos.x() + width / 2, pos.y());
+}
+
