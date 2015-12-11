@@ -39,7 +39,7 @@ int Landscape::getYCoordinate(int x)
 {
 	QPoint previousPoint = getClosestPoints(x).first;
 	QPoint nextPoint = getClosestPoints(x).second;
-	int ratio = (x - previousPoint.x()) / (nextPoint.x() - x);
+	int ratio = abs((x - previousPoint.x()) / (nextPoint.x() - x));
 	return (previousPoint.y() + ratio * nextPoint.y()) / (1 + ratio);
 }
 

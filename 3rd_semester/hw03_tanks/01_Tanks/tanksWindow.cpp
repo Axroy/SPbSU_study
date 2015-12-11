@@ -9,7 +9,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	scene = new QGraphicsScene(0, 0, 1000, 1000, this);
+	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
 
 	drawingTimer = new QTimer(this);
@@ -34,6 +34,9 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	enemyPlayer->setZValue(1);
 	scene->addItem(enemyPlayer);
 	moveTank(enemyPlayer, 300);
+
+	currentAngle = ui->angleScrollBar->value();
+	currentPower = ui->powerScrollBar->value();
 
 	QPainterPath landPath;
 	landPath.moveTo(land.getFirstPoint());
@@ -126,7 +129,6 @@ void TanksWindow::updateMissilePosition()
 	if (currentAngle < 0)
 		sign = -1;
 
-	///TODO выделить куда-нибудь все константы
 	double cosAngle = cos(currentAngle * 3.14 / 180) * sign;
 	double sinAngle = sin(currentAngle * 3.14 / 180) * sign;
 
@@ -162,6 +164,7 @@ void TanksWindow::moveRight()
 void TanksWindow::updatePositions()
 {
 	currentPlayer->rotateGun(currentAngle - 90);
+	scene->update();
 
 	if (!isFiring)
 		return;
@@ -174,15 +177,15 @@ void TanksWindow::updatePositions()
 			gameReset();
 		else
 			QApplication::exit();
+		return;
 	}
-	else
-		if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
-		{
-			turnEndReset();
-			currentAngle = -currentAngle;
-			switchPlayers();
-		}
-	scene->update();
+	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x())
+			|| missile->pos().x() <= land.getFirstPoint().x() || missile->pos().x() > land.getLastPoint().x())
+	{
+		turnEndReset();
+		currentAngle = -currentAngle;
+		switchPlayers();
+	}
 }
 
 void TanksWindow::moveTank(Tank *player, int x)
