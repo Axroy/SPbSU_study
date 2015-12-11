@@ -33,6 +33,7 @@ private slots:
 private:
 	void moveTank(Tank *player, int x);
 	void enableControls(bool status);
+	void switchPlayers();
 
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
@@ -47,6 +48,8 @@ private:
 	QPointF currentMissilePosition;
 	float currentTimeFromShot;
 	const int moveSize = 1;
+	const int tankWidth = 15;
+	const int tankHeight = 5;
 	bool isFiring;
 };
 

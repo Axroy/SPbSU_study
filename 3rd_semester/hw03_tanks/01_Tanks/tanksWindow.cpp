@@ -25,11 +25,13 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 	connect(ui->fireButton, SIGNAL(clicked(bool)), this, SLOT(shoot()));
 
-	currentPlayer = new Tank(45, 15, Qt::red, scene);
+	currentPlayer = new Tank(tankWidth, tankHeight, Qt::red, scene);
+	currentPlayer->setZValue(1);
 	scene->addItem(currentPlayer);
 	moveTank(currentPlayer, 60);
 
-	enemyPlayer = new Tank(15, 5, Qt::blue, scene);
+	enemyPlayer = new Tank(tankWidth, tankHeight, Qt::blue, scene);
+	enemyPlayer->setZValue(1);
 	scene->addItem(enemyPlayer);
 	moveTank(enemyPlayer, 300);
 
@@ -106,7 +108,7 @@ void TanksWindow::shoot()
 	missile = new Missile(2, currentMissilePosition);
 	scene->addItem(missile);
 	isFiring = true;
-	shootingTimer->start(100);
+	shootingTimer->start(15);
 	enableControls(false);
 }
 
@@ -180,6 +182,7 @@ void TanksWindow::updatePositions()
 		currentTimeFromShot = 0;
 		enableControls(true);
 		delete missile;
+		switchPlayers();
 	}
 	scene->update();
 }
@@ -200,4 +203,11 @@ void TanksWindow::enableControls(bool status)
 	ui->moveLeftButton->setEnabled(status);
 	ui->moveRightButton->setEnabled(status);
 	ui->fireButton->setEnabled(status);
+}
+
+void TanksWindow::switchPlayers()
+{
+	Tank *temp = enemyPlayer;
+	enemyPlayer = currentPlayer;
+	currentPlayer = temp;
 }
