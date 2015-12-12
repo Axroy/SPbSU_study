@@ -18,12 +18,14 @@ SOURCES += main.cpp\
     tank.cpp \
     gun.cpp \
     missile.cpp \
-    landscape.cpp
+    landscape.cpp \
+    explosion.cpp
 
 HEADERS  += tanksWindow.h \
     tank.h \
     gun.h \
     missile.h \
-    landscape.h
+    landscape.h \
+    explosion.h
 
 FORMS    += tanksWindow.ui

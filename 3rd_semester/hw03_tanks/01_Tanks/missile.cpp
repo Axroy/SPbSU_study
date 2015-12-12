@@ -14,6 +14,15 @@ QRectF Missile::boundingRect() const
 
 void Missile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	painter->setBrush(QBrush(Qt::black));
 	painter->drawEllipse(QRectF(- radius, - radius, radius * 2, radius * 2));
+}
+
+Explosion *Missile::explode(QGraphicsScene *scene)
+{
+	explosion = new Explosion(radius * 3, Qt::darkRed);
+	scene->addItem(explosion);
+	explosion->setPos(pos());
+	return explosion;
 }
 

@@ -29,6 +29,7 @@ private slots:
 	void moveLeft();
 	void moveRight();
 	void updatePositions();
+	void updateExplosion();
 
 private:
 	void moveTank(Tank *player, int x);
@@ -36,14 +37,17 @@ private:
 	void switchPlayers();
 	void gameReset();
 	void turnEndReset();
+	void startExploding();
 
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
 	Tank *currentPlayer;
 	Tank *enemyPlayer;
 	Missile *missile;
+	Explosion *explosion;
 	QTimer *drawingTimer;
 	QTimer *shootingTimer;
+	QTimer *explosionTimer;
 	Landscape land;
 	int currentAngle;
 	int currentPower;

@@ -19,6 +19,9 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	shootingTimer = new QTimer(this);
 	connect(shootingTimer, SIGNAL(timeout()), this, SLOT(updateMissilePosition()));
 
+	explosionTimer = new QTimer(this);
+	connect(explosionTimer, SIGNAL(timeout()), this, SLOT(updateExplosion()));
+
 	connect(ui->angleScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updateAngle(int)));
 	connect(ui->powerScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updatePower(int)));
 	connect(ui->moveLeftButton, SIGNAL(clicked(bool)), this, SLOT(moveLeft()));
@@ -173,20 +176,36 @@ void TanksWindow::updatePositions()
 
 	if (missile->collidesWithItem(enemyPlayer))
 	{
-		QMessageBox::StandardButton winMessage = QMessageBox::question(this, "Repeat?",
-															"Repeat the game?", QMessageBox::Yes | QMessageBox::No);
+		explosion = missile->explode(scene);
+
+		QMessageBox::StandardButton winMessage;
+		winMessage = QMessageBox::question(this, "Repeat?", "Repeat the game?", QMessageBox::Yes | QMessageBox::No);
+
 		if (winMessage == QMessageBox::Yes)
 			gameReset();
 		else
 			QApplication::exit();
+
 		return;
 	}
+
 	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x())
 			|| missile->pos().x() <= land.getFirstPoint().x() || missile->pos().x() > land.getLastPoint().x())
 	{
+		startExploding();
 		turnEndReset();
 		ui->angleScrollBar->setValue(-ui->angleScrollBar->value());
 		switchPlayers();
+	}
+}
+
+void TanksWindow::updateExplosion()
+{
+	explosion->updateExplosionSize();
+	if (explosion->isMaxed())
+	{
+		explosionTimer->stop();
+		delete explosion;
 	}
 }
 
@@ -232,4 +251,10 @@ void TanksWindow::turnEndReset()
 	enableControls(true);
 	if (missile != nullptr)
 		delete missile;
+}
+
+void TanksWindow::startExploding()
+{
+	explosion = missile->explode(scene);
+	explosionTimer->start(10);
 }
