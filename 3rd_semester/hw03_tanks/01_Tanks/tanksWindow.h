@@ -37,6 +37,7 @@ private:
 	void switchPlayers();
 	void gameReset();
 	void turnEndReset();
+	void endTurn();
 	void startExploding();
 
 	Ui::TanksWindow *ui;

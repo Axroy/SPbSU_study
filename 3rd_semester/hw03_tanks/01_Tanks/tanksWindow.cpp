@@ -179,7 +179,8 @@ void TanksWindow::updatePositions()
 		startExploding();
 
 		QMessageBox::StandardButton winMessage;
-		winMessage = QMessageBox::question(this, "Repeat?", "Repeat the game?", QMessageBox::Yes | QMessageBox::No);
+		winMessage = QMessageBox::question(this, "Repeat?", "You won!\nRepeat the game?",
+										   QMessageBox::Yes | QMessageBox::No);
 
 		if (winMessage == QMessageBox::Yes)
 			gameReset();
@@ -189,13 +190,17 @@ void TanksWindow::updatePositions()
 		return;
 	}
 
-	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x())
-			|| missile->pos().x() <= land.getFirstPoint().x() || missile->pos().x() > land.getLastPoint().x())
+	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
 	{
 		startExploding();
-		turnEndReset();
-		ui->angleScrollBar->setValue(-ui->angleScrollBar->value());
-		switchPlayers();
+		endTurn();
+		return;
+	}
+
+	if (missile->pos().x() <= land.getFirstPoint().x() || missile->pos().x() > land.getLastPoint().x())
+	{
+		endTurn();
+		return;
 	}
 }
 
@@ -253,8 +258,16 @@ void TanksWindow::turnEndReset()
 		delete missile;
 }
 
+void TanksWindow::endTurn()
+{
+	turnEndReset();
+	ui->angleScrollBar->setValue(-ui->angleScrollBar->value());
+	switchPlayers();
+}
+
 void TanksWindow::startExploding()
 {
+	missile->setVisible(false);
 	explosion = missile->explode(scene);
 	explosionTimer->start(10);
 }
