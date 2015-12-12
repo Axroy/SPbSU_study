@@ -176,7 +176,7 @@ void TanksWindow::updatePositions()
 
 	if (missile->collidesWithItem(enemyPlayer))
 	{
-		explosion = missile->explode(scene);
+		startExploding();
 
 		QMessageBox::StandardButton winMessage;
 		winMessage = QMessageBox::question(this, "Repeat?", "Repeat the game?", QMessageBox::Yes | QMessageBox::No);
