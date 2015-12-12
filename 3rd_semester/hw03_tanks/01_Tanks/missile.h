@@ -14,10 +14,12 @@ public:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	Explosion *explode(QGraphicsScene *scene);
 	int getWeight();
+	const QString &getName();
 
 protected:
 	qreal radius;
 	int weight;
+	QString name;
 	Explosion *explosion;
 };
 

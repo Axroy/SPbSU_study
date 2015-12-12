@@ -41,6 +41,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	missileList.append(new LightMissile(tankHeight));
 	missileList.append(new HeavyMissile(tankHeight));
 	missile = missileList.first();
+	ui->currentMissileNameLabel->setText(missile->getName());
 
 	currentAngle = ui->angleScrollBar->value();
 	currentPower = ui->powerScrollBar->value();
@@ -252,6 +253,7 @@ void TanksWindow::switchMissiles()
 		nextMissileIndex = 0;
 
 	missile = missileList.at(nextMissileIndex);
+	ui->currentMissileNameLabel->setText(missile->getName());
 }
 
 void TanksWindow::gameReset()

@@ -26,3 +26,8 @@ int Missile::getWeight()
 	return weight;
 }
 
+const QString &Missile::getName()
+{
+	return name;
+}
+
