@@ -129,10 +129,12 @@ void TanksWindow::updateMissilePosition()
 	if (currentAngle < 0)
 		sign = -1;
 
-	double cosAngle = cos(currentAngle * 3.14 / 180) * sign;
-	double sinAngle = sin(currentAngle * 3.14 / 180) * sign;
+	int modifiedCurrentAngle = abs(abs(currentAngle) - 90);
 
-	double velocityX = currentPower * cosAngle;
+	double cosAngle = cos(modifiedCurrentAngle * 3.14 / 180);
+	double sinAngle = sin(modifiedCurrentAngle * 3.14 / 180);
+
+	double velocityX = currentPower * cosAngle * sign;
 	double velocityY = currentPower * sinAngle;
 
 	currentMissilePosition = QPoint(startX + currentTimeFromShot * velocityX,
@@ -183,7 +185,7 @@ void TanksWindow::updatePositions()
 			|| missile->pos().x() <= land.getFirstPoint().x() || missile->pos().x() > land.getLastPoint().x())
 	{
 		turnEndReset();
-		currentAngle = -currentAngle;
+		ui->angleScrollBar->setValue(-ui->angleScrollBar->value());
 		switchPlayers();
 	}
 }
