@@ -38,6 +38,10 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	scene->addItem(enemyPlayer);
 	moveTank(enemyPlayer, 300);
 
+	missileList.append(new LightMissile(tankHeight));
+	missileList.append(new HeavyMissile(tankHeight));
+	missile = missileList.first();
+
 	currentAngle = ui->angleScrollBar->value();
 	currentPower = ui->powerScrollBar->value();
 
@@ -68,9 +72,6 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key())
 	{
-	case Qt::Key_Enter:
-		break;
-
 	case Qt::Key_Right:
 		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + 2);
 		break;
@@ -95,8 +96,12 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		ui->powerScrollBar->setValue(ui->powerScrollBar->value() + 2);
 		break;
 
-	case Qt::Key_Space:
+	case Qt::Key_Return:
 		ui->fireButton->click();
+		break;
+
+	case Qt::Key_Space:
+		switchMissiles();
 		break;
 
 	case Qt::Key_Exit:
@@ -111,8 +116,9 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 void TanksWindow::shoot()
 {
 	currentMissilePosition = currentPlayer->getGunEndPos();
-	missile = new Missile(tankHeight / 3, currentMissilePosition);
 	scene->addItem(missile);
+	missile->setPos(currentMissilePosition);
+	missile->setVisible(true);
 	isFiring = true;
 	shootingTimer->start(15);
 	enableControls(false);
@@ -137,8 +143,8 @@ void TanksWindow::updateMissilePosition()
 	double cosAngle = cos(modifiedCurrentAngle * 3.14 / 180);
 	double sinAngle = sin(modifiedCurrentAngle * 3.14 / 180);
 
-	double velocityX = currentPower * cosAngle * sign;
-	double velocityY = currentPower * sinAngle;
+	double velocityX = (currentPower / missile->getWeight()) * cosAngle * sign;
+	double velocityY = (currentPower / missile->getWeight()) * sinAngle;
 
 	currentMissilePosition = QPoint(startX + currentTimeFromShot * velocityX,
 								   startY - velocityY * currentTimeFromShot
@@ -239,6 +245,15 @@ void TanksWindow::switchPlayers()
 	currentPlayer = temp;
 }
 
+void TanksWindow::switchMissiles()
+{
+	int nextMissileIndex = missileList.indexOf(missile) + 1;
+	if (nextMissileIndex == missileList.size())
+		nextMissileIndex = 0;
+
+	missile = missileList.at(nextMissileIndex);
+}
+
 void TanksWindow::gameReset()
 {
 	moveTank(currentPlayer, 60);
@@ -254,8 +269,7 @@ void TanksWindow::turnEndReset()
 	isFiring = false;
 	shootingTimer->stop();
 	enableControls(true);
-	if (missile != nullptr)
-		delete missile;
+	scene->removeItem(missile);
 }
 
 void TanksWindow::endTurn()

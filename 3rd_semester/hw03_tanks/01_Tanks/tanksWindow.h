@@ -3,9 +3,11 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QtWidgets>
+#include <QList>
 
 #include "tank.h"
-#include "missile.h"
+#include "lightMissile.h"
+#include "heavyMissile.h"
 #include "landscape.h"
 
 namespace Ui {
@@ -35,6 +37,7 @@ private:
 	void moveTank(Tank *player, int x);
 	void enableControls(bool status);
 	void switchPlayers();
+	void switchMissiles();
 	void gameReset();
 	void turnEndReset();
 	void endTurn();
@@ -44,6 +47,7 @@ private:
 	QGraphicsScene *scene;
 	Tank *currentPlayer;
 	Tank *enemyPlayer;
+	QList<Missile*> missileList;
 	Missile *missile;
 	Explosion *explosion;
 	QTimer *drawingTimer;
@@ -55,8 +59,8 @@ private:
 	QPointF currentMissilePosition;
 	float currentTimeFromShot;
 	const int moveSize = 1;
-	const int tankWidth = 15;
-	const int tankHeight = 5;
+	const int tankWidth = 18;
+	const int tankHeight = 6;
 	bool isFiring;
 };
 

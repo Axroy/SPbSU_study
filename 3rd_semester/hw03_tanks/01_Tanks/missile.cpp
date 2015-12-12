@@ -1,10 +1,5 @@
 #include "missile.h"
 
-Missile::Missile(qreal radius, QPointF position) : radius(radius)
-{
-	setPos(position);
-}
-
 QRectF Missile::boundingRect() const
 {
 	qreal penWidth = 1;
@@ -24,5 +19,10 @@ Explosion *Missile::explode(QGraphicsScene *scene)
 	scene->addItem(explosion);
 	explosion->setPos(pos());
 	return explosion;
+}
+
+int Missile::getWeight()
+{
+	return weight;
 }
 
