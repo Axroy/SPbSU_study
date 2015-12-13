@@ -4,49 +4,47 @@
 TanksWindow::TanksWindow(QWidget *parent) :
     QMainWindow(parent),
 	ui(new Ui::TanksWindow),
+	scene(new QGraphicsScene(this)),
+	player1(new Tank(tankWidth, tankHeight, Qt::red, scene)),
+	player2(new Tank(tankWidth, tankHeight, Qt::blue, scene)),
+	currentPlayer(player1),
+	enemyPlayer(player2),
+	drawingTimer(new QTimer(this)),
+	shootingTimer(new QTimer(this)),
+	explosionTimer(new QTimer(this)),
+	land(new Landscape()),
 	currentTimeFromShot(0),
 	isFiring(false)
 {
 	ui->setupUi(this);
-
-	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
+	ui->graphicsView->scale(viewScale, viewScale);
+	ui->graphicsView->setSceneRect(ui->graphicsView->rect());
+	ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
 
-	drawingTimer = new QTimer(this);
 	drawingTimer->start(normalFPSInMSec);
 	connect(drawingTimer, SIGNAL(timeout()), this, SLOT(updatePositions()));
-
-	shootingTimer = new QTimer(this);
 	connect(shootingTimer, SIGNAL(timeout()), this, SLOT(updateMissilePosition()));
-
-	explosionTimer = new QTimer(this);
 	connect(explosionTimer, SIGNAL(timeout()), this, SLOT(updateExplosion()));
-
 	connect(ui->angleScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updateAngle(int)));
 	connect(ui->powerScrollBar, SIGNAL(valueChanged(int)), this, SLOT(updatePower(int)));
 	connect(ui->moveLeftButton, SIGNAL(clicked(bool)), this, SLOT(moveLeft()));
 	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 	connect(ui->fireButton, SIGNAL(clicked(bool)), this, SLOT(shoot()));
 
-	land = new Landscape();
 	QPainterPath landPath;
 	landPath.moveTo(land->getFirstPoint());
 	for (int i = 0; i < land->getNumberOfPoints(); i++)
 		landPath.lineTo(land->getPoint(i));
 	scene->addPath(landPath);
 
-	player1 = new Tank(tankWidth, tankHeight, Qt::red, scene);
 	player1->setZValue(landZValue + 1);
 	scene->addItem(player1);
 	moveTank(player1, player1StartX);
 
-	player2 = new Tank(tankWidth, tankHeight, Qt::blue, scene);
 	player2->setZValue(landZValue + 1);
 	scene->addItem(player2);
 	moveTank(player2, player2StartX);
-
-	currentPlayer = player1;
-	enemyPlayer = player2;
 
 	missileList.append(new LightMissile(tankHeight));
 	missileList.append(new HeavyMissile(tankHeight));
@@ -55,10 +53,6 @@ TanksWindow::TanksWindow(QWidget *parent) :
 
 	currentAngle = ui->angleScrollBar->value();
 	currentPower = ui->powerScrollBar->value();
-
-	ui->graphicsView->scale(viewScale, viewScale);
-	ui->graphicsView->setSceneRect(ui->graphicsView->rect());
-	ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
 
 	this->setFocus();
 }
