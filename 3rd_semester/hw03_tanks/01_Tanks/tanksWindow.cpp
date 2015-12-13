@@ -181,26 +181,10 @@ void TanksWindow::updatePositions()
 	if (!isFiring)
 		return;
 
-	if (missile->collidesWithItem(enemyPlayer))
+	if (missile->collidesWithItem(enemyPlayer) || missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
 	{
 		startExploding();
-
-		QMessageBox::StandardButton winMessage;
-		winMessage = QMessageBox::question(this, "Repeat?", "You won!\nRepeat the game?",
-										   QMessageBox::Yes | QMessageBox::No);
-
-		if (winMessage == QMessageBox::Yes)
-			gameReset();
-		else
-			QApplication::exit();
-
-		return;
-	}
-
-	if (missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
-	{
-		startExploding();
-		endTurn();
+		turnEndReset();
 		return;
 	}
 
@@ -216,8 +200,21 @@ void TanksWindow::updateExplosion()
 	explosion->updateExplosionSize();
 	if (explosion->isMaxed())
 	{
+		if (explosion->collidesWithItem(enemyPlayer))
+		{
+
+			QMessageBox::StandardButton winMessage;
+			winMessage = QMessageBox::question(this, "Repeat?", "You won!\nRepeat the game?",
+											   QMessageBox::Yes | QMessageBox::No);
+
+			if (winMessage == QMessageBox::Yes)
+				gameReset();
+			else
+				QApplication::exit();
+		}
 		explosionTimer->stop();
 		delete explosion;
+		endTurn();
 	}
 }
 
@@ -271,7 +268,8 @@ void TanksWindow::turnEndReset()
 	isFiring = false;
 	shootingTimer->stop();
 	enableControls(true);
-	scene->removeItem(missile);
+	if (missile->scene() != 0)
+		scene->removeItem(missile);
 }
 
 void TanksWindow::endTurn()
@@ -285,5 +283,6 @@ void TanksWindow::startExploding()
 {
 	missile->setVisible(false);
 	explosion = missile->explode(scene);
+	explosion->setZValue(2);
 	explosionTimer->start(10);
 }
