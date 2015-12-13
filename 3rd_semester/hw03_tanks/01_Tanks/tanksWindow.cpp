@@ -28,15 +28,18 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 	connect(ui->fireButton, SIGNAL(clicked(bool)), this, SLOT(shoot()));
 
-	currentPlayer = new Tank(tankWidth, tankHeight, Qt::red, scene);
-	currentPlayer->setZValue(1);
-	scene->addItem(currentPlayer);
-	moveTank(currentPlayer, 60);
+	player1 = new Tank(tankWidth, tankHeight, Qt::red, scene);
+	player1->setZValue(1);
+	scene->addItem(player1);
+	moveTank(player1, 60);
 
-	enemyPlayer = new Tank(tankWidth, tankHeight, Qt::blue, scene);
-	enemyPlayer->setZValue(1);
-	scene->addItem(enemyPlayer);
-	moveTank(enemyPlayer, 300);
+	player2 = new Tank(tankWidth, tankHeight, Qt::blue, scene);
+	player2->setZValue(1);
+	scene->addItem(player2);
+	moveTank(player2, 300);
+
+	currentPlayer = player1;
+	enemyPlayer = player2;
 
 	missileList.append(new LightMissile(tankHeight));
 	missileList.append(new HeavyMissile(tankHeight));
@@ -105,7 +108,7 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		switchMissiles();
 		break;
 
-	case Qt::Key_Exit:
+	case Qt::Key_Escape:
 		QApplication::exit();
 		break;
 
@@ -212,9 +215,11 @@ void TanksWindow::updateExplosion()
 			else
 				QApplication::exit();
 		}
+		else
+			endTurn();
+
 		explosionTimer->stop();
 		delete explosion;
-		endTurn();
 	}
 }
 
@@ -255,6 +260,8 @@ void TanksWindow::switchMissiles()
 
 void TanksWindow::gameReset()
 {
+	currentPlayer = player1;
+	enemyPlayer = player2;
 	moveTank(currentPlayer, 60);
 	moveTank(enemyPlayer, 300);
 	currentAngle = 0;

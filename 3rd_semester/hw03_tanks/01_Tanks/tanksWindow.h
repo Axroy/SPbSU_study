@@ -45,6 +45,8 @@ private:
 
 	Ui::TanksWindow *ui;
 	QGraphicsScene *scene;
+	Tank *player1;
+	Tank *player2;
 	Tank *currentPlayer;
 	Tank *enemyPlayer;
 	QList<Missile*> missileList;
