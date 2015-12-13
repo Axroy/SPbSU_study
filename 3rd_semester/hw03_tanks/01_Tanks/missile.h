@@ -17,7 +17,7 @@ public:
 	const QString &getName();
 
 protected:
-	qreal radius;
+	int radius;
 	int weight;
 	QString name;
 	Explosion *explosion;

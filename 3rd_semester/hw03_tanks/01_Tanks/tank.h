@@ -4,12 +4,13 @@
 #include <QRectF>
 #include <QPainter>
 #include <QGraphicsScene>
+
 #include "gun.h"
 
 class Tank : public QGraphicsItem
 {
 public:
-	Tank(qreal width, qreal height, QColor color, QGraphicsScene *scene);
+	Tank(int width, int height, QColor color, QGraphicsScene *scene);
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void rotateGun(int angle);
@@ -18,8 +19,8 @@ public:
 	void setDownCenterPos(QPoint pos);
 
 private:
-	qreal width;
-	qreal height;
+	int width;
+	int height;
 	QColor color;
 	Gun *gun;
 };

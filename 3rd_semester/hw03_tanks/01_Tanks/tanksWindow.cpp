@@ -28,6 +28,13 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 	connect(ui->fireButton, SIGNAL(clicked(bool)), this, SLOT(shoot()));
 
+	land = new Landscape();
+	QPainterPath landPath;
+	landPath.moveTo(land->getFirstPoint());
+	for (int i = 0; i < land->getNumberOfPoints(); i++)
+		landPath.lineTo(land->getPoint(i));
+	scene->addPath(landPath);
+
 	player1 = new Tank(tankWidth, tankHeight, Qt::red, scene);
 	player1->setZValue(landZValue + 1);
 	scene->addItem(player1);
@@ -48,12 +55,6 @@ TanksWindow::TanksWindow(QWidget *parent) :
 
 	currentAngle = ui->angleScrollBar->value();
 	currentPower = ui->powerScrollBar->value();
-
-	QPainterPath landPath;
-	landPath.moveTo(land.getFirstPoint());
-	for (int i = 0; i < land.getNumberOfPoints(); i++)
-		landPath.lineTo(land.getPoint(i));
-	scene->addPath(landPath);
 
 	ui->graphicsView->scale(viewScale, viewScale);
 	ui->graphicsView->setSceneRect(ui->graphicsView->rect());
@@ -179,14 +180,14 @@ void TanksWindow::updatePositions()
 	if (!isFiring)
 		return;
 
-	if (missile->collidesWithItem(enemyPlayer) || missile->pos().y() >= land.getYCoordinate(missile->pos().x()))
+	if (missile->collidesWithItem(enemyPlayer) || missile->pos().y() >= land->getYCoordinate(missile->pos().x()))
 	{
 		startExploding();
 		turnEndReset();
 		return;
 	}
 
-	if (missile->pos().x() <= land.getFirstPoint().x() || missile->pos().x() > land.getLastPoint().x())
+	if (missile->pos().x() <= land->getFirstPoint().x() || missile->pos().x() > land->getLastPoint().x())
 	{
 		endTurn();
 		return;
@@ -220,10 +221,10 @@ void TanksWindow::updateExplosion()
 
 void TanksWindow::moveTank(Tank *player, int x)
 {
-	if (x < land.getFirstPoint().x() || x > land.getLastPoint().x())
+	if (x < land->getFirstPoint().x() || x > land->getLastPoint().x())
 		return;
 
-	int y = land.getYCoordinate(x);
+	int y = land->getYCoordinate(x);
 	player->setDownCenterPos(QPoint(x, y));
 }
 

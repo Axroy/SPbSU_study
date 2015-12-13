@@ -59,7 +59,7 @@ private:
 	QTimer *drawingTimer;
 	QTimer *shootingTimer;
 	QTimer *explosionTimer;
-	Landscape land;
+	Landscape *land;
 	int currentAngle;
 	int currentPower;
 	QPointF currentMissilePosition;

@@ -1,6 +1,6 @@
 #include "gun.h"
 
-Gun::Gun(qreal width, qreal height, QColor color) : width(width), height(height), color(color)
+Gun::Gun(int width, int height, QColor color) : width(width), height(height), color(color)
 {
 }
 

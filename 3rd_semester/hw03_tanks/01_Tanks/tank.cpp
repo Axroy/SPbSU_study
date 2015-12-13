@@ -1,7 +1,7 @@
 #include "tank.h"
 
 
-Tank::Tank(qreal width, qreal height, QColor color, QGraphicsScene *scene) : width(width), height(height),
+Tank::Tank(int width, int height, QColor color, QGraphicsScene *scene) : width(width), height(height),
 	color(color), gun(new Gun(width / 2, height / 3, color))
 {
 	scene->addItem(gun);
