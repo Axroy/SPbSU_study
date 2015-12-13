@@ -109,14 +109,38 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="currentMissileNameLabel">
-        <property name="text">
-         <string>MISSILE NAME</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="missileTypeLayout">
+        <item>
+         <widget class="QLabel" name="missileTypeLabel">
+          <property name="text">
+           <string>Current missile type:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="currentMissileNameLabel">
+          <property name="text">
+           <string>MISSILE NAME</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="changeMissileButton">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="text">
+           <string>Change missile type</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QPushButton" name="fireButton">

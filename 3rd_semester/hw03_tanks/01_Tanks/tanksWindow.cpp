@@ -31,6 +31,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->moveLeftButton, SIGNAL(clicked(bool)), this, SLOT(moveLeft()));
 	connect(ui->moveRightButton, SIGNAL(clicked(bool)), this, SLOT(moveRight()));
 	connect(ui->fireButton, SIGNAL(clicked(bool)), this, SLOT(shoot()));
+	connect(ui->changeMissileButton, SIGNAL(clicked(bool)), this, SLOT(switchMissiles()));
 
 	QPainterPath landPath;
 	landPath.moveTo(land->getFirstPoint());
@@ -60,6 +61,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 TanksWindow::~TanksWindow()
 {
 	delete ui;
+	delete land;
 }
 
 void TanksWindow::keyPressEvent(QKeyEvent *event)
@@ -95,7 +97,7 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		break;
 
 	case Qt::Key_Space:
-		switchMissiles();
+		ui->changeMissileButton->click();
 		break;
 
 	case Qt::Key_Escape:
@@ -213,6 +215,16 @@ void TanksWindow::updateExplosion()
 	}
 }
 
+void TanksWindow::switchMissiles()
+{
+	int nextMissileIndex = missileList.indexOf(missile) + 1;
+	if (nextMissileIndex == missileList.size())
+		nextMissileIndex = 0;
+
+	missile = missileList.at(nextMissileIndex);
+	ui->currentMissileNameLabel->setText(missile->getName());
+}
+
 void TanksWindow::moveTank(Tank *player, int x)
 {
 	if (x < land->getFirstPoint().x() || x > land->getLastPoint().x())
@@ -236,16 +248,6 @@ void TanksWindow::switchPlayers()
 	Tank *temp = enemyPlayer;
 	enemyPlayer = currentPlayer;
 	currentPlayer = temp;
-}
-
-void TanksWindow::switchMissiles()
-{
-	int nextMissileIndex = missileList.indexOf(missile) + 1;
-	if (nextMissileIndex == missileList.size())
-		nextMissileIndex = 0;
-
-	missile = missileList.at(nextMissileIndex);
-	ui->currentMissileNameLabel->setText(missile->getName());
 }
 
 void TanksWindow::gameReset()

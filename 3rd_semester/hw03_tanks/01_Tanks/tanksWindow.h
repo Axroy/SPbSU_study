@@ -36,12 +36,12 @@ private slots:
 	void moveRight();
 	void updatePositions();
 	void updateExplosion();
+	void switchMissiles();
 
 private:
 	void moveTank(Tank *player, int x);
 	void enableControls(bool status);
 	void switchPlayers();
-	void switchMissiles();
 	void gameReset();
 	void turnEndReset();
 	void endTurn();
