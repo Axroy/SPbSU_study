@@ -13,7 +13,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	ui->graphicsView->setScene(scene);
 
 	drawingTimer = new QTimer(this);
-	drawingTimer->start(15);
+	drawingTimer->start(normalFPSInMSec);
 	connect(drawingTimer, SIGNAL(timeout()), this, SLOT(updatePositions()));
 
 	shootingTimer = new QTimer(this);
@@ -29,14 +29,14 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	connect(ui->fireButton, SIGNAL(clicked(bool)), this, SLOT(shoot()));
 
 	player1 = new Tank(tankWidth, tankHeight, Qt::red, scene);
-	player1->setZValue(1);
+	player1->setZValue(landZValue + 1);
 	scene->addItem(player1);
-	moveTank(player1, 60);
+	moveTank(player1, player1StartX);
 
 	player2 = new Tank(tankWidth, tankHeight, Qt::blue, scene);
-	player2->setZValue(1);
+	player2->setZValue(landZValue + 1);
 	scene->addItem(player2);
-	moveTank(player2, 300);
+	moveTank(player2, player2StartX);
 
 	currentPlayer = player1;
 	enemyPlayer = player2;
@@ -55,12 +55,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 		landPath.lineTo(land.getPoint(i));
 	scene->addPath(landPath);
 
-	//Testing grid
-	/*scene->addLine(-50, 0 ,100, 0, QPen(Qt::green));
-	scene->addLine(0, -50, 0, 100, QPen(Qt::blue));
-	scene->addLine(0, 0, 0, 0);*/
-
-	ui->graphicsView->scale(2, 2);
+	ui->graphicsView->scale(viewScale, viewScale);
 	ui->graphicsView->setSceneRect(ui->graphicsView->rect());
 	ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
 
@@ -77,11 +72,11 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 	switch (event->key())
 	{
 	case Qt::Key_Right:
-		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + 2);
+		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + scrollbarMoveSize);
 		break;
 
 	case Qt::Key_Left:
-		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - 2);
+		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - scrollbarMoveSize);
 		break;
 
 	case Qt::Key_A:
@@ -93,11 +88,11 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		break;
 
 	case Qt::Key_Down:
-		ui->powerScrollBar->setValue(ui->powerScrollBar->value() - 2);
+		ui->powerScrollBar->setValue(ui->powerScrollBar->value() - scrollbarMoveSize);
 		break;
 
 	case Qt::Key_Up:
-		ui->powerScrollBar->setValue(ui->powerScrollBar->value() + 2);
+		ui->powerScrollBar->setValue(ui->powerScrollBar->value() + scrollbarMoveSize);
 		break;
 
 	case Qt::Key_Return:
@@ -124,7 +119,7 @@ void TanksWindow::shoot()
 	missile->setPos(currentMissilePosition);
 	missile->setVisible(true);
 	isFiring = true;
-	shootingTimer->start(15);
+	shootingTimer->start(normalFPSInMSec);
 	enableControls(false);
 }
 
@@ -133,7 +128,7 @@ void TanksWindow::updateMissilePosition()
 	if (!isFiring)
 		return;
 
-	currentTimeFromShot += 0.1;
+	currentTimeFromShot += normalFPSInSec;
 
 	int startX = currentPlayer->getGunEndPos().x();
 	int startY = currentPlayer->getGunEndPos().y();
@@ -142,17 +137,17 @@ void TanksWindow::updateMissilePosition()
 	if (currentAngle < 0)
 		sign = -1;
 
-	int modifiedCurrentAngle = abs(abs(currentAngle) - 90);
+	int modifiedCurrentAngle = abs(abs(currentAngle) - piRad / 2);
 
-	double cosAngle = cos(modifiedCurrentAngle * 3.14 / 180);
-	double sinAngle = sin(modifiedCurrentAngle * 3.14 / 180);
+	double cosAngle = cos(modifiedCurrentAngle * pi / piRad);
+	double sinAngle = sin(modifiedCurrentAngle * pi / piRad);
 
 	double velocityX = (currentPower / missile->getWeight()) * cosAngle * sign;
 	double velocityY = (currentPower / missile->getWeight()) * sinAngle;
 
 	currentMissilePosition = QPoint(startX + currentTimeFromShot * velocityX,
 								   startY - velocityY * currentTimeFromShot
-								   + 9.8 * currentTimeFromShot * currentTimeFromShot / 2);
+								   + gravitationalAcceleration * currentTimeFromShot * currentTimeFromShot / 2);
 	missile->setPos(currentMissilePosition);
 }
 
@@ -178,7 +173,7 @@ void TanksWindow::moveRight()
 
 void TanksWindow::updatePositions()
 {
-	currentPlayer->rotateGun(currentAngle - 90);
+	currentPlayer->rotateGun(currentAngle - piRad / 2);
 	scene->update();
 
 	if (!isFiring)
@@ -262,8 +257,8 @@ void TanksWindow::gameReset()
 {
 	currentPlayer = player1;
 	enemyPlayer = player2;
-	moveTank(currentPlayer, 60);
-	moveTank(enemyPlayer, 300);
+	moveTank(currentPlayer, player1StartX);
+	moveTank(enemyPlayer, player2StartX);
 	currentAngle = 0;
 	currentPower = 0;
 	turnEndReset();
@@ -290,6 +285,6 @@ void TanksWindow::startExploding()
 {
 	missile->setVisible(false);
 	explosion = missile->explode(scene);
-	explosion->setZValue(2);
-	explosionTimer->start(10);
+	explosion->setZValue(player1->zValue() + 1);
+	explosionTimer->start(explosionGrowSpeed);
 }

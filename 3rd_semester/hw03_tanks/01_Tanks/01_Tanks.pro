@@ -30,6 +30,7 @@ HEADERS  += tanksWindow.h \
     landscape.h \
     explosion.h \
     lightMissile.h \
-    heavyMissile.h
+    heavyMissile.h \
+    constants.h
 
 FORMS    += tanksWindow.ui

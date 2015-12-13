@@ -129,6 +129,9 @@
           <property name="autoRepeat">
            <bool>true</bool>
           </property>
+          <property name="autoRepeatDelay">
+           <number>0</number>
+          </property>
          </widget>
         </item>
         <item>
@@ -141,6 +144,9 @@
           </property>
           <property name="autoRepeat">
            <bool>true</bool>
+          </property>
+          <property name="autoRepeatDelay">
+           <number>0</number>
           </property>
          </widget>
         </item>

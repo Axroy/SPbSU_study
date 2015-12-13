@@ -9,10 +9,14 @@
 #include "lightMissile.h"
 #include "heavyMissile.h"
 #include "landscape.h"
+#include "constants.h"
 
 namespace Ui {
 class TanksWindow;
 }
+
+using namespace gameConstants;
+using namespace mathConstants;
 
 class TanksWindow : public QMainWindow
 {
@@ -60,9 +64,6 @@ private:
 	int currentPower;
 	QPointF currentMissilePosition;
 	float currentTimeFromShot;
-	const int moveSize = 1;
-	const int tankWidth = 18;
-	const int tankHeight = 6;
 	bool isFiring;
 };
 
