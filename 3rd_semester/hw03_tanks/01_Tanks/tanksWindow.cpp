@@ -5,10 +5,6 @@ TanksWindow::TanksWindow(QWidget *parent) :
     QMainWindow(parent),
 	ui(new Ui::TanksWindow),
 	scene(new QGraphicsScene(this)),
-	player1(new Tank(tankWidth, tankHeight, Qt::red, scene)),
-	player2(new Tank(tankWidth, tankHeight, Qt::blue, scene)),
-	currentPlayer(player1),
-	enemyPlayer(player2),
 	drawingTimer(new QTimer(this)),
 	shootingTimer(new QTimer(this)),
 	explosionTimer(new QTimer(this)),
@@ -39,6 +35,14 @@ TanksWindow::TanksWindow(QWidget *parent) :
 		landPath.lineTo(land->getPoint(i));
 	scene->addPath(landPath);
 
+	missileList.append(new LightMissile(tankHeight));
+	missileList.append(new HeavyMissile(tankHeight));
+	missile = missileList.first();
+	ui->currentMissileNameLabel->setText(missile->getName());
+
+	player1 = new Tank(tankWidth, tankHeight, Qt::red, scene, missile);
+	player2 = new Tank(tankWidth, tankHeight, Qt::blue, scene, missile);
+
 	player1->setZValue(landZValue + 1);
 	scene->addItem(player1);
 	moveTank(player1, player1StartX);
@@ -47,13 +51,38 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	scene->addItem(player2);
 	moveTank(player2, player2StartX);
 
-	missileList.append(new LightMissile(tankHeight));
-	missileList.append(new HeavyMissile(tankHeight));
-	missile = missileList.first();
-	ui->currentMissileNameLabel->setText(missile->getName());
+	currentPlayer = player1;
+	enemyPlayer = player2;
 
-	currentAngle = ui->angleScrollBar->value();
-	currentPower = ui->powerScrollBar->value();
+	currentPlayer->setGunAngle(ui->angleScrollBar->value());
+	currentPlayer->setShotPower(ui->powerScrollBar->value());
+
+	enableControls(false);
+
+	QMessageBox::StandardButton networkDecisionMessage;
+	networkDecisionMessage = QMessageBox::question(this, "Server or client?", "Do you want to be a server?",
+									   QMessageBox::Yes | QMessageBox::No);
+
+	if (networkDecisionMessage == QMessageBox::Yes)
+	{
+		myTurn = false;
+		network = new Network(server, ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
+		setWindowTitle("Tanks Server");
+		ui->IPComboBox->setVisible(false);
+		ui->portLineEdit->setVisible(false);
+		ui->connectButton->setVisible(false);
+	}
+	else
+	{
+		myTurn = true;
+		network = new Network(client, ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
+		setWindowTitle("Tanks Client");
+		connect(ui->connectButton, SIGNAL(clicked(bool)), this, SLOT(connectToServer()));
+	}
+
+	connect(network, SIGNAL(connected()), this, SLOT(connected()));
+	connect(network, SIGNAL(disconnected()), this, SLOT(disconnected()));
+	connect(network, SIGNAL(messageReceived(Message)), this, SLOT(messageReceived(Message)));
 
 	this->setFocus();
 }
@@ -62,18 +91,22 @@ TanksWindow::~TanksWindow()
 {
 	delete ui;
 	delete land;
+	delete network;
 }
 
 void TanksWindow::keyPressEvent(QKeyEvent *event)
 {
+	if (!myTurn)
+		return;
+
 	switch (event->key())
 	{
 	case Qt::Key_Right:
-		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + scrollbarMoveSize);
+		ui->angleScrollBar->setValue(ui->angleScrollBar->value() + angleStepSize);
 		break;
 
 	case Qt::Key_Left:
-		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - scrollbarMoveSize);
+		ui->angleScrollBar->setValue(ui->angleScrollBar->value() - angleStepSize);
 		break;
 
 	case Qt::Key_A:
@@ -85,11 +118,11 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		break;
 
 	case Qt::Key_Down:
-		ui->powerScrollBar->setValue(ui->powerScrollBar->value() - scrollbarMoveSize);
+		ui->powerScrollBar->setValue(ui->powerScrollBar->value() - powerStepSize);
 		break;
 
 	case Qt::Key_Up:
-		ui->powerScrollBar->setValue(ui->powerScrollBar->value() + scrollbarMoveSize);
+		ui->powerScrollBar->setValue(ui->powerScrollBar->value() + powerStepSize);
 		break;
 
 	case Qt::Key_Return:
@@ -100,10 +133,6 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 		ui->changeMissileButton->click();
 		break;
 
-	case Qt::Key_Escape:
-		QApplication::exit();
-		break;
-
 	default:
 		break;
 	}
@@ -111,7 +140,11 @@ void TanksWindow::keyPressEvent(QKeyEvent *event)
 
 void TanksWindow::shoot()
 {
+	if (myTurn)
+		network->sendMessage(shotFired);
+
 	currentMissilePosition = currentPlayer->getGunEndPos();
+	missile = currentPlayer->getMissile();
 	scene->addItem(missile);
 	missile->setPos(currentMissilePosition);
 	missile->setVisible(true);
@@ -120,57 +153,10 @@ void TanksWindow::shoot()
 	enableControls(false);
 }
 
-void TanksWindow::updateMissilePosition()
-{
-	if (!isFiring)
-		return;
-
-	currentTimeFromShot += normalFPSInSec;
-
-	int startX = currentPlayer->getGunEndPos().x();
-	int startY = currentPlayer->getGunEndPos().y();
-
-	int sign = 1;
-	if (currentAngle < 0)
-		sign = -1;
-
-	int modifiedCurrentAngle = abs(abs(currentAngle) - piRad / 2);
-
-	double cosAngle = cos(modifiedCurrentAngle * pi / piRad);
-	double sinAngle = sin(modifiedCurrentAngle * pi / piRad);
-
-	double velocityX = (currentPower / missile->getWeight()) * cosAngle * sign;
-	double velocityY = (currentPower / missile->getWeight()) * sinAngle;
-
-	currentMissilePosition = QPoint(startX + currentTimeFromShot * velocityX,
-								   startY - velocityY * currentTimeFromShot
-								   + gravitationalAcceleration * currentTimeFromShot * currentTimeFromShot / 2);
-	missile->setPos(currentMissilePosition);
-}
-
-void TanksWindow::updateAngle(int angle)
-{
-	currentAngle = angle;
-}
-
-void TanksWindow::updatePower(int power)
-{
-	currentPower = power;
-}
-
-void TanksWindow::moveLeft()
-{
-	moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() - moveSize);
-}
-
-void TanksWindow::moveRight()
-{
-	moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() + moveSize);
-}
-
 void TanksWindow::updatePositions()
 {
-	currentPlayer->rotateGun(currentAngle - piRad / 2);
+	currentPlayer->rotateGun();
+	enemyPlayer->rotateGun();
 	scene->update();
 
 	if (!isFiring)
@@ -197,22 +183,81 @@ void TanksWindow::updateExplosion()
 	{
 		if (explosion->collidesWithItem(enemyPlayer))
 		{
-
-			QMessageBox::StandardButton winMessage;
-			winMessage = QMessageBox::question(this, "Repeat?", "You won!\nRepeat the game?",
-											   QMessageBox::Yes | QMessageBox::No);
-
-			if (winMessage == QMessageBox::Yes)
-				gameReset();
-			else
-				QApplication::exit();
+			endGame();
 		}
 		else
+		{
 			endTurn();
+		}
 
 		explosionTimer->stop();
 		delete explosion;
 	}
+}
+
+void TanksWindow::updateMissilePosition()
+{
+	if (!isFiring)
+		return;
+
+	currentTimeFromShot += normalFPSInSec;
+
+	int startX = currentPlayer->getGunEndPos().x();
+	int startY = currentPlayer->getGunEndPos().y();
+
+	int currentAngle = currentPlayer->getGunAngle();
+	int currentPower = currentPlayer->getShotPower();
+
+	int sign = 1;
+	if (currentAngle < 0)
+		sign = -1;
+
+	int modifiedCurrentAngle = abs(abs(currentAngle) - piRad / 2);
+
+	double cosAngle = cos(modifiedCurrentAngle * pi / piRad);
+	double sinAngle = sin(modifiedCurrentAngle * pi / piRad);
+
+	double velocityX = (currentPower / missile->getWeight()) * cosAngle * sign;
+	double velocityY = (currentPower / missile->getWeight()) * sinAngle;
+
+	currentMissilePosition = QPoint(startX + currentTimeFromShot * velocityX,
+								   startY - velocityY * currentTimeFromShot
+								   + gravitationalAcceleration * currentTimeFromShot * currentTimeFromShot / 2);
+	missile->setPos(currentMissilePosition);
+}
+
+void TanksWindow::updateAngle(int angle)
+{
+	int currentAngle = currentPlayer->getGunAngle();
+	if (angle > currentAngle)
+		network->sendMessage(angleUp);
+	if (angle < currentAngle)
+		network->sendMessage(angleDown);
+
+	currentPlayer->setGunAngle(angle);
+}
+
+void TanksWindow::updatePower(int power)
+{
+	int currentPower = currentPlayer->getShotPower();
+	if (power > currentPower)
+		network->sendMessage(powerUp);
+	if (power < currentPower)
+		network->sendMessage(powerDown);
+
+	currentPlayer->setShotPower(power);
+}
+
+void TanksWindow::moveLeft()
+{
+	moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() - moveSize);
+	network->sendMessage(leftMove);
+}
+
+void TanksWindow::moveRight()
+{
+	moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() + moveSize);
+	network->sendMessage(rightMove);
 }
 
 void TanksWindow::switchMissiles()
@@ -222,7 +267,84 @@ void TanksWindow::switchMissiles()
 		nextMissileIndex = 0;
 
 	missile = missileList.at(nextMissileIndex);
-	ui->currentMissileNameLabel->setText(missile->getName());
+	currentPlayer->setMissile(missile);
+
+	if (myTurn)
+	{
+		network->sendMessage(missileSwitched);
+		ui->currentMissileNameLabel->setText(missile->getName());
+	}
+}
+
+void TanksWindow::connectToServer()
+{
+	network->setupConnection();
+}
+
+void TanksWindow::connected()
+{
+	if (myTurn)
+		enableControls(true);
+
+	ui->IPComboBox->setVisible(false);
+	ui->portLineEdit->setVisible(false);
+	ui->connectButton->setVisible(false);
+}
+
+void TanksWindow::disconnected()
+{
+	enableControls(false);
+
+	if (network->isServer())
+		return;
+	ui->IPComboBox->setVisible(true);
+	ui->portLineEdit->setVisible(true);
+	ui->connectButton->setVisible(true);
+}
+
+void TanksWindow::messageReceived(Message message)
+{
+	switch (message)
+	{
+		case angleUp:
+			currentPlayer->setGunAngle(currentPlayer->getGunAngle() + angleStepSize);
+		break;
+
+		case angleDown:
+			currentPlayer->setGunAngle(currentPlayer->getGunAngle() - angleStepSize);
+		break;
+
+		case powerUp:
+			currentPlayer->setShotPower(currentPlayer->getShotPower() + powerStepSize);
+		break;
+
+		case powerDown:
+			currentPlayer->setShotPower(currentPlayer->getShotPower() - powerStepSize);
+		break;
+
+		case leftMove:
+			moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() - moveSize);
+		break;
+
+		case rightMove:
+			moveTank(currentPlayer, currentPlayer->getDownCenterPos().x() + moveSize);
+		break;
+
+		case missileSwitched:
+			switchMissiles();
+		break;
+
+		case shotFired:
+			shoot();
+		break;
+
+		case gameEnded:
+			gameReset();
+		break;
+
+		default:
+		break;
+	}
 }
 
 void TanksWindow::moveTank(Tank *player, int x)
@@ -241,6 +363,7 @@ void TanksWindow::enableControls(bool status)
 	ui->moveLeftButton->setEnabled(status);
 	ui->moveRightButton->setEnabled(status);
 	ui->fireButton->setEnabled(status);
+	ui->changeMissileButton->setEnabled(status);
 }
 
 void TanksWindow::switchPlayers()
@@ -252,13 +375,33 @@ void TanksWindow::switchPlayers()
 
 void TanksWindow::gameReset()
 {
+	turnEndReset();
+	moveTank(player1, player1StartX);
+	moveTank(player2, player2StartX);
 	currentPlayer = player1;
 	enemyPlayer = player2;
-	moveTank(currentPlayer, player1StartX);
-	moveTank(enemyPlayer, player2StartX);
-	currentAngle = 0;
-	currentPower = 0;
-	turnEndReset();
+
+	missile = missileList.first();
+	player1->setMissile(missile);
+	player2->setMissile(missile);
+
+	ui->angleScrollBar->setValue(0);
+	ui->powerScrollBar->setValue(0);
+	player1->setGunAngle(0);
+	player1->setShotPower(0);
+	player2->setGunAngle(0);
+	player2->setShotPower(0);
+
+	if (network->isServer())
+	{
+		myTurn = false;
+		enableControls(false);
+	}
+	else
+	{
+		myTurn = true;
+		enableControls(true);
+	}
 }
 
 void TanksWindow::turnEndReset()
@@ -266,16 +409,42 @@ void TanksWindow::turnEndReset()
 	currentTimeFromShot = 0;
 	isFiring = false;
 	shootingTimer->stop();
-	enableControls(true);
 	if (missile->scene() != 0)
 		scene->removeItem(missile);
+
+	missile = enemyPlayer->getMissile();
+	if (!myTurn)
+		ui->currentMissileNameLabel->setText(missile->getName());
 }
 
 void TanksWindow::endTurn()
 {
 	turnEndReset();
-	ui->angleScrollBar->setValue(-ui->angleScrollBar->value());
 	switchPlayers();
+
+	enableControls(!myTurn);
+	myTurn = !myTurn;
+}
+
+void TanksWindow::endGame()
+{
+	QString gameEndMessage = "";
+	if (myTurn)
+		gameEndMessage = "You won!";
+	else
+		gameEndMessage = "You lost!";
+
+	QMessageBox::StandardButton winMessage;
+	winMessage = QMessageBox::question(this, "Repeat?", gameEndMessage + "\nRepeat the game?",
+									   QMessageBox::Yes | QMessageBox::No);
+
+	if (winMessage == QMessageBox::Yes)
+	{
+		network->sendMessage(gameEnded);
+		gameReset();
+	}
+	else
+		QApplication::exit();
 }
 
 void TanksWindow::startExploding()

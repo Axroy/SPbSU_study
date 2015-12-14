@@ -33,6 +33,55 @@
     <item>
      <layout class="QVBoxLayout" name="mainLayout">
       <item>
+       <layout class="QVBoxLayout" name="networkLayout">
+        <item>
+         <widget class="QLabel" name="connectionStatusLabel">
+          <property name="text">
+           <string>Connection status</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <layout class="QVBoxLayout" name="IPPortLayout">
+            <item>
+             <widget class="QComboBox" name="IPComboBox">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="portLineEdit">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="connectButton">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="text">
+             <string>Connect</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QGraphicsView" name="graphicsView">
         <property name="enabled">
          <bool>true</bool>

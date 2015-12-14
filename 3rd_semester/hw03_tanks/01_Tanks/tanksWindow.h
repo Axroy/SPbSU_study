@@ -10,6 +10,7 @@
 #include "heavyMissile.h"
 #include "landscape.h"
 #include "constants.h"
+#include "network.h"
 
 namespace Ui {
 class TanksWindow;
@@ -29,14 +30,18 @@ public:
 private slots:
 	void keyPressEvent(QKeyEvent *event);
 	void shoot();
+	void updatePositions();
+	void updateExplosion();
 	void updateMissilePosition();
 	void updateAngle(int angle);
 	void updatePower(int power);
 	void moveLeft();
 	void moveRight();
-	void updatePositions();
-	void updateExplosion();
 	void switchMissiles();
+	void connectToServer();
+	void connected();
+	void disconnected();
+	void messageReceived(Message message);
 
 private:
 	void moveTank(Tank *player, int x);
@@ -45,6 +50,7 @@ private:
 	void gameReset();
 	void turnEndReset();
 	void endTurn();
+	void endGame();
 	void startExploding();
 
 	Ui::TanksWindow *ui;
@@ -60,8 +66,8 @@ private:
 	QTimer *shootingTimer;
 	QTimer *explosionTimer;
 	Landscape *land;
-	int currentAngle;
-	int currentPower;
+	Network *network;
+	bool myTurn;
 	QPointF currentMissilePosition;
 	float currentTimeFromShot;
 	bool isFiring;

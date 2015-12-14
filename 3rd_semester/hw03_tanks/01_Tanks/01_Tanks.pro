@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 QMAKE_CXXFLAGS += -std=c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -21,7 +22,8 @@ SOURCES += main.cpp\
     landscape.cpp \
     explosion.cpp \
     lightMissile.cpp \
-    heavyMissile.cpp
+    heavyMissile.cpp \
+    network.cpp
 
 HEADERS  += tanksWindow.h \
     tank.h \
@@ -31,6 +33,7 @@ HEADERS  += tanksWindow.h \
     explosion.h \
     lightMissile.h \
     heavyMissile.h \
-    constants.h
+    constants.h \
+    network.h
 
 FORMS    += tanksWindow.ui
