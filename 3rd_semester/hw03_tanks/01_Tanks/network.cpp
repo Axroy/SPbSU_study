@@ -116,7 +116,7 @@ void Network::sessionOpened()
 		ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 
 	statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
-							"The client now.")
+							"Run the client now.")
 						 .arg(ipAddress).arg(tcpServer->serverPort()));
 }
 
