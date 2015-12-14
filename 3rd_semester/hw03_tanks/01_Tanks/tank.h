@@ -15,7 +15,9 @@ public:
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void rotateGun();
+	/// Returns the starting position of the missile
 	QPoint getGunEndPos();
+	/// Returns the position used to move the tank
 	QPoint getDownCenterPos();
 	void setDownCenterPos(QPoint pos);
 	int getGunAngle();

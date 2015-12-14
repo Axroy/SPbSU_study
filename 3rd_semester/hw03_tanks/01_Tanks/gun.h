@@ -4,6 +4,7 @@
 #include <QRectF>
 #include <QPainter>
 
+/// A tank's gun
 class Gun : public QGraphicsItem
 {
 public:

@@ -31,8 +31,13 @@ public:
 private slots:
 	void keyPressEvent(QKeyEvent *event);
 	void shoot();
+	///	Updates game objects' positions on scene
+	/// Missile collisions are checked here
 	void updatePositions();
+	/// Updates explosion size
+	/// Win is dependent on collision of explosion and enemy tank so it's checked here
 	void updateExplosion();
+	/// Calculates and updates missile position after shot
 	void updateMissilePosition();
 	void updateAngle(int angle);
 	void updatePower(int power);
@@ -45,6 +50,7 @@ private slots:
 	void messageReceived(Message message);
 
 private:
+	///Moves tank to position with x coordinate on the landscape
 	void moveTank(Tank *player, int x);
 	void enableControls(bool status);
 	void switchPlayers();
