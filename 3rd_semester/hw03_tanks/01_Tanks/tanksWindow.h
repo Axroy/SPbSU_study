@@ -11,6 +11,7 @@
 #include "landscape.h"
 #include "constants.h"
 #include "network.h"
+#include "networkEnums.h"
 
 namespace Ui {
 class TanksWindow;

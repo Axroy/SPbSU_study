@@ -34,6 +34,7 @@ HEADERS  += tanksWindow.h \
     lightMissile.h \
     heavyMissile.h \
     constants.h \
-    network.h
+    network.h \
+    networkEnums.h
 
 FORMS    += tanksWindow.ui

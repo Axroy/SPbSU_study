@@ -5,7 +5,7 @@
 #include <QtWidgets>
 #include <QLabel>
 
-#include "constants.h"
+#include "networkEnums.h"
 
 class Network : public QObject
 {
