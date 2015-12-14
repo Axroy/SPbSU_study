@@ -35,6 +35,11 @@ void Network::setupConnection()
 	tcpSocket->connectToHost(hostCombo->currentText(), portLineEdit->text().toInt());
 }
 
+void Network::clearBuffer()
+{
+	tcpSocket->readAll();
+}
+
 void Network::sendMessage(Message message)
 {
 	QByteArray block;

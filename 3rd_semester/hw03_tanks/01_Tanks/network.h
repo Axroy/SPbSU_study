@@ -15,6 +15,7 @@ public:
 	Network(NetworkType type, QLabel *statusLabel, QComboBox *hostCombo,
 			QLineEdit *portLineEdit);
 	void setupConnection();
+	void clearBuffer();
 	void sendMessage(Message message);
 	bool isServer();
 

@@ -375,6 +375,8 @@ void TanksWindow::switchPlayers()
 
 void TanksWindow::gameReset()
 {
+	network->clearBuffer();
+
 	turnEndReset();
 	moveTank(player1, player1StartX);
 	moveTank(player2, player2StartX);
@@ -440,7 +442,8 @@ void TanksWindow::endGame()
 
 	if (winMessage == QMessageBox::Yes)
 	{
-		network->sendMessage(gameEnded);
+		if (myTurn)
+			network->sendMessage(gameEnded);
 		gameReset();
 	}
 	else
