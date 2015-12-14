@@ -386,6 +386,7 @@ void TanksWindow::gameReset()
 	missile = missileList.first();
 	player1->setMissile(missile);
 	player2->setMissile(missile);
+	ui->currentMissileNameLabel->setText(missile->getName());
 
 	ui->angleScrollBar->setValue(0);
 	ui->powerScrollBar->setValue(0);
