@@ -18,7 +18,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     localNetworkModel.cpp \
     computer.cpp \
-    network.cpp
+	network.cpp \
+	windowsComputer.cpp \
+	linuxComputer.cpp \
+	macComputer.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -26,4 +29,7 @@ HEADERS += \
     localNetworkModel.h \
     computer.h \
     network.h \
-    networkTests.h
+	networkTests.h \
+	windowsComputer.h \
+	linuxComputer.h \
+	macComputer.h

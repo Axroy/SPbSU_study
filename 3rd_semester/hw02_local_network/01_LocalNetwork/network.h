@@ -5,6 +5,9 @@
 #include <iostream>
 
 #include "computer.h"
+#include "windowsComputer.h"
+#include "linuxComputer.h"
+#include "macComputer.h"
 
 ///Class representing a local network: some computers with some connections between them
 class Network
@@ -34,11 +37,7 @@ public:
 	/**
 	 * @brief Tries to infect computers connected with infected ones
 	 */
-	void spreadInfection();
-	/**
-	 * @brief Chance of infection here is 100%
-	 */
-	void spreadInfectionForSure();
+	void spreadInfection(bool guaranteed = false);
 	/**
 	 * @brief allInfected
 	 * @return true if all computers in the network are infected, false otherwise
@@ -54,5 +53,5 @@ public:
 private:
 	int size;
 	int **connections;
-	Computer *computers;
+	Computer **computers;
 };

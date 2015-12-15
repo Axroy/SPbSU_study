@@ -1,13 +1,8 @@
 #include <QTime>
 #include "computer.h"
 
-Computer::Computer() : infected(false), recentlyInfected(false), operatingSystem('W')
+Computer::Computer() : infected(false), recentlyInfected(false)
 {
-}
-
-void Computer::setOperatingSystem(const QChar &system)
-{
-	operatingSystem = system;
 }
 
 void Computer::setInfectedStatus(bool status)
@@ -20,33 +15,21 @@ void Computer::setRecentlyInfectedStatus(bool status)
 	recentlyInfected = status;
 }
 
-bool Computer::tryToInfect()
+bool Computer::tryToInfect(bool guaranteed)
 {
 	if (infected)
 		return false;
 
-	qsrand(QTime::currentTime().msec());
-	int infectionChance = 0;
-	switch (operatingSystem.toLatin1())
+	if (guaranteed)
 	{
-		case 'W':
-			infectionChance = 25;
-			break;
-		case 'L':
-			infectionChance = 5;
-			break;
-		case 'M':
-			infectionChance = 20;
-			break;
+		infected = true;
+		return infected;
 	}
+
+	qsrand(QTime::currentTime().msec());
 	if (qrand() % 100 <= infectionChance)
 		infected = true;
 	return infected;
-}
-
-QChar Computer::getOperatingSystem()
-{
-	return operatingSystem;
 }
 
 bool Computer::isInfected()

@@ -7,15 +7,9 @@ class Computer
 {
 public:
 	/**
-	 * @brief Default computer is non-infected Windows
+	 * @brief Default computer is non-infected
 	 */
 	Computer();
-	/**
-	 * @brief Sets an operating system for this computer
-	 * @param system - first letter of the system name
-	 * (currently can be L for Linux, W for Windows and M for Mac)
-	 */
-	void setOperatingSystem(const QChar &system);
 	/**
 	 * @brief Makes the computer infected or not infected
 	 * @param status - true for infection, false for cleaning one
@@ -31,7 +25,7 @@ public:
 	 * (chance of success depends on operating system)
 	 * @return true if successfully infected, false if infection failed or already infected
 	 */
-	bool tryToInfect();
+	bool tryToInfect(bool guaranteed = false);
 	/**
 	 * @brief Checks whether the computer is infected
 	 * @return true if infected, false if not
@@ -43,14 +37,14 @@ public:
 	 */
 	bool isRecentlyInfected();
 	/**
-	 * @brief Returns operating system letter
-	 * @return currently L for Linux, W for Windows or M for Mac
+	 * @brief getOperatingSystem
+	 * @return operating system of the computer
 	 */
-	QChar getOperatingSystem();
+	virtual QChar getOperatingSystem() = 0;
 
-private:
+protected:
 	bool infected;
 	bool recentlyInfected;
-	QChar operatingSystem;
+	int infectionChance;
 };
 

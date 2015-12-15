@@ -44,7 +44,7 @@ private slots:
 	   simpleInfection.close();
 
 	   network = new Network("simpleInfection.txt");
-	   network->spreadInfectionForSure();
+	   network->spreadInfection(true);
 	   QVERIFY(network->computerInfected(1));
    }
 
@@ -66,7 +66,7 @@ private slots:
 	   isolatedComputer.close();
 
 	   network = new Network("isolatedComputer.txt");
-	   network->spreadInfectionForSure();
+	   network->spreadInfection(true);
 	   QVERIFY(!network->computerInfected(3));
    }
 
@@ -100,7 +100,7 @@ private slots:
 	   farAwayComputer.close();
 
 	   network = new Network("farAwayComputer.txt");
-	   network->spreadInfectionForSure();
+	   network->spreadInfection(true);
 	   QVERIFY(network->computerInfected(9));
    }
 
