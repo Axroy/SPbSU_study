@@ -66,7 +66,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	if (networkDecisionMessage == QMessageBox::Yes)
 	{
 		myTurn = false;
-		network = new Network(server, ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
+		network = new NetworkServer(ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
 		setWindowTitle("Tanks Server");
 		ui->IPComboBox->setVisible(false);
 		ui->portLineEdit->setVisible(false);
@@ -75,7 +75,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 	else
 	{
 		myTurn = true;
-		network = new Network(client, ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
+		network = new NetworkClient(ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
 		setWindowTitle("Tanks Client");
 		connect(ui->connectButton, SIGNAL(clicked(bool)), this, SLOT(connectToServer()));
 	}

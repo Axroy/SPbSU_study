@@ -13,15 +13,11 @@ class Network : public QObject
 	Q_OBJECT
 
 public:
-	/// The type - client or server
-	/// The label, the comboBox and the lineEdit are used to show connection status,
-	/// available IPs and available ports correspondingly
-	Network(NetworkType type, QLabel *statusLabel, QComboBox *hostCombo, QLineEdit *portLineEdit);
-	void setupConnection();
+	virtual void setupConnection() = 0;
 	/// Clears all received data
 	void clearBuffer();
 	void sendMessage(Message message);
-	bool isServer();
+	virtual bool isServer() = 0;
 
 
 signals:
@@ -29,20 +25,17 @@ signals:
 	void disconnected();
 	void messageReceived(Message message);
 
-private slots:
-	void sessionOpened();
-	void connectedAsServer();
-	void connectedAsClient();
+protected slots:
+	virtual void sessionOpened() = 0;
+	virtual void connectionEstablished() = 0;
 	void readMessage();
 	void lostConnection();
 
-private:
-	QTcpServer *tcpServer;
+protected:
 	QTcpSocket *tcpSocket;
 	QNetworkSession *networkSession;
 	QString ipAddress;
 	qint16 blockSize;
-	NetworkType type;
 	QLabel *statusLabel;
 	QComboBox *hostCombo;
 	QLineEdit *portLineEdit;

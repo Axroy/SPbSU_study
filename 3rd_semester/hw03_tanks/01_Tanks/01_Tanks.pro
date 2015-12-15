@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     explosion.cpp \
     lightMissile.cpp \
     heavyMissile.cpp \
-    network.cpp
+    network.cpp \
+    networkClient.cpp \
+    networkServer.cpp
 
 HEADERS  += tanksWindow.h \
     tank.h \
@@ -35,6 +37,8 @@ HEADERS  += tanksWindow.h \
     heavyMissile.h \
     constants.h \
     network.h \
-    networkEnums.h
+    networkEnums.h \
+    networkClient.h \
+    networkServer.h
 
 FORMS    += tanksWindow.ui

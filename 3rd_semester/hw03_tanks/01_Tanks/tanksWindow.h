@@ -11,6 +11,8 @@
 #include "landscape.h"
 #include "constants.h"
 #include "network.h"
+#include "networkClient.h"
+#include "networkServer.h"
 #include "networkEnums.h"
 
 namespace Ui {
