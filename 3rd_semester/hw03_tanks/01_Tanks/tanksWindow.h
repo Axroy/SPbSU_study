@@ -46,7 +46,6 @@ private slots:
 	void moveLeft();
 	void moveRight();
 	void switchMissiles();
-	void connectToServer();
 	void connected();
 	void disconnected();
 	void messageReceived(Message message);

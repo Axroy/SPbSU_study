@@ -12,8 +12,10 @@ class Network : public QObject
 {
 	Q_OBJECT
 
-public:
+public slots:
 	virtual void setupConnection() = 0;
+
+public:
 	/// Clears all received data
 	void clearBuffer();
 	void sendMessage(Message message);

@@ -77,7 +77,7 @@ TanksWindow::TanksWindow(QWidget *parent) :
 		myTurn = true;
 		network = new NetworkClient(ui->connectionStatusLabel, ui->IPComboBox, ui->portLineEdit);
 		setWindowTitle("Tanks Client");
-		connect(ui->connectButton, SIGNAL(clicked(bool)), this, SLOT(connectToServer()));
+		connect(ui->connectButton, SIGNAL(clicked(bool)), network, SLOT(setupConnection()));
 	}
 
 	connect(network, SIGNAL(connected()), this, SLOT(connected()));
@@ -274,11 +274,6 @@ void TanksWindow::switchMissiles()
 		network->sendMessage(missileSwitched);
 		ui->currentMissileNameLabel->setText(missile->getName());
 	}
-}
-
-void TanksWindow::connectToServer()
-{
-	network->setupConnection();
 }
 
 void TanksWindow::connected()
