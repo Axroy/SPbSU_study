@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += testlib
 QT       -= gui
 
 TARGET = 01_LocalNetwork
@@ -15,6 +15,21 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    localNetworkModel.cpp \
+    computer.cpp \
+	network.cpp \
+	windowsComputer.cpp \
+	linuxComputer.cpp \
+	macComputer.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
+
+HEADERS += \
+    localNetworkModel.h \
+    computer.h \
+    network.h \
+	networkTests.h \
+	windowsComputer.h \
+	linuxComputer.h \
+	macComputer.h
