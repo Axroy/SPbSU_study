@@ -1,8 +1,23 @@
+isOpeningBracket :: Char -> Bool
+isOpeningBracket x = x == '(' || x == '[' || x == '{'
+
+isClosingBracket :: Char -> Bool
+isClosingBracket x = x == ')' || x == ']' || x == '}'
+
+sameTypeBrackets :: Char -> Char -> Bool
+sameTypeBrackets x y = (x == '(' && y == ')') || (x == '[' && y == ']') || (x == '{' && y == '}')
+
 brackets :: String -> Bool
-brackets s = brackets_ s 0 where
-                brackets_ :: String -> Int -> Bool
-                brackets_ [] 0 = True
-                brackets_ [] _ = False
-                brackets_ (s:xs) x = if s == ')' then if x == 0 then False else brackets_ xs (x - 1) 
-                                     else if s == '(' then brackets_ xs (x + 1) 
-                                     else brackets_ xs x
+brackets s = brackets_ s []
+    where
+        brackets_ :: String -> String -> Bool
+        brackets_ [] [] = True
+        brackets_ [] _ = False
+        brackets_ (x:xs) []
+            | isOpeningBracket x = brackets_ xs [x]
+            | isClosingBracket x = False
+            | otherwise = brackets_ xs []
+        brackets_ (x:xs) (y:ys)
+            | isOpeningBracket x = brackets_ xs (x:y:ys)
+            | isClosingBracket x = if sameTypeBrackets y x then brackets_ xs ys else False
+            | otherwise = brackets_ xs (y:ys)
