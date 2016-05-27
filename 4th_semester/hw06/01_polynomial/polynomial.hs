@@ -29,19 +29,21 @@ showPlus x | x > 0 = "+"
            | otherwise = ""
 
 showMonomial :: Int -> Int -> String
-showMonomial 0 _ = ""
 showMonomial x 0 = show x
-showMonomial x 1 = showPlus x ++ show x ++ "x"
-showMonomial 1 power = "+x^" ++ show power
-showMonomial (-1) power = "-x^" ++ show power
-showMonomial x power = showPlus x ++ show x ++ "x^" ++ show power
+showMonomial 1 1 = "x"
+showMonomial x 1 = show x ++ "x"
+showMonomial 1 power = "x^" ++ show power
+showMonomial x power = show x ++ "x^" ++ show power
 
-show_ :: [Int] -> Int -> String
-show_ [] _ = ""
-show_ (x : xs) power = showMonomial x power ++ show_ xs (power + 1)
+show_ :: [Int] -> Int -> Bool -> String
+show_ [] _ _= ""
+show_ (x : xs) power True | x == 0 = show_ xs (power + 1) True
+                          | otherwise = showMonomial x power ++ show_ xs (power + 1) False
+show_ (x : xs) power False | x == 0 = show_ xs (power + 1) False
+                           | otherwise = showPlus x ++ showMonomial x power ++ show_ xs (power + 1) False
 
 instance Show Polynomial where
-    show (Polynomial p) = show_ p 0
+    show (Polynomial p) = show_ p 0 True
     
 main = do
     putStrLn (show $ multiply (add (Polynomial[2, 0]) (Polynomial[0, 1])) (Polynomial[-2, 1]))
