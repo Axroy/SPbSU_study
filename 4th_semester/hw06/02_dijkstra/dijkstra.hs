@@ -38,7 +38,7 @@ dijkstra (Graph vertices edges) start = dijkstra_ (map (\(x, y) -> if x == start
                                                                                                      then (fst current, snd from + getThird edge) : (updateDistances rest from)
                                                                                                      else current : (updateDistances rest from)
 
--- Graph from Wikipedia's article about the algorythm                                                                                                     
+-- Graph from Wikipedia's article about the algorithm                                                                                                     
 wikiGraph = Graph [(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0)] 
                   [(1, 6, 14), (1, 3, 9), (1, 2, 7), (2, 3, 10), (2, 4, 15), (3, 6, 2), (3, 4, 11), (4, 5, 6), (5, 6, 9)]
 
