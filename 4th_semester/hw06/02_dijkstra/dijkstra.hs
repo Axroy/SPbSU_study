@@ -32,11 +32,11 @@ dijkstra (Graph vertices edges) start = dijkstra_ (map (\(x, y) -> if x == start
                                                 
                                                 updateDistances :: [(Int, Int)] -> (Int, Int) -> [(Int, Int)]
                                                 updateDistances [] _ = []
-                                                updateDistances (current : rest) from = case (getEdge from current) of
-                                                                                        Nothing -> current : (updateDistances rest from)
-                                                                                        Just edge -> if snd from + getThird edge < snd current
-                                                                                                     then (fst current, snd from + getThird edge) : (updateDistances rest from)
-                                                                                                     else current : (updateDistances rest from)
+                                                updateDistances (to : rest) from = case (getEdge from to) of
+                                                                                        Nothing -> to : (updateDistances rest from)
+                                                                                        Just edge -> if snd from + getThird edge < snd to
+                                                                                                     then (fst to, snd from + getThird edge) : (updateDistances rest from)
+                                                                                                     else to : (updateDistances rest from)
 
 -- Graph from Wikipedia's article about the algorithm                                                                                                     
 wikiGraph = Graph [(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0)] 
