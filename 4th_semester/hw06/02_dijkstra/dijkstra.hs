@@ -1,45 +1,70 @@
+import Prelude hiding (id)
 import Data.List
 import Data.Ord
 import Data.Maybe
+import Control.Monad.Writer
 
-data Graph = Graph [(Int, Int)] [(Int, Int, Int)]
+data Edge = Edge {
+    from :: Int,
+    to :: Int,
+    value :: Int
+}
+
+instance Show Edge where
+    show (Edge from to value) = show from ++ "->" ++ show to
+
+data Vertex = Vertex {
+    id :: Int,
+    path :: Int
+}
+
+instance Eq Vertex where
+    (==) a b = id a == id b
+    
+instance Ord Vertex where
+    compare (Vertex _ a) (Vertex _ b) = compare a b
+    
+instance Show Vertex where
+    show (Vertex id path) = show id ++ ":" ++ show path
+
+data Graph = Graph [Vertex] [Edge]
     deriving Show
     
 infinity = maxBound :: Int    
 
-getThird :: (Int, Int, Int) -> Int
-getThird (_, _, c) = c
-
-dijkstra :: Graph -> Int -> [(Int, Int)]
-dijkstra (Graph vertices edges) start = dijkstra_ (map (\(x, y) -> if x == start then (x, 0) else (x, infinity)) vertices) edges start
+dijkstra :: Graph -> Int -> [Vertex]
+dijkstra (Graph vertices edges) start = dijkstra_ vertices edges start
     where
-        dijkstra_ :: [(Int, Int)] -> [(Int, Int, Int)] -> Int -> [(Int, Int)]
+        dijkstra_ :: [Vertex] -> [Edge] -> Int -> [Vertex]
         dijkstra_ [] _ _ = []
         dijkstra_ vertices edges start | length vertices == 1 = vertices
-                                       | otherwise = minVertex : dijkstra_ newVertices edges (fst $ newMinVertex)
+                                       | otherwise = minVertex : dijkstra_ newVertices edges (id newMinVertex)
                                             where
-                                                minVertex :: (Int, Int)
-                                                minVertex = minimumBy (comparing snd) (vertices)
+                                                minVertex :: Vertex
+                                                minVertex = minimum vertices
                                                 
-                                                newMinVertex :: (Int, Int)
-                                                newMinVertex = minimumBy (comparing snd) (newVertices)
+                                                newMinVertex :: Vertex
+                                                newMinVertex = minimum newVertices
                                                 
-                                                getEdge :: (Int, Int) -> (Int, Int) -> Maybe(Int, Int, Int)
-                                                getEdge from to = find (\(x, y, z) -> x == fst from && y == fst to || x == fst to && y == fst from) edges
+                                                getEdge :: Vertex -> Vertex -> [Edge] -> Maybe(Edge)
+                                                getEdge _ _ [] = Nothing
+                                                getEdge fromV toV (current : rest) | id fromV == from current && id toV == to current = Just current
+                                                                                   | id fromV == to current && id toV == from current = Just current
+                                                                                   | otherwise = getEdge fromV toV rest
                                                 
-                                                newVertices :: [(Int, Int)]
-                                                newVertices = filter (\(x, y) -> x /= start) (updateDistances vertices minVertex)
+                                                newVertices :: [Vertex]
+                                                newVertices = filter (\x -> (id x) /= start) (updateDistances vertices minVertex)
                                                 
-                                                updateDistances :: [(Int, Int)] -> (Int, Int) -> [(Int, Int)]
+                                                updateDistances :: [Vertex] -> Vertex -> [Vertex]
                                                 updateDistances [] _ = []
-                                                updateDistances (to : rest) from = case (getEdge from to) of
+                                                updateDistances (to : rest) from = case (getEdge from to edges) of
                                                                                         Nothing -> to : (updateDistances rest from)
-                                                                                        Just edge -> if snd from + getThird edge < snd to
-                                                                                                     then (fst to, snd from + getThird edge) : (updateDistances rest from)
+                                                                                        Just edge -> if id from + value edge < path to
+                                                                                                     then (Vertex (id to) (path from + value edge)) : (updateDistances rest from)
                                                                                                      else to : (updateDistances rest from)
 
 -- Graph from Wikipedia's article about the algorithm                                                                                                     
-wikiGraph = Graph [(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0)] 
-                  [(1, 6, 14), (1, 3, 9), (1, 2, 7), (2, 3, 10), (2, 4, 15), (3, 6, 2), (3, 4, 11), (4, 5, 6), (5, 6, 9)]
+wikiGraph = Graph [(Vertex 1 0), (Vertex 2 infinity), (Vertex 3 infinity), (Vertex 4 infinity), (Vertex 5 infinity), (Vertex 6 infinity)] 
+                  [(Edge 1 6 14), (Edge 1 3 9), (Edge 1 2 7), (Edge 2 3 10), (Edge 2 4 15), (Edge 3 6 2), (Edge 3 4 11), (Edge 4 5 6), (Edge 5 6 9)]
 
 main = putStrLn $ show (dijkstra wikiGraph 1)
