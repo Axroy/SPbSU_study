@@ -11,21 +11,21 @@ data Edge = Edge {
 }
 
 instance Show Edge where
-    show (Edge from to value) = show from ++ "->" ++ show to
+    show (Edge from to value) = show from ++ "-" ++ show to
 
 data Vertex = Vertex {
     id :: Int,
-    path :: Int
+    path :: Writer [Edge] Int
 }
 
 instance Eq Vertex where
     (==) a b = id a == id b
     
 instance Ord Vertex where
-    compare (Vertex _ a) (Vertex _ b) = compare a b
+    compare (Vertex _ a) (Vertex _ b) = compare (fst $ runWriter a) (fst $ runWriter b)
     
 instance Show Vertex where
-    show (Vertex id path) = show id ++ ":" ++ show path
+    show (Vertex id path) = "(" ++ show id ++ ":" ++ show (fst $ runWriter path) ++ ":" ++ show (snd $ runWriter path) ++ ")"
 
 data Graph = Graph [Vertex] [Edge]
     deriving Show
@@ -55,16 +55,21 @@ dijkstra (Graph vertices edges) start = dijkstra_ vertices edges start
                                                 newVertices :: [Vertex]
                                                 newVertices = filter (\x -> (id x) /= start) (updateDistances vertices minVertex)
                                                 
+                                                doEdge :: Writer [Edge] Int -> Edge -> Writer [Edge] Int
+                                                doEdge wr e = do
+                                                    v <- wr
+                                                    tell (e : [])
+                                                    return (v + (value e))
+                                                
                                                 updateDistances :: [Vertex] -> Vertex -> [Vertex]
                                                 updateDistances [] _ = []
                                                 updateDistances (toV : rest) fromV = case (getEdge fromV toV edges) of
                                                                                         Nothing -> toV : (updateDistances rest fromV)
-                                                                                        Just edge -> if path fromV + value edge < path toV
-                                                                                                     then (Vertex (id toV) (path fromV + value edge)) : (updateDistances rest fromV)
-                                                                                                     else toV : (updateDistances rest fromV)
+                                                                                        Just edge -> (min (Vertex (id toV) (doEdge (path fromV) edge)) toV) : (updateDistances rest fromV)
+                                                                                                     
 
 -- Graph from Wikipedia's article about the algorithm                                                                                                     
-wikiGraph = Graph [(Vertex 1 0), (Vertex 2 infinity), (Vertex 3 infinity), (Vertex 4 infinity), (Vertex 5 infinity), (Vertex 6 infinity)] 
+wikiGraph = Graph [(Vertex 1 (writer (0, []))), (Vertex 2 (writer (infinity, []))), (Vertex 3 (writer (infinity, []))), (Vertex 4 (writer (infinity, []))), (Vertex 5 (writer (infinity, []))), (Vertex 6 (writer (infinity, [])))] 
                   [(Edge 1 6 14), (Edge 1 3 9), (Edge 1 2 7), (Edge 2 3 10), (Edge 2 4 15), (Edge 3 6 2), (Edge 3 4 11), (Edge 4 5 6), (Edge 5 6 9)]
 
 main = putStrLn $ show (dijkstra wikiGraph 1)
