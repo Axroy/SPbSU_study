@@ -57,11 +57,11 @@ dijkstra (Graph vertices edges) start = dijkstra_ vertices edges start
                                                 
                                                 updateDistances :: [Vertex] -> Vertex -> [Vertex]
                                                 updateDistances [] _ = []
-                                                updateDistances (to : rest) from = case (getEdge from to edges) of
-                                                                                        Nothing -> to : (updateDistances rest from)
-                                                                                        Just edge -> if id from + value edge < path to
-                                                                                                     then (Vertex (id to) (path from + value edge)) : (updateDistances rest from)
-                                                                                                     else to : (updateDistances rest from)
+                                                updateDistances (toV : rest) fromV = case (getEdge fromV toV edges) of
+                                                                                        Nothing -> toV : (updateDistances rest fromV)
+                                                                                        Just edge -> if path fromV + value edge < path toV
+                                                                                                     then (Vertex (id toV) (path fromV + value edge)) : (updateDistances rest fromV)
+                                                                                                     else toV : (updateDistances rest fromV)
 
 -- Graph from Wikipedia's article about the algorithm                                                                                                     
 wikiGraph = Graph [(Vertex 1 0), (Vertex 2 infinity), (Vertex 3 infinity), (Vertex 4 infinity), (Vertex 5 infinity), (Vertex 6 infinity)] 
