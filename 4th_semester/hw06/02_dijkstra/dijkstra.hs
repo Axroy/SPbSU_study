@@ -15,7 +15,7 @@ instance Show Edge where
 
 data Vertex = Vertex {
     id :: Int,
-    path :: Writer [Edge] Int
+    path :: Writer [(Edge, String)] Int
 }
 
 instance Eq Vertex where
@@ -25,7 +25,7 @@ instance Ord Vertex where
     compare (Vertex _ a) (Vertex _ b) = compare (fst $ runWriter a) (fst $ runWriter b)
     
 instance Show Vertex where
-    show (Vertex id path) = "(" ++ show id ++ ":" ++ show (fst $ runWriter path) ++ ":" ++ show (snd $ runWriter path) ++ ")"
+    show (Vertex id path) = "\n\n(" ++ show id ++ ":" ++ show (fst $ runWriter path) ++ ", " ++ "Seen edges:" ++ show (snd $ runWriter path) ++ ")"
 
 data Graph = Graph [Vertex] [Edge]
     deriving Show
@@ -55,17 +55,23 @@ dijkstra (Graph vertices edges) start = dijkstra_ vertices edges start
                                                 newVertices :: [Vertex]
                                                 newVertices = filter (\x -> (id x) /= start) (updateDistances vertices minVertex)
                                                 
-                                                doEdge :: Writer [Edge] Int -> Edge -> Writer [Edge] Int
-                                                doEdge wr e = do
-                                                    v <- wr
-                                                    tell (e : [])
-                                                    return (v + (value e))
+                                                doEdge :: Writer [(Edge, String)] Int -> Writer [(Edge, String)] Int -> Edge -> Writer [(Edge, String)] Int
+                                                doEdge wr1 wr2 e = do
+                                                    v1 <- wr1
+                                                    v2 <- wr2
+                                                    if v1 + (value e) < v2
+                                                    then do 
+                                                        tell ((e, "Updated distance to " ++ show (to e)) : [])
+                                                        return (v1 + (value e))
+                                                    else do
+                                                        tell ((e, "No changes") : [])
+                                                        return v2
                                                 
                                                 updateDistances :: [Vertex] -> Vertex -> [Vertex]
                                                 updateDistances [] _ = []
                                                 updateDistances (toV : rest) fromV = case (getEdge fromV toV edges) of
                                                                                         Nothing -> toV : (updateDistances rest fromV)
-                                                                                        Just edge -> (min (Vertex (id toV) (doEdge (path fromV) edge)) toV) : (updateDistances rest fromV)
+                                                                                        Just edge -> (min (Vertex (id toV) (doEdge (path fromV) (path toV) edge)) toV) : (updateDistances rest fromV)
                                                                                                      
 
 -- Graph from Wikipedia's article about the algorithm                                                                                                     
